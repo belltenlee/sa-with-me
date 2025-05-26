@@ -6,8 +6,15 @@ import Gallery from '@/components/Gallery';
 import Map from '@/components/Map';
 import ShareButton from '@/components/ShareButton';
 import Account from '@/components/Account';
+import Carousel from '@/components/Carousel';
 
 export default function Home() {
+  const carouselImages = [
+    { src: '/images/themed_placeholders/wedding_theme_1.svg', alt: 'Wedding Themed Placeholder Image 1' },
+    { src: '/images/themed_placeholders/wedding_theme_2.svg', alt: 'Wedding Themed Placeholder Image 2' },
+    { src: '/images/themed_placeholders/wedding_theme_3.svg', alt: 'Wedding Themed Placeholder Image 3' },
+  ];
+
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="text-center mb-12">
@@ -36,9 +43,7 @@ export default function Home() {
           transition={{ delay: 0.8, duration: 0.8 }}
           className="relative w-full h-[400px] rounded-lg overflow-hidden bg-gray-200"
         >
-          <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-            웨딩 사진이 들어갈 자리입니다
-          </div>
+          <Carousel images={carouselImages} />
         </m.div>
       </section>
 

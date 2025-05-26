@@ -1,0 +1,19 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bgGradient2" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" style="stop-color:#F0FFF0;stop-opacity:1" /> <!-- Honeydew -->
+      <stop offset="100%" style="stop-color:#E0FFFF;stop-opacity:1" /> <!-- Light Cyan -->
+    </radialGradient>
+    <pattern id="floralPattern" patternUnits="userSpaceOnUse" width="80" height="80">
+      <!-- Simple petal-like shapes -->
+      <circle cx="10" cy="10" r="8" fill="#FFDAB9" opacity="0.6"/> <!-- PeachPuff -->
+      <circle cx="40" cy="30" r="10" fill="#FFB6C1" opacity="0.6"/> <!-- LightPink -->
+      <circle cx="15" cy="50" r="7" fill="#AFEEEE" opacity="0.6"/> <!-- PaleTurquoise -->
+      <circle cx="60" cy="15" r="9" fill="#DB7093" opacity="0.6"/> <!-- PaleVioletRed -->
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bgGradient2)" />
+  <rect width="100%" height="100%" fill="url(#floralPattern)" />
+  
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Verdana, sans-serif" font-size="22" fill="#333" stroke="#fff" stroke-width="0.5">Placeholder 2</text>
+</svg>
