@@ -6,7 +6,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: '/sa-with-me',
 }
 
 module.exports = nextConfig
