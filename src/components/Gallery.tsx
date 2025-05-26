@@ -4,12 +4,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const images = [
-  { id: 1, src: '/images/gallery/1.jpg', alt: '웨딩 사진 1' },
-  { id: 2, src: '/images/gallery/2.jpg', alt: '웨딩 사진 2' },
-  { id: 3, src: '/images/gallery/3.jpg', alt: '웨딩 사진 3' },
-  { id: 4, src: '/images/gallery/4.jpg', alt: '웨딩 사진 4' },
-  { id: 5, src: '/images/gallery/5.jpg', alt: '웨딩 사진 5' },
-  { id: 6, src: '/images/gallery/6.jpg', alt: '웨딩 사진 6' },
+  { id: 1, src: '/images/themed_placeholders/wedding_theme_1.svg', alt: 'Wedding Theme Placeholder 1' },
+  { id: 2, src: '/images/themed_placeholders/wedding_theme_2.svg', alt: 'Wedding Theme Placeholder 2' },
+  { id: 3, src: '/images/themed_placeholders/wedding_theme_3.svg', alt: 'Wedding Theme Placeholder 3' },
+  { id: 4, src: '/images/themed_placeholders/wedding_theme_4.svg', alt: 'Wedding Theme Placeholder 4' },
+  { id: 5, src: '/images/themed_placeholders/wedding_theme_1.svg', alt: 'Wedding Theme Placeholder 1 (repeated)' },
+  { id: 6, src: '/images/themed_placeholders/wedding_theme_2.svg', alt: 'Wedding Theme Placeholder 2 (repeated)' },
 ];
 
 export default function Gallery() {
@@ -31,15 +31,15 @@ export default function Gallery() {
             key={image.id}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: image.id * 0.2 }}
-            className="relative aspect-square cursor-pointer overflow-hidden rounded-lg"
+            transition={{ delay: image.id * 0.1 }} // Adjusted delay slightly
+            className="relative aspect-square cursor-pointer overflow-hidden rounded-lg bg-gray-100" // Added a light bg for loading
             onClick={() => setSelectedImage(image.id)}
           >
-            <div className="relative w-full h-full">
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-200 text-gray-400">
-                {`사진 ${image.id}`}
-              </div>
-            </div>
+            <img
+              src={image.src}
+              alt={image.alt}
+              className="w-full h-full object-cover" // Ensures image covers the div
+            />
           </motion.div>
         ))}
       </div>
@@ -56,17 +56,17 @@ export default function Gallery() {
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0.8 }}
-            className="relative max-w-4xl w-full aspect-[3/2] bg-white rounded-lg"
+            className="relative max-w-4xl w-full aspect-[3/2] bg-gray-100 rounded-lg overflow-hidden" // Added bg and overflow
+            onClick={(e) => e.stopPropagation()} // Prevent closing modal when clicking on image itself
           >
-            <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-              클릭한 사진이 크게 표시됩니다
-            </div>
+            <img
+              src={images.find(img => img.id === selectedImage)?.src}
+              alt={images.find(img => img.id === selectedImage)?.alt}
+              className="w-full h-full object-contain" // Use object-contain for modal to see full image
+            />
             <button
               className="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full p-2"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedImage(null);
-              }}
+              onClick={() => setSelectedImage(null)} // Simplified this onClick
             >
               닫기
             </button>
@@ -75,4 +75,4 @@ export default function Gallery() {
       )}
     </div>
   );
-} 
+}
