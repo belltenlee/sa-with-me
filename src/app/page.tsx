@@ -10,9 +10,9 @@ import Carousel from '@/components/Carousel';
 
 export default function Home() {
   const carouselImages = [
-    { src: '/images/themed_placeholders/wedding_theme_1.svg', alt: 'Wedding Themed Placeholder Image 1' },
-    { src: '/images/themed_placeholders/wedding_theme_2.svg', alt: 'Wedding Themed Placeholder Image 2' },
-    { src: '/images/themed_placeholders/wedding_theme_3.svg', alt: 'Wedding Themed Placeholder Image 3' },
+    { src: '/sa-with-me/images/themed_placeholders/wedding_theme_1.svg', alt: 'Wedding Themed Placeholder Image 1' },
+    { src: '/sa-with-me/images/themed_placeholders/wedding_theme_2.svg', alt: 'Wedding Themed Placeholder Image 2' },
+    { src: '/sa-with-me/images/themed_placeholders/wedding_theme_3.svg', alt: 'Wedding Themed Placeholder Image 3' },
   ];
 
   return (
