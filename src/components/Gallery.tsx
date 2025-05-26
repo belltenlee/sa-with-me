@@ -4,12 +4,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const images = [
-  { id: 1, src: '/images/themed_placeholders/wedding_theme_1.svg', alt: 'Wedding Theme Placeholder 1' },
-  { id: 2, src: '/images/themed_placeholders/wedding_theme_2.svg', alt: 'Wedding Theme Placeholder 2' },
-  { id: 3, src: '/images/themed_placeholders/wedding_theme_3.svg', alt: 'Wedding Theme Placeholder 3' },
-  { id: 4, src: '/images/themed_placeholders/wedding_theme_4.svg', alt: 'Wedding Theme Placeholder 4' },
-  { id: 5, src: '/images/themed_placeholders/wedding_theme_1.svg', alt: 'Wedding Theme Placeholder 1 (repeated)' },
-  { id: 6, src: '/images/themed_placeholders/wedding_theme_2.svg', alt: 'Wedding Theme Placeholder 2 (repeated)' },
+  { id: 1, src: '/images/simple_fallbacks/fallback1.svg', alt: 'Fallback Image 1' },
+  { id: 2, src: '/images/simple_fallbacks/fallback2.svg', alt: 'Fallback Image 2' },
+  { id: 3, src: '/images/simple_fallbacks/fallback3.svg', alt: 'Fallback Image 3' },
+  { id: 4, src: '/images/simple_fallbacks/fallback4.svg', alt: 'Fallback Image 4' },
+  { id: 5, src: '/images/simple_fallbacks/fallback1.svg', alt: 'Fallback Image 1 (repeated)' },
+  { id: 6, src: '/images/simple_fallbacks/fallback2.svg', alt: 'Fallback Image 2 (repeated)' },
 ];
 
 export default function Gallery() {
