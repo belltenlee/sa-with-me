@@ -3,17 +3,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const images = [
-  { id: 1, src: '/images/themed_placeholders/wedding_theme_1.svg', alt: 'Wedding Theme Placeholder 1' },
-  { id: 2, src: '/images/themed_placeholders/wedding_theme_2.svg', alt: 'Wedding Theme Placeholder 2' },
-  { id: 3, src: '/images/themed_placeholders/wedding_theme_3.svg', alt: 'Wedding Theme Placeholder 3' },
-  { id: 4, src: '/images/themed_placeholders/wedding_theme_4.svg', alt: 'Wedding Theme Placeholder 4' },
-  { id: 5, src: '/images/themed_placeholders/wedding_theme_1.svg', alt: 'Wedding Theme Placeholder 1 (repeated)' },
-  { id: 6, src: '/images/themed_placeholders/wedding_theme_2.svg', alt: 'Wedding Theme Placeholder 2 (repeated)' },
-];
-
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = React.useState<number | null>(null);
+
+  const images = [
+    { id: 1, src: '/sa-with-me/images/themed_placeholders/wedding_theme_1.svg', alt: 'Wedding Theme Placeholder 1' },
+    { id: 2, src: '/sa-with-me/images/themed_placeholders/wedding_theme_2.svg', alt: 'Wedding Theme Placeholder 2' },
+    { id: 3, src: '/sa-with-me/images/themed_placeholders/wedding_theme_3.svg', alt: 'Wedding Theme Placeholder 3' },
+    { id: 4, src: '/sa-with-me/images/themed_placeholders/wedding_theme_4.svg', alt: 'Wedding Theme Placeholder 4' },
+    { id: 5, src: '/sa-with-me/images/themed_placeholders/wedding_theme_1.svg', alt: 'Wedding Theme Placeholder 1 (repeated)' },
+    { id: 6, src: '/sa-with-me/images/themed_placeholders/wedding_theme_2.svg', alt: 'Wedding Theme Placeholder 2 (repeated)' },
+  ];
 
   return (
     <div className="py-12">
