@@ -1,50 +1,16 @@
 'use client';
 
-import { useEffect } from 'react';
-
-interface KakaoLatLng {
-  getLat(): number;
-  getLng(): number;
-}
-
-interface KakaoMap {
-  setCenter(position: KakaoLatLng): void;
-  setLevel(level: number): void;
-  getLevel(): number;
-  getCenter(): KakaoLatLng;
-}
-
-interface KakaoMarker {
-  setMap(map: KakaoMap | null): void;
-  getPosition(): KakaoLatLng;
-}
-
-interface KakaoCustomOverlay {
-  setMap(map: KakaoMap | null): void;
-  setPosition(position: KakaoLatLng): void;
-}
-
-interface KakaoMaps {
-  maps: {
-    load: (callback: () => void) => void;
-    LatLng: new (lat: number, lng: number) => KakaoLatLng;
-    Map: new (container: HTMLElement, options: { center: KakaoLatLng; level: number }) => KakaoMap;
-    Marker: new (options: { position: KakaoLatLng }) => KakaoMarker;
-    CustomOverlay: new (options: { 
-      content: string; 
-      position: KakaoLatLng;
-      yAnchor?: number;
-    }) => KakaoCustomOverlay;
-  };
-}
+import { useEffect, useState } from 'react';
 
 declare global {
   interface Window {
-    kakao: KakaoMaps;
+    kakao: any;
   }
 }
 
 export default function Map() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     const mapScript = document.createElement('script');
     mapScript.async = true;
@@ -61,37 +27,38 @@ export default function Map() {
           level: 3,
         };
         const map = new window.kakao.maps.Map(container, options);
-        
-        // 마커 추가
+
+        // Marker
         const markerPosition = new window.kakao.maps.LatLng(37.5252, 127.0382);
         const marker = new window.kakao.maps.Marker({
           position: markerPosition,
         });
         marker.setMap(map);
 
-        // 커스텀 오버레이로 변경
+        // Custom Overlay
         const content = `
           <div style="
-            position: relative;
-            bottom: 40px;
-            padding: 5px 10px;
+            padding: 8px 16px;
             background: white;
-            border-radius: 4px;
-            font-size: 12px;
+            border-radius: 20px;
+            font-size: 13px;
             font-weight: 600;
-            color: #333;
+            color: #2C2C2C;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-          ">더채플앳청담</div>
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-family: serif;
+            border: 1px solid #F9F7F2;
+          ">The Chapel at Cheongdam</div>
         `;
 
         const customOverlay = new window.kakao.maps.CustomOverlay({
           content: content,
           position: markerPosition,
-          yAnchor: 1,
+          yAnchor: 2.2,
         });
-        
+
         customOverlay.setMap(map);
+        setIsLoaded(true);
       });
     };
 
@@ -103,27 +70,37 @@ export default function Map() {
   }, []);
 
   return (
-    <div className="w-full">
-      <div 
-        id="map" 
-        className="w-full h-[400px] rounded-lg shadow-lg"
-      />
-      <div className="mt-4 flex justify-center space-x-4">
+    <div className="w-full space-y-6">
+      <div className="relative w-full h-[300px] rounded-lg overflow-hidden shadow-md bg-gray-100">
+        <div id="map" className="w-full h-full" />
+        {!isLoaded && (
+          <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm bg-gray-50">
+            Loading Map...
+          </div>
+        )}
+      </div>
+
+      <div className="text-center space-y-2 font-serif text-charcoal">
+        <p className="text-lg font-bold">The Chapel at Cheongdam</p>
+        <p className="text-sm text-gray-500">123-45 Cheongdam-dong, Gangnam-gu, Seoul</p>
+      </div>
+
+      <div className="flex justify-center gap-4">
         <a
           href="https://map.kakao.com/link/to/더채플앳청담,37.5252,127.0382"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-yellow-400 text-black px-4 py-2 rounded-full hover:bg-yellow-500 transition-colors"
+          className="bg-[#FAE100] text-[#3C1E1E] px-6 py-2 rounded-full text-sm font-bold hover:opacity-90 transition-opacity"
         >
-          길찾기
+          Kakao Map
         </a>
         <a
           href="tel:02-1234-5678"
-          className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-colors"
+          className="bg-charcoal text-white px-6 py-2 rounded-full text-sm font-serif hover:bg-gold transition-colors"
         >
-          전화하기
+          Call Venue
         </a>
       </div>
     </div>
   );
-} 
+}
