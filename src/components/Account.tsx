@@ -1,81 +1,116 @@
 'use client';
 
 import { useState } from 'react';
-import { motion as m } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface AccountInfo {
   bank: string;
   number: string;
   holder: string;
-  relation: string;
 }
 
-const accounts: AccountInfo[] = [
+interface AccountGroup {
+  label: string;
+  accounts: AccountInfo[];
+}
+
+const accountGroups: AccountGroup[] = [
   {
-    bank: '신한은행',
-    number: '110-123-456789',
-    holder: '김철수',
-    relation: '신랑',
+    label: '신랑 측 마음 전하실 곳',
+    accounts: [
+      { bank: '농협은행', number: '123-456-789', holder: 'SJ' },
+      { bank: '신한은행', number: '123-456-789', holder: 'JY' },
+    ],
   },
   {
-    bank: '국민은행',
-    number: '123-12-123456',
-    holder: '이영희',
-    relation: '신부',
+    label: '신부 측 마음 전하실 곳',
+    accounts: [
+      { bank: '신한은행', number: '123-456-789', holder: 'MH' },
+      { bank: '신한은행', number: '123-456-789', holder: 'SA' },
+    ],
   },
 ];
 
 export default function Account() {
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
 
-  const handleCopy = async (account: AccountInfo, index: number) => {
+  const handleCopy = async (number: string, id: string) => {
     try {
-      await navigator.clipboard.writeText(account.number);
-      setCopiedIndex(index);
+      await navigator.clipboard.writeText(number);
+      setCopiedIndex(id);
       setTimeout(() => setCopiedIndex(null), 2000);
     } catch (err) {
-      console.error('계좌번호 복사 중 오류가 발생했습니다:', err);
+      console.error('Failed to copy:', err);
     }
   };
 
+  const toggleGroup = (label: string) => {
+    setOpenGroup(openGroup === label ? null : label);
+  };
+
   return (
-    <div className="w-full max-w-md mx-auto">
-      <h2 className="text-2xl font-bold text-center mb-6">축의금 계좌번호</h2>
-      <div className="space-y-4">
-        {accounts.map((account, index) => (
-          <m.div
-            key={account.number}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.2 }}
-            className="bg-white rounded-lg shadow-md p-4"
-          >
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-gray-600">{account.relation}</span>
-              <span className="text-sm text-gray-500">{account.bank}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <div>
-                <p className="font-medium">{account.holder}</p>
-                <p className="text-gray-700">{account.number}</p>
-              </div>
+    <section className="py-16 px-6 bg-white">
+      <div className="max-w-md mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-10"
+        >
+          <h2 className="font-playfair text-3xl text-gold mb-4">마음 전하실 곳</h2>
+          <p className="font-serif text-charcoal/60 text-sm">축의금 계좌</p>
+        </motion.div>
+
+        <div className="space-y-4 font-serif">
+          {accountGroups.map((group) => (
+            <div key={group.label} className="border border-gray-100 rounded-lg overflow-hidden">
               <button
-                onClick={() => handleCopy(account, index)}
-                className="ml-4 px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full text-sm transition-colors"
+                onClick={() => toggleGroup(group.label)}
+                className="w-full px-6 py-4 flex justify-between items-center bg-cream/30 hover:bg-cream/50 transition-colors"
               >
-                {copiedIndex === index ? (
-                  <span className="text-green-600">복사완료</span>
-                ) : (
-                  <span>복사하기</span>
-                )}
+                <span className="text-charcoal font-medium">{group.label}</span>
+                <span className={`transform transition-transform duration-300 ${openGroup === group.label ? 'rotate-180' : ''}`}>
+                  ▼
+                </span>
               </button>
+
+              <AnimatePresence>
+                {openGroup === group.label && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="bg-white p-6 space-y-4 border-t border-gray-100">
+                      {group.accounts.map((account, idx) => {
+                        const id = `${group.label}-${idx}`;
+                        return (
+                          <div key={idx} className="flex justify-between items-center">
+                            <div className="text-sm">
+                              <p className="text-charcoal mb-1">
+                                <span className="font-bold">{account.holder}</span>
+                              </p>
+                              <p className="text-gray-500">{account.bank} {account.number}</p>
+                            </div>
+                            <button
+                              onClick={() => handleCopy(`${account.bank} ${account.number}`, id)}
+                              className="px-3 py-1.5 text-xs border border-gray-200 rounded-full hover:border-gold hover:text-gold transition-colors"
+                            >
+                              {copiedIndex === id ? '복사완료' : '복사하기'}
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          </m.div>
-        ))}
+          ))}
+        </div>
       </div>
-      <p className="text-center text-gray-500 text-sm mt-4">
-        계좌번호를 클릭하시면 복사됩니다
-      </p>
-    </div>
+    </section>
   );
-} 
+}

@@ -56,19 +56,22 @@ export default function ShareButton() {
     }
   };
 
+  // <section className="py-16 px-6 flex justify-center">
+  //   <button className="bg-charcoal text-white px-8 py-3 rounded-full hover:bg-gold transition-colors duration-300 font-serif">
+  //     청첩장 공유하기
+  //   </button>
+  // </section>
+
   return (
-    <button
-      onClick={handleShare}
-      className="flex items-center justify-center gap-2 bg-yellow-400 text-black px-4 py-2 rounded-full hover:bg-yellow-500 transition-colors"
-    >
-      <svg
-        className="w-5 h-5"
-        viewBox="0 0 24 24"
-        fill="currentColor"
+    <section className="py-12 px-6 flex justify-center">
+      <button
+        onClick={handleShare}
+        // className="flex items-center justify-center gap-2 bg-yellow-400 text-black px-4 py-2 rounded-full hover:bg-yellow-500 transition-colors"
+        className="flex items-center justify-center gap-2 bg-[#FAE100] text-[#3C1E1E] px-8 py-3 rounded-full hover:bg-gold transition-colors duration-300 font-serif"
       >
-        <path d="M12 3C7.03 3 3 7.03 3 12C3 16.97 7.03 21 12 21C16.97 21 21 16.97 21 12C21 7.03 16.97 3 12 3ZM15.92 14.92L11.61 17.89C11.09 18.24 10.38 17.95 10.28 17.32L9.27 12.89L5.96 10.58C5.4 10.17 5.45 9.25 6.06 8.92L16.03 4.11C16.68 3.75 17.37 4.44 17.01 5.1L15.92 14.92Z" />
-      </svg>
-      카카오톡 공유하기
-    </button>
+        카카오톡 공유하기
+      </button>
+    </section>
+
   );
 } 
