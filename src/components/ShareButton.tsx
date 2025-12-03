@@ -25,11 +25,11 @@ export default function ShareButton() {
     if (window.Kakao) {
       window.Kakao.Share.sendDefault({
         objectType: 'location',
-        address: '서울 강남구 청담동 123-45',
+        address: '서울 서초구 매헌로 16',
         addressTitle: '라시따시어터',
         content: {
           title: '우리 결혼합니다',
-          description: '2024년 8월 15일 토요일 오후 2시\n라시따시어터',
+          description: '2025년 2월 21일 토요일 오후 5시\n라시따시어터',
           imageUrl: 'https://your-image-url.jpg', // 나중에 실제 이미지로 교체 필요
           link: {
             mobileWebUrl: window.location.href,
