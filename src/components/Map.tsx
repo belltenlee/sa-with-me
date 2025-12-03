@@ -131,7 +131,7 @@ export default function Map() {
           카카오맵
         </a>
         <a
-          href="tel:02-1234-5678"
+          href="tel:02-2155-2222"
           className="bg-charcoal text-white px-6 py-2 rounded-full text-sm font-serif hover:bg-gold transition-colors"
         >
           전화하기

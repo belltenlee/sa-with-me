@@ -47,7 +47,7 @@ export default function Hero() {
                         2026. 02. 21
                     </p>
                     <p className="mt-2 text-sm tracking-widest uppercase opacity-80">
-                        일요일 오후 5시
+                        토요일 오후 5시
                     </p>
                     <p className="mt-2 font-playfair text-xl md:text-2xl">
                         LACITTA

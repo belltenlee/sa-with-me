@@ -6,6 +6,7 @@ import Guestbook from "@/components/Guestbook";
 import Gallery from "@/components/Gallery";
 import Map from "@/components/Map";
 import ShareButton from "@/components/ShareButton";
+import Account from "@/components/Account";
 
 export default function Home() {
   return (
@@ -19,6 +20,14 @@ export default function Home() {
         <section className="py-16 px-6">
           <h2 className="font-playfair text-3xl text-center mb-8 text-gold">갤러리</h2>
           <Gallery />
+          <div className="mt-8 text-center">
+            <a
+              href="/sa-with-me/our-gallery"
+              className="inline-block border-b border-charcoal text-charcoal text-sm pb-1 hover:text-gold hover:border-gold transition-colors font-serif"
+            >
+              하객 갤러리 보러가기 →
+            </a>
+          </div>
         </section>
 
         {/* Location */}
@@ -27,19 +36,21 @@ export default function Home() {
           <Map />
         </section>
 
+        <Account />
+
         <Guestbook />
 
-        <section className="py-16 px-6 flex justify-center">
-          {/* <ShareButton /> -- Keeping this commented out or replace with simple button if ShareButton is not adapted yet. 
-               The previous code had a simple button. I'll stick to the simple button for now to avoid issues with the old component.
-           */}
+        <ShareButton />
+        {/* Keeping this commented out or replace with simple button if ShareButton is not adapted yet.
+          The previous code had a simple button. I'll stick to the simple button for now to avoid issues with the old component.*/}
+        {/* <section className="py-16 px-6 flex justify-center">
           <button className="bg-charcoal text-white px-8 py-3 rounded-full hover:bg-gold transition-colors duration-300 font-serif">
             청첩장 공유하기
           </button>
-        </section>
+        </section> */}
 
         <footer className="py-8 text-center text-gray-400 text-sm font-serif">
-          <p>© 2025 지수 & 민준. All rights reserved.</p>
+          <p>© 2026 성애 & 종열. All rights reserved.</p>
         </footer>
       </div>
     </div>
