@@ -84,7 +84,7 @@ export default function Map() {
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             font-family: serif;
             border: 1px solid #F9F7F2;
-          ">더채플앳청담</div>
+          ">라시따시어터</div>
         `;
 
         const customOverlay = new window.kakao.maps.CustomOverlay({
@@ -117,13 +117,13 @@ export default function Map() {
       </div>
 
       <div className="text-center space-y-2 font-serif text-charcoal">
-        <p className="text-lg font-bold">더채플앳청담</p>
-        <p className="text-sm text-gray-500">서울 강남구 청담동 123-45</p>
+        <p className="text-lg font-bold">라시따시어터</p>
+        <p className="text-sm text-gray-500">서울 서초구 16 라시따시어터 1층</p>
       </div>
 
       <div className="flex justify-center gap-4">
         <a
-          href="https://map.kakao.com/link/to/더채플앳청담,37.5252,127.0382"
+          href="https://map.kakao.com/link/to/라시따시어터,37.4624,127.0369"
           target="_blank"
           rel="noopener noreferrer"
           className="bg-[#FAE100] text-[#3C1E1E] px-6 py-2 rounded-full text-sm font-bold hover:opacity-90 transition-opacity"
