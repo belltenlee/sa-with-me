@@ -56,8 +56,8 @@ export default function Guestbook() {
                     transition={{ duration: 0.8 }}
                     className="text-center mb-12"
                 >
-                    <h2 className="font-playfair text-3xl text-gold mb-4">Guestbook</h2>
-                    <p className="text-charcoal/60 text-sm">Leave a message of blessing.</p>
+                    <h2 className="font-playfair text-3xl text-gold mb-4">방명록</h2>
+                    <p className="text-charcoal/60 text-sm">축복의 메시지를 남겨주세요.</p>
                 </motion.div>
 
                 {/* Form */}
@@ -65,7 +65,7 @@ export default function Guestbook() {
                     <div>
                         <input
                             type="text"
-                            placeholder="Your Name"
+                            placeholder="이름"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all bg-white font-serif"
@@ -74,7 +74,7 @@ export default function Guestbook() {
                     </div>
                     <div>
                         <textarea
-                            placeholder="Write a congratulatory message..."
+                            placeholder="축하 메시지를 작성해주세요..."
                             value={text}
                             onChange={(e) => setText(e.target.value)}
                             className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-all bg-white font-serif resize-none h-32"
@@ -86,7 +86,7 @@ export default function Guestbook() {
                         disabled={isSubmitting || !name || !text}
                         className="w-full bg-charcoal text-white py-3 rounded-lg font-serif hover:bg-gold transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {isSubmitting ? "Sending..." : "Send Message"}
+                        {isSubmitting ? "등록 중..." : "메시지 남기기"}
                     </button>
                 </form>
 
@@ -99,7 +99,7 @@ export default function Guestbook() {
                                 animate={{ opacity: 1 }}
                                 className="text-center text-gray-400 text-sm italic"
                             >
-                                Be the first to leave a message!
+                                첫 번째로 축하 메시지를 남겨주세요!
                             </motion.p>
                         ) : (
                             messages.map((msg) => (

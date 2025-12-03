@@ -48,7 +48,7 @@ export default function Map() {
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             font-family: serif;
             border: 1px solid #F9F7F2;
-          ">The Chapel at Cheongdam</div>
+          ">더채플앳청담</div>
         `;
 
         const customOverlay = new window.kakao.maps.CustomOverlay({
@@ -75,14 +75,14 @@ export default function Map() {
         <div id="map" className="w-full h-full" />
         {!isLoaded && (
           <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm bg-gray-50">
-            Loading Map...
+            지도를 불러오는 중...
           </div>
         )}
       </div>
 
       <div className="text-center space-y-2 font-serif text-charcoal">
-        <p className="text-lg font-bold">The Chapel at Cheongdam</p>
-        <p className="text-sm text-gray-500">123-45 Cheongdam-dong, Gangnam-gu, Seoul</p>
+        <p className="text-lg font-bold">더채플앳청담</p>
+        <p className="text-sm text-gray-500">서울 강남구 청담동 123-45</p>
       </div>
 
       <div className="flex justify-center gap-4">
@@ -92,13 +92,13 @@ export default function Map() {
           rel="noopener noreferrer"
           className="bg-[#FAE100] text-[#3C1E1E] px-6 py-2 rounded-full text-sm font-bold hover:opacity-90 transition-opacity"
         >
-          Kakao Map
+          카카오맵
         </a>
         <a
           href="tel:02-1234-5678"
           className="bg-charcoal text-white px-6 py-2 rounded-full text-sm font-serif hover:bg-gold transition-colors"
         >
-          Call Venue
+          전화하기
         </a>
       </div>
     </div>

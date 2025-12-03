@@ -24,7 +24,7 @@ export default function Hero() {
                     transition={{ duration: 0.8, delay: 0.2 }}
                 >
                     <p className="text-lg md:text-xl tracking-[0.2em] mb-4 uppercase font-light">
-                        We Are Getting Married
+                        저희 결혼합니다
                     </p>
                 </motion.div>
 
@@ -34,7 +34,7 @@ export default function Hero() {
                     transition={{ duration: 0.8, delay: 0.4 }}
                 >
                     <h1 className="font-playfair text-5xl md:text-7xl mb-6">
-                        Jisu & Minjun
+                        SA & JY
                     </h1>
                 </motion.div>
 
@@ -44,10 +44,13 @@ export default function Hero() {
                     transition={{ duration: 0.8, delay: 0.6 }}
                 >
                     <p className="font-playfair text-2xl md:text-3xl">
-                        2025. 10. 25
+                        2026. 02. 21
                     </p>
                     <p className="mt-2 text-sm tracking-widest uppercase opacity-80">
-                        Saturday 12:00 PM
+                        일요일 오후 5시
+                    </p>
+                    <p className="mt-2 font-playfair text-xl md:text-2xl">
+                        LACITTA
                     </p>
                 </motion.div>
             </div>

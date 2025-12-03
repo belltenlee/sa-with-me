@@ -64,7 +64,7 @@ export default function Gallery() {
                 className="absolute -top-12 right-0 text-white/80 hover:text-white text-sm tracking-widest uppercase"
                 onClick={() => setSelectedImage(null)}
               >
-                Close
+                닫기
               </button>
             </motion.div>
           </motion.div>

@@ -17,13 +17,13 @@ export default function Home() {
 
         {/* Gallery */}
         <section className="py-16 px-6">
-          <h2 className="font-playfair text-3xl text-center mb-8 text-gold">Gallery</h2>
+          <h2 className="font-playfair text-3xl text-center mb-8 text-gold">갤러리</h2>
           <Gallery />
         </section>
 
         {/* Location */}
         <section className="py-16 px-6 bg-gray-50">
-          <h2 className="font-playfair text-3xl text-center mb-8 text-gold">Location</h2>
+          <h2 className="font-playfair text-3xl text-center mb-8 text-gold">오시는 길</h2>
           <Map />
         </section>
 
@@ -34,12 +34,12 @@ export default function Home() {
                The previous code had a simple button. I'll stick to the simple button for now to avoid issues with the old component.
            */}
           <button className="bg-charcoal text-white px-8 py-3 rounded-full hover:bg-gold transition-colors duration-300 font-serif">
-            Share Invitation
+            청첩장 공유하기
           </button>
         </section>
 
         <footer className="py-8 text-center text-gray-400 text-sm font-serif">
-          <p>© 2025 Jisu & Minjun. All rights reserved.</p>
+          <p>© 2025 지수 & 민준. All rights reserved.</p>
         </footer>
       </div>
     </div>

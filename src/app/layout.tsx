@@ -14,7 +14,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Jisu & Minjun's Wedding",
+  title: "SA & JY's Wedding",
   description: "We invite you to our wedding.",
 };
 
