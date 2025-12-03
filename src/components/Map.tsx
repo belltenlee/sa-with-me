@@ -2,9 +2,45 @@
 
 import { useEffect, useState } from 'react';
 
+interface KakaoLatLng {
+  getLat(): number;
+  getLng(): number;
+}
+
+interface KakaoMap {
+  setCenter(position: KakaoLatLng): void;
+  setLevel(level: number): void;
+  getLevel(): number;
+  getCenter(): KakaoLatLng;
+}
+
+interface KakaoMarker {
+  setMap(map: KakaoMap | null): void;
+  getPosition(): KakaoLatLng;
+}
+
+interface KakaoCustomOverlay {
+  setMap(map: KakaoMap | null): void;
+  setPosition(position: KakaoLatLng): void;
+}
+
+interface KakaoMaps {
+  maps: {
+    load: (callback: () => void) => void;
+    LatLng: new (lat: number, lng: number) => KakaoLatLng;
+    Map: new (container: HTMLElement, options: { center: KakaoLatLng; level: number }) => KakaoMap;
+    Marker: new (options: { position: KakaoLatLng }) => KakaoMarker;
+    CustomOverlay: new (options: {
+      content: string;
+      position: KakaoLatLng;
+      yAnchor?: number;
+    }) => KakaoCustomOverlay;
+  };
+}
+
 declare global {
   interface Window {
-    kakao: any;
+    kakao: KakaoMaps;
   }
 }
 
