@@ -33,8 +33,8 @@ export default function Hero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                    <h1 className="font-playfair text-5xl md:text-7xl mb-6">
-                        SA & JY
+                    <h1 className="font-playfair text-5xl md:text-5xl mb-6">
+                        박성애 & 이종열
                     </h1>
                 </motion.div>
 

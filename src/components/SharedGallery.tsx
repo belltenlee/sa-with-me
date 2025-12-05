@@ -15,7 +15,15 @@ interface Photo {
     timestamp: any;
 }
 
-export default function SharedGallery() {
+interface SharedGalleryProps {
+    collectionName?: string;
+    title?: React.ReactNode;
+}
+
+export default function SharedGallery({
+    collectionName = "gallery_photos",
+    title = <>결혼식의 소중한 순간들을<br />함께 공유해주세요.</>
+}: SharedGalleryProps) {
     const [photos, setPhotos] = useState<Photo[]>([]);
     const [isUploading, setIsUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState({ current: 0, total: 0 });
@@ -25,7 +33,7 @@ export default function SharedGallery() {
 
     // Load photos from Firestore
     useEffect(() => {
-        const q = query(collection(db, "gallery_photos"), orderBy("timestamp", "desc"));
+        const q = query(collection(db, collectionName), orderBy("timestamp", "desc"));
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const newPhotos = snapshot.docs.map((doc) => ({
                 id: doc.id,
@@ -39,7 +47,7 @@ export default function SharedGallery() {
         if (savedName) setUploaderName(savedName);
 
         return () => unsubscribe();
-    }, []);
+    }, [collectionName]);
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.value;
@@ -69,7 +77,7 @@ export default function SharedGallery() {
                 const { url, thumbUrl } = await uploadImageToImgBB(file);
 
                 // 2. Save URL to Firestore
-                await addDoc(collection(db, "gallery_photos"), {
+                await addDoc(collection(db, collectionName), {
                     url: url,
                     thumbUrl: thumbUrl,
                     caption: "Wedding Moment",
@@ -91,8 +99,7 @@ export default function SharedGallery() {
         <div className="p-4 min-h-screen bg-white">
             <div className="mb-8 text-center space-y-2">
                 <p className="font-serif text-charcoal/80 text-sm leading-relaxed">
-                    결혼식의 소중한 순간들을<br />
-                    함께 공유해주세요.
+                    {title}
                 </p>
             </div>
 

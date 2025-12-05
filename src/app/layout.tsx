@@ -14,7 +14,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "SA & JY's Wedding",
+  title: "Sungae & Joneyeol's Wedding",
   description: "We invite you to our wedding.",
 };
 
