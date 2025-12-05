@@ -50,7 +50,9 @@ export default function Home() {
         </section> */}
 
         <footer className="py-8 text-center text-gray-400 text-sm font-serif">
-          <p>© 2026 성애 & 종열. All rights reserved.</p>
+          <p>
+            © 2026 <a href="/sa-with-me/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">성애 & 종열</a>. All rights reserved.
+          </p>
         </footer>
       </div>
     </div>

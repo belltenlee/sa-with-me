@@ -32,22 +32,23 @@ export default function Invitation() {
 
                 <div className="space-y-2 font-serif">
                     <div className="flex items-center justify-center gap-4 text-lg">
-                        <span className="font-bold">SK</span>
+                        <span className="font-bold">이상규</span>
                         <span className="text-gray-400 text-sm">·</span>
-                        <span className="font-bold">SJ</span>
+                        <span className="font-bold">남순자</span>
                         <span className="text-gray-500 text-sm">의 차남</span>
-                        <span className="font-bold">JY</span>
+                        <span className="font-bold">이종열</span>
                     </div>
                     <div className="flex items-center justify-center gap-4 text-lg">
-                        <span className="font-bold">MH</span>
+                        <span className="font-bold">박명하</span>
                         <span className="text-gray-400 text-sm">·</span>
-                        <span className="font-bold">SH</span>
+                        <span className="font-bold">장숙희</span>
                         <span className="text-gray-500 text-sm">의 장녀</span>
-                        <span className="font-bold">SA</span>
+                        <span className="font-bold">박성애</span>
                     </div>
                     {/* Simplified for demo, can be dynamic */}
+
                     <div className="mt-8 pt-8 border-t border-gray-100 w-1/2 mx-auto">
-                        <p className="text-xl font-playfair mb-2">SA & JY</p>
+                        <p className="text-xl font-bold font-playfair mb-2">SA & JY</p>
                     </div>
                 </div>
             </motion.div>
