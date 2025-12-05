@@ -1,6 +1,11 @@
 const IMGBB_API_KEY = '37359e8024636f33fde2ec4057d3f43e';
 
-export async function uploadImageToImgBB(file: File): Promise<string> {
+interface ImgBBResponse {
+    url: string;
+    thumbUrl: string;
+}
+
+export async function uploadImageToImgBB(file: File): Promise<ImgBBResponse> {
     const formData = new FormData();
     formData.append('image', file);
 
@@ -14,5 +19,8 @@ export async function uploadImageToImgBB(file: File): Promise<string> {
     }
 
     const data = await response.json();
-    return data.data.url;
+    return {
+        url: data.data.url,
+        thumbUrl: data.data.thumb?.url || data.data.display_url || data.data.url, // Fallback chain
+    };
 }
