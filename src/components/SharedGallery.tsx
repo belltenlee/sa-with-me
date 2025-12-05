@@ -11,6 +11,7 @@ interface Photo {
     url: string;
     thumbUrl?: string;
     caption: string;
+    uploaderName?: string;
     timestamp: any;
 }
 
@@ -19,6 +20,7 @@ export default function SharedGallery() {
     const [isUploading, setIsUploading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState({ current: 0, total: 0 });
     const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+    const [uploaderName, setUploaderName] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Load photos from Firestore
@@ -32,12 +34,28 @@ export default function SharedGallery() {
             setPhotos(newPhotos);
         });
 
+        // Load saved name
+        const savedName = localStorage.getItem('uploader_name');
+        if (savedName) setUploaderName(savedName);
+
         return () => unsubscribe();
     }, []);
+
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const name = e.target.value;
+        setUploaderName(name);
+        localStorage.setItem('uploader_name', name);
+    };
 
     const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (!files || files.length === 0) return;
+
+        if (!uploaderName.trim()) {
+            alert("사진을 올리려면 이름을 입력해주세요!");
+            if (fileInputRef.current) fileInputRef.current.value = '';
+            return;
+        }
 
         setIsUploading(true);
         setUploadProgress({ current: 0, total: files.length });
@@ -55,6 +73,7 @@ export default function SharedGallery() {
                     url: url,
                     thumbUrl: thumbUrl,
                     caption: "Wedding Moment",
+                    uploaderName: uploaderName,
                     timestamp: serverTimestamp(),
                 });
             }
@@ -77,8 +96,17 @@ export default function SharedGallery() {
                 </p>
             </div>
 
-            {/* Upload Button */}
-            <div className="mb-8 flex justify-center sticky top-4 z-10">
+            {/* Upload Section */}
+            <div className="mb-8 flex flex-col items-center gap-4 sticky top-4 z-10 bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-gray-100">
+                <input
+                    type="text"
+                    placeholder="이름을 입력해주세요"
+                    value={uploaderName}
+                    onChange={handleNameChange}
+                    className="w-48 px-4 py-2 text-center border-b border-gray-300 focus:border-gold outline-none font-serif text-sm bg-transparent placeholder-gray-400"
+                    maxLength={10}
+                />
+
                 <input
                     type="file"
                     accept="image/*"
@@ -90,7 +118,7 @@ export default function SharedGallery() {
                 <button
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isUploading}
-                    className="flex items-center gap-2 bg-charcoal text-white px-6 py-3 rounded-full hover:bg-gold transition-colors font-serif text-sm disabled:opacity-80 shadow-lg"
+                    className="flex items-center gap-2 bg-charcoal text-white px-6 py-3 rounded-full hover:bg-gold transition-colors font-serif text-sm disabled:opacity-80 shadow-md w-full justify-center sm:w-auto"
                 >
                     {isUploading ? (
                         <div className="flex items-center gap-2">
@@ -117,15 +145,22 @@ export default function SharedGallery() {
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             layout
-                            className="relative aspect-square overflow-hidden bg-gray-100 cursor-pointer"
+                            className="relative aspect-square overflow-hidden bg-gray-100 cursor-pointer group"
                             onClick={() => setSelectedPhoto(photo)}
                         >
                             <img
                                 src={photo.thumbUrl || photo.url}
                                 alt="Shared moment"
-                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                                 loading="lazy"
                             />
+                            {photo.uploaderName && (
+                                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-2">
+                                    <p className="text-white text-[10px] font-serif text-right truncate">
+                                        by {photo.uploaderName}
+                                    </p>
+                                </div>
+                            )}
                         </motion.div>
                     ))}
                 </AnimatePresence>
@@ -149,7 +184,7 @@ export default function SharedGallery() {
                         onClick={() => setSelectedPhoto(null)}
                     >
                         <button
-                            className="absolute top-4 right-4 text-white/70 hover:text-white p-2"
+                            className="absolute top-4 right-4 text-white/70 hover:text-white p-2 z-50"
                             onClick={() => setSelectedPhoto(null)}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
@@ -162,9 +197,17 @@ export default function SharedGallery() {
                             animate={{ scale: 1, opacity: 1 }}
                             src={selectedPhoto.url}
                             alt="Full size"
-                            className="max-w-full max-h-[90vh] object-contain rounded-sm"
+                            className="max-w-full max-h-[85vh] object-contain rounded-sm"
                             onClick={(e) => e.stopPropagation()}
                         />
+
+                        {selectedPhoto.uploaderName && (
+                            <div className="absolute bottom-8 left-0 right-0 text-center">
+                                <p className="text-white/80 font-serif text-sm">
+                                    Uploaded by {selectedPhoto.uploaderName}
+                                </p>
+                            </div>
+                        )}
                     </motion.div>
                 )}
             </AnimatePresence>
