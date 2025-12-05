@@ -9,6 +9,7 @@ import { uploadImageToImgBB } from '@/services/imgbb';
 interface Photo {
     id: string;
     url: string;
+    thumbUrl?: string;
     caption: string;
     timestamp: any;
 }
@@ -16,6 +17,8 @@ interface Photo {
 export default function SharedGallery() {
     const [photos, setPhotos] = useState<Photo[]>([]);
     const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState({ current: 0, total: 0 });
+    const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Load photos from Firestore
@@ -33,31 +36,40 @@ export default function SharedGallery() {
     }, []);
 
     const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
 
         setIsUploading(true);
+        setUploadProgress({ current: 0, total: files.length });
+
         try {
-            // 1. Upload to ImgBB
-            const imageUrl = await uploadImageToImgBB(file);
+            for (let i = 0; i < files.length; i++) {
+                setUploadProgress(prev => ({ ...prev, current: i + 1 }));
+                const file = files[i];
 
-            // 2. Save URL to Firestore
-            await addDoc(collection(db, "gallery_photos"), {
-                url: imageUrl,
-                caption: "Wedding Moment",
-                timestamp: serverTimestamp(),
-            });
+                // 1. Upload to ImgBB
+                const { url, thumbUrl } = await uploadImageToImgBB(file);
 
+                // 2. Save URL to Firestore
+                await addDoc(collection(db, "gallery_photos"), {
+                    url: url,
+                    thumbUrl: thumbUrl,
+                    caption: "Wedding Moment",
+                    timestamp: serverTimestamp(),
+                });
+            }
         } catch (err) {
             console.error("Upload failed:", err);
             alert("사진 업로드에 실패했습니다.");
         } finally {
             setIsUploading(false);
+            setUploadProgress({ current: 0, total: 0 });
+            if (fileInputRef.current) fileInputRef.current.value = '';
         }
     };
 
     return (
-        <div className="p-4">
+        <div className="p-4 min-h-screen bg-white">
             <div className="mb-8 text-center space-y-2">
                 <p className="font-serif text-charcoal/80 text-sm leading-relaxed">
                     결혼식의 소중한 순간들을<br />
@@ -66,10 +78,11 @@ export default function SharedGallery() {
             </div>
 
             {/* Upload Button */}
-            <div className="mb-8 flex justify-center">
+            <div className="mb-8 flex justify-center sticky top-4 z-10">
                 <input
                     type="file"
                     accept="image/*"
+                    multiple
                     className="hidden"
                     ref={fileInputRef}
                     onChange={handleFileSelect}
@@ -77,10 +90,13 @@ export default function SharedGallery() {
                 <button
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isUploading}
-                    className="flex items-center gap-2 bg-charcoal text-white px-6 py-3 rounded-full hover:bg-gold transition-colors font-serif text-sm disabled:opacity-50"
+                    className="flex items-center gap-2 bg-charcoal text-white px-6 py-3 rounded-full hover:bg-gold transition-colors font-serif text-sm disabled:opacity-80 shadow-lg"
                 >
                     {isUploading ? (
-                        <span>업로드 중...</span>
+                        <div className="flex items-center gap-2">
+                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            <span>{uploadProgress.current}/{uploadProgress.total} 업로드 중...</span>
+                        </div>
                     ) : (
                         <>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -93,7 +109,7 @@ export default function SharedGallery() {
             </div>
 
             {/* Photo Grid */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-1">
                 <AnimatePresence>
                     {photos.map((photo) => (
                         <motion.div
@@ -101,12 +117,14 @@ export default function SharedGallery() {
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             layout
-                            className="relative aspect-square rounded-lg overflow-hidden bg-gray-100 shadow-sm"
+                            className="relative aspect-square overflow-hidden bg-gray-100 cursor-pointer"
+                            onClick={() => setSelectedPhoto(photo)}
                         >
                             <img
-                                src={photo.url}
+                                src={photo.thumbUrl || photo.url}
                                 alt="Shared moment"
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                                loading="lazy"
                             />
                         </motion.div>
                     ))}
@@ -119,6 +137,37 @@ export default function SharedGallery() {
                     <p>첫 번째 사진을 올려주세요!</p>
                 </div>
             )}
+
+            {/* Lightbox */}
+            <AnimatePresence>
+                {selectedPhoto && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+                        onClick={() => setSelectedPhoto(null)}
+                    >
+                        <button
+                            className="absolute top-4 right-4 text-white/70 hover:text-white p-2"
+                            onClick={() => setSelectedPhoto(null)}
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+
+                        <motion.img
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            src={selectedPhoto.url}
+                            alt="Full size"
+                            className="max-w-full max-h-[90vh] object-contain rounded-sm"
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
