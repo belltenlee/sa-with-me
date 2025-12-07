@@ -22,6 +22,7 @@ export default function SecretGalleryPage() {
                 <SharedGallery
                     collectionName="secret_gallery_photos"
                     title="청첩장 모임의 추억을 여기에 남겨주세요."
+                    uploadProvider="cloudinary"
                 />
             </main>
         </div>

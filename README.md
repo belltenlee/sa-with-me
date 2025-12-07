@@ -46,6 +46,12 @@ npm start
 # 카카오맵 (클라이언트에서 사용)
 NEXT_PUBLIC_KAKAO_MAP_API_KEY=your_kakao_map_api_key
 
+# ImgBB (만약 ImgBB를 계속 사용한다면)
+NEXT_PUBLIC_IMGBB_API_KEY=your_imgbb_api_key
+
+# Cloudinary (추천: unsigned 업로드 프리셋 사용)
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_unsigned_upload_preset
 # ImgBB (이미지 업로드, 클라이언트에서 호출 시 NEXT_PUBLIC로 노출될 수 있음)
 NEXT_PUBLIC_IMGBB_API_KEY=your_imgbb_api_key
 
