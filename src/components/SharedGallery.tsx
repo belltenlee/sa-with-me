@@ -14,6 +14,12 @@ interface Photo {
     caption: string;
     uploaderName?: string;
     timestamp: any;
+    provider?: 'imgbb' | 'cloudinary';
+    public_id?: string;
+    resource_type?: string;
+    format?: string;
+    width?: number;
+    height?: number;
 }
 
 interface SharedGalleryProps {
@@ -80,22 +86,39 @@ export default function SharedGallery({
                 let url: string;
                 let thumbUrl: string | undefined;
 
+                let public_id: string | undefined;
+                let resource_type: string | undefined;
+                let format: string | undefined;
+                let width: number | undefined;
+                let height: number | undefined;
+
                 if (uploadProvider === 'cloudinary') {
                     const res = await uploadImageToCloudinary(file);
                     url = res.url;
                     thumbUrl = res.thumbUrl;
+                    public_id = res.public_id;
+                    resource_type = res.resource_type;
+                    format = res.format;
+                    width = res.width;
+                    height = res.height;
                 } else {
                     const res = await uploadImageToImgBB(file);
                     url = res.url;
                     thumbUrl = res.thumbUrl;
                 }
 
-                // 2. Save URL to Firestore
+                // 2. Save URL and provider metadata to Firestore
                 await addDoc(collection(db, collectionName), {
                     url: url,
                     thumbUrl: thumbUrl,
                     caption: "Wedding Moment",
                     uploaderName: uploaderName,
+                    provider: uploadProvider,
+                    public_id: public_id,
+                    resource_type: resource_type,
+                    format: format,
+                    width: width,
+                    height: height,
                     timestamp: serverTimestamp(),
                 });
             }
