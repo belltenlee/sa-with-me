@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { db } from '@/services/firebase';
 import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore';
+import { uploadImageToCloudinary } from '@/services/cloudinary';
 import { uploadImageToImgBB } from '@/services/imgbb';
 
 interface Photo {
@@ -18,11 +19,13 @@ interface Photo {
 interface SharedGalleryProps {
     collectionName?: string;
     title?: React.ReactNode;
+    uploadProvider?: 'imgbb' | 'cloudinary';
 }
 
 export default function SharedGallery({
     collectionName = "gallery_photos",
-    title = <>결혼식의 소중한 순간들을<br />함께 공유해주세요.</>
+    title = <>결혼식의 소중한 순간들을<br />함께 공유해주세요.</>,
+    uploadProvider = 'imgbb',
 }: SharedGalleryProps) {
     const [photos, setPhotos] = useState<Photo[]>([]);
     const [isUploading, setIsUploading] = useState(false);
@@ -73,8 +76,19 @@ export default function SharedGallery({
                 setUploadProgress(prev => ({ ...prev, current: i + 1 }));
                 const file = files[i];
 
-                // 1. Upload to ImgBB
-                const { url, thumbUrl } = await uploadImageToImgBB(file);
+                // 1. Upload to selected provider (default: ImgBB)
+                let url: string;
+                let thumbUrl: string | undefined;
+
+                if (uploadProvider === 'cloudinary') {
+                    const res = await uploadImageToCloudinary(file);
+                    url = res.url;
+                    thumbUrl = res.thumbUrl;
+                } else {
+                    const res = await uploadImageToImgBB(file);
+                    url = res.url;
+                    thumbUrl = res.thumbUrl;
+                }
 
                 // 2. Save URL to Firestore
                 await addDoc(collection(db, collectionName), {
