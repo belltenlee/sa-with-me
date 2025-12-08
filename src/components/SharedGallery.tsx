@@ -6,10 +6,12 @@ import { db } from '@/services/firebase';
 import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore';
 import { uploadImageToCloudinary } from '@/services/cloudinary';
 import { uploadImageToImgBB } from '@/services/imgbb';
+import { compressImage } from '@/utils/imageCompression';
 
 interface Photo {
     id: string;
     url: string;
+    originalUrl?: string;
     thumbUrl?: string;
     caption: string;
     uploaderName?: string;
@@ -91,6 +93,7 @@ export default function SharedGallery({
                 let format: string | undefined;
                 let width: number | undefined;
                 let height: number | undefined;
+                let originalUrl: string | undefined;
 
                 if (uploadProvider === 'cloudinary') {
                     const res = await uploadImageToCloudinary(file);
@@ -102,13 +105,27 @@ export default function SharedGallery({
                     width = res.width;
                     height = res.height;
                 } else {
-                    const res = await uploadImageToImgBB(file);
-                    url = res.url;
-                    thumbUrl = res.thumbUrl;
+                    // ImgBB: Dual upload strategy
+                    // 1. Upload Original
+                    const originalRes = await uploadImageToImgBB(file);
+                    const originalImgBbUrl = originalRes.url;
+
+                    // 2. Compress for display
+                    const compressedFile = await compressImage(file, {
+                        maxWidth: 1920,
+                        quality: 0.8
+                    });
+
+                    // 3. Upload Compressed (Display version)
+                    const displayRes = await uploadImageToImgBB(compressedFile);
+
+                    url = displayRes.url;
+                    thumbUrl = displayRes.thumbUrl;
+                    originalUrl = originalImgBbUrl;
                 }
 
                 // 2. Save URL and provider metadata to Firestore
-                await addDoc(collection(db, collectionName), {
+                const docData: any = {
                     url: url,
                     thumbUrl: thumbUrl,
                     caption: "Wedding Moment",
@@ -120,7 +137,13 @@ export default function SharedGallery({
                     width: width,
                     height: height,
                     timestamp: serverTimestamp(),
-                });
+                };
+
+                if (originalUrl) {
+                    docData.originalUrl = originalUrl;
+                }
+
+                await addDoc(collection(db, collectionName), docData);
             }
         } catch (err) {
             console.error("Upload failed:", err);
