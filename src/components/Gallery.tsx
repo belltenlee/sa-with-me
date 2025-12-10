@@ -115,7 +115,10 @@ export default function Gallery() {
             className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
             onClick={() => setSelectedImage(null)}
           >
-            <div className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center">
+            <div
+              className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
+              style={{ touchAction: 'pan-x' }}
+            >
               {/* Previous Button */}
               {selectedImage > 1 && (
                 <button
