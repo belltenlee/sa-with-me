@@ -1,32 +1,31 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Gallery() {
-  const [selectedImage, setSelectedImage] = React.useState<number | null>(null);
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [displayedCount, setDisplayedCount] = useState(6);
 
-  // Using Unsplash images for a more premium feel
-  const images = [
-    { id: 1, src: 'https://images.unsplash.com/photo-1511285560982-1356c11d4606?q=80&w=1000&auto=format&fit=crop', alt: 'Wedding Photo 1' },
-    { id: 2, src: 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop', alt: 'Wedding Photo 2' },
-    { id: 3, src: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1000&auto=format&fit=crop', alt: 'Wedding Photo 3' },
-    { id: 4, src: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1000&auto=format&fit=crop', alt: 'Wedding Photo 4' },
-    { id: 5, src: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=1000&auto=format&fit=crop', alt: 'Wedding Photo 5' },
-    { id: 6, src: 'https://images.unsplash.com/photo-1522673607200-1645062cd958?q=80&w=1000&auto=format&fit=crop', alt: 'Wedding Photo 6' },
-  ];
+  const images = Array.from({ length: 11 }, (_, i) => ({
+    id: i + 1,
+    src: `/images/gallery/G${String(i + 1).padStart(2, '0')}.jpg`,
+    alt: `Wedding Photo ${i + 1}`,
+  }));
+
+  const visibleImages = images.slice(0, displayedCount);
 
   return (
     <div className="py-4">
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-        {images.map((image) => (
+        {visibleImages.map((image) => (
           <motion.div
             key={image.id}
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: image.id * 0.1 }}
-            className="relative aspect-square cursor-pointer overflow-hidden"
+            transition={{ duration: 0.5, delay: (image.id % 6) * 0.1 }}
+            className="relative aspect-square cursor-pointer overflow-hidden rounded-lg shadow-sm hover:shadow-md"
             onClick={() => setSelectedImage(image.id)}
           >
             <img
@@ -37,6 +36,24 @@ export default function Gallery() {
             <div className="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300" />
           </motion.div>
         ))}
+      </div>
+
+      <div className="mt-8 flex justify-center">
+        {displayedCount < images.length ? (
+          <button
+            onClick={() => setDisplayedCount(images.length)}
+            className="px-6 py-2 text-sm text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50 transition-colors duration-300"
+          >
+            사진 더 보기 (+{images.length - displayedCount})
+          </button>
+        ) : (
+          <button
+            onClick={() => setDisplayedCount(6)}
+            className="px-6 py-2 text-sm text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50 transition-colors duration-300"
+          >
+            접기
+          </button>
+        )}
       </div>
 
       <AnimatePresence>
@@ -56,9 +73,10 @@ export default function Gallery() {
               onClick={(e) => e.stopPropagation()}
             >
               <img
-                src={images.find(img => img.id === selectedImage)?.src}
-                alt={images.find(img => img.id === selectedImage)?.alt}
-                className="max-w-full max-h-full object-contain shadow-2xl"
+                src={images.find((img) => img.id === selectedImage)?.src}
+                alt={images.find((img) => img.id === selectedImage)?.alt}
+                className="max-w-full max-h-full object-contain shadow-2xl touch-none select-none"
+                style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
               />
               <button
                 className="absolute -top-12 right-0 text-white/80 hover:text-white text-sm tracking-widest uppercase"

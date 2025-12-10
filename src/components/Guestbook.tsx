@@ -71,7 +71,7 @@ export default function Guestbook() {
                     viewport={{ once: true }}
                     className="text-center mb-10"
                 >
-                    <h2 className="font-playfair text-3xl text-gold mb-4">Guestbook</h2>
+                    <h2 className="font-playfair text-3xl text-gold mb-4">방명록</h2>
                     <p className="font-serif text-charcoal/60 text-sm">축복의 메시지를 남겨주세요</p>
                 </motion.div>
 

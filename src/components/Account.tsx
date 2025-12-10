@@ -25,8 +25,8 @@ const accountGroups: AccountGroup[] = [
   {
     label: '신부 측 마음 전하실 곳',
     accounts: [
-      { bank: '신한은행', number: '123-456-789', holder: '박명하' },
-      { bank: '신한은행', number: '123-456-789', holder: '박성애' },
+      { bank: '국민은행', number: '795302-04-164976', holder: '장숙희' },
+      { bank: '신한은행', number: '110-379-626879', holder: '박성애' },
     ],
   },
 ];
