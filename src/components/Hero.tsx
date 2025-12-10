@@ -23,7 +23,7 @@ export default function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                    <p className="text-lg md:text-xl tracking-[0.2em] mb-4 uppercase font-light">
+                    <p className="text-sm sm:text-lg md:text-xl tracking-[0.2em] mb-4 uppercase font-light whitespace-nowrap">
                         저희 결혼합니다
                     </p>
                 </motion.div>
@@ -33,8 +33,8 @@ export default function Hero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                 >
-                    <h1 className="font-playfair text-5xl md:text-5xl mb-6">
-                        박성애 & 이종열
+                    <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl mb-6 whitespace-nowrap">
+                        박성애 · 이종열
                     </h1>
                 </motion.div>
 
@@ -43,13 +43,13 @@ export default function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.6 }}
                 >
-                    <p className="font-playfair text-2xl md:text-3xl">
+                    <p className="font-playfair text-xl sm:text-2xl md:text-3xl whitespace-nowrap">
                         2026. 02. 21
                     </p>
-                    <p className="mt-2 text-sm tracking-widest uppercase opacity-80">
+                    <p className="mt-2 text-xs sm:text-sm tracking-widest uppercase opacity-80 whitespace-nowrap">
                         토요일 오후 5시
                     </p>
-                    <p className="mt-2 font-playfair text-xl md:text-2xl">
+                    <p className="mt-2 font-playfair text-lg sm:text-xl md:text-2xl whitespace-nowrap">
                         LACITTA
                     </p>
                 </motion.div>

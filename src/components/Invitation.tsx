@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function Invitation() {
     return (
-        <section className="py-20 px-6 text-center bg-white">
+        <section className="pt-20 pb-10 px-6 text-center bg-white">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -15,14 +15,14 @@ export default function Invitation() {
                     초대합니다
                 </h2>
 
-                <div className="font-serif text-charcoal leading-loose text-lg space-y-6 mb-16">
+                <div className="font-serif text-charcoal leading-loose text-base sm:text-lg space-y-6 mb-16 max-w-md mx-auto">
                     <p>
                         따스한 햇살 아래 만난 두 사람이<br />
                         작은 나무를 심으려 합니다.
                     </p>
                     <p>
-                        사랑과 믿음으로 시작하는 저희의 앞날을<br />
-                        지켜봐 주시길 바랍니다.
+                        사랑과 믿음으로 시작하는<br />
+                        저희의 앞날을 지켜봐 주시길 바랍니다.
                     </p>
                     <p>
                         귀한 걸음 하시어 축복해 주시면<br />
@@ -30,25 +30,25 @@ export default function Invitation() {
                     </p>
                 </div>
 
-                <div className="space-y-2 font-serif">
-                    <div className="flex items-center justify-center gap-4 text-lg">
-                        <span className="font-bold">이상규</span>
+                <div className="space-y-4 font-serif">
+                    <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-base sm:text-lg">
+                        <span className="font-bold whitespace-nowrap">이상규</span>
                         <span className="text-gray-400 text-sm">·</span>
-                        <span className="font-bold">남순자</span>
-                        <span className="text-gray-500 text-sm">의 차남</span>
-                        <span className="font-bold">이종열</span>
+                        <span className="font-bold whitespace-nowrap">남순자</span>
+                        <span className="text-gray-500 text-xs sm:text-sm whitespace-nowrap">의 차남</span>
+                        <span className="font-bold whitespace-nowrap">이종열</span>
                     </div>
-                    <div className="flex items-center justify-center gap-4 text-lg">
-                        <span className="font-bold">박명하</span>
+                    <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-base sm:text-lg">
+                        <span className="font-bold whitespace-nowrap">박명하</span>
                         <span className="text-gray-400 text-sm">·</span>
-                        <span className="font-bold">장숙희</span>
-                        <span className="text-gray-500 text-sm">의 장녀</span>
-                        <span className="font-bold">박성애</span>
+                        <span className="font-bold whitespace-nowrap">장숙희</span>
+                        <span className="text-gray-500 text-xs sm:text-sm whitespace-nowrap">의 장녀</span>
+                        <span className="font-bold whitespace-nowrap">박성애</span>
                     </div>
                     {/* Simplified for demo, can be dynamic */}
 
-                    <div className="mt-8 pt-8 border-t border-gray-100 w-1/2 mx-auto">
-                        <p className="text-xl font-bold font-playfair mb-2">SA & JY</p>
+                    <div className="mt-8 pt-4 border-b border-gray-100 w-2/3 mx-auto">
+                        {/* <p className="text-lg sm:text-xl font-bold font-playfair mb-2 whitespace-nowrap">SA & JY</p> */}
                     </div>
                 </div>
             </motion.div>
