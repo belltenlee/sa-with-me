@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getAssetPath } from '@/utils/basePath';
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
@@ -9,7 +10,7 @@ export default function Gallery() {
 
   const images = Array.from({ length: 11 }, (_, i) => ({
     id: i + 1,
-    src: `/images/gallery/G${String(i + 1).padStart(2, '0')}.jpg`,
+    src: getAssetPath(`/images/gallery/G${String(i + 1).padStart(2, '0')}.jpg`),
     alt: `Wedding Photo ${i + 1}`,
   }));
 
