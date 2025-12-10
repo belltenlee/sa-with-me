@@ -6,7 +6,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: '/sa-with-me',
+  basePath: process.env.NODE_ENV === 'production' ? '/sa-with-me' : '',
 }
 
 module.exports = nextConfig
