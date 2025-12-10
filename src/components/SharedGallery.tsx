@@ -40,6 +40,7 @@ export default function SharedGallery({
     const [uploadProgress, setUploadProgress] = useState({ current: 0, total: 0 });
     const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
     const [uploaderName, setUploaderName] = useState('');
+    const [direction, setDirection] = useState(0);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Load photos from Firestore
@@ -59,6 +60,43 @@ export default function SharedGallery({
 
         return () => unsubscribe();
     }, [collectionName]);
+
+    // Navigation functions
+    const goToNext = () => {
+        if (!selectedPhoto) return;
+        const currentIndex = photos.findIndex(p => p.id === selectedPhoto.id);
+        if (currentIndex < photos.length - 1) {
+            setDirection(1);
+            setSelectedPhoto(photos[currentIndex + 1]);
+        }
+    };
+
+    const goToPrev = () => {
+        if (!selectedPhoto) return;
+        const currentIndex = photos.findIndex(p => p.id === selectedPhoto.id);
+        if (currentIndex > 0) {
+            setDirection(-1);
+            setSelectedPhoto(photos[currentIndex - 1]);
+        }
+    };
+
+    // Keyboard navigation
+    useEffect(() => {
+        if (!selectedPhoto) return;
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'ArrowRight') {
+                goToNext();
+            } else if (e.key === 'ArrowLeft') {
+                goToPrev();
+            } else if (e.key === 'Escape') {
+                setSelectedPhoto(null);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [selectedPhoto, photos]);
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const name = e.target.value;
@@ -241,7 +279,7 @@ export default function SharedGallery({
             )}
 
             {/* Lightbox */}
-            <AnimatePresence>
+            <AnimatePresence initial={false} custom={direction}>
                 {selectedPhoto && (
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -250,31 +288,123 @@ export default function SharedGallery({
                         className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
                         onClick={() => setSelectedPhoto(null)}
                     >
-                        <button
-                            className="absolute top-4 right-4 text-white/70 hover:text-white p-2 z-50"
-                            onClick={() => setSelectedPhoto(null)}
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
+                        <div className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center">
+                            {/* Previous Button */}
+                            {photos.findIndex(p => p.id === selectedPhoto.id) > 0 && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        goToPrev();
+                                    }}
+                                    className="absolute left-4 z-10 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors duration-300"
+                                    aria-label="Previous image"
+                                >
+                                    <svg
+                                        className="w-6 h-6"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M15 19l-7-7 7-7"
+                                        />
+                                    </svg>
+                                </button>
+                            )}
 
-                        <motion.img
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            src={selectedPhoto.url}
-                            alt="Full size"
-                            className="max-w-full max-h-[85vh] object-contain rounded-sm"
-                            onClick={(e) => e.stopPropagation()}
-                        />
+                            {/* Image with swipe support */}
+                            <motion.div
+                                key={selectedPhoto.id}
+                                custom={direction}
+                                initial={{
+                                    x: direction > 0 ? 1000 : -1000,
+                                    opacity: 0,
+                                }}
+                                animate={{
+                                    x: 0,
+                                    opacity: 1,
+                                }}
+                                exit={{
+                                    x: direction < 0 ? 1000 : -1000,
+                                    opacity: 0,
+                                }}
+                                transition={{
+                                    x: { type: 'spring', stiffness: 300, damping: 30 },
+                                    opacity: { duration: 0.2 },
+                                }}
+                                drag="x"
+                                dragConstraints={{ left: 0, right: 0 }}
+                                dragElastic={1}
+                                onDragEnd={(e, { offset, velocity }) => {
+                                    const swipe = Math.abs(offset.x) * velocity.x;
+                                    if (swipe < -10000) {
+                                        goToNext();
+                                    } else if (swipe > 10000) {
+                                        goToPrev();
+                                    }
+                                }}
+                                className="flex flex-col items-center justify-center cursor-grab active:cursor-grabbing"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <img
+                                    src={selectedPhoto.url}
+                                    alt="Full size"
+                                    className="max-w-full max-h-[85vh] object-contain rounded-sm select-none pointer-events-none"
+                                    style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
+                                />
+                                {selectedPhoto.uploaderName && (
+                                    <div className="mt-4">
+                                        <p className="text-white/80 font-serif text-sm">
+                                            Uploaded by {selectedPhoto.uploaderName}
+                                        </p>
+                                    </div>
+                                )}
+                            </motion.div>
 
-                        {selectedPhoto.uploaderName && (
-                            <div className="absolute bottom-8 left-0 right-0 text-center">
-                                <p className="text-white/80 font-serif text-sm">
-                                    Uploaded by {selectedPhoto.uploaderName}
-                                </p>
+                            {/* Next Button */}
+                            {photos.findIndex(p => p.id === selectedPhoto.id) < photos.length - 1 && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        goToNext();
+                                    }}
+                                    className="absolute right-4 z-10 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors duration-300"
+                                    aria-label="Next image"
+                                >
+                                    <svg
+                                        className="w-6 h-6"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M9 5l7 7-7 7"
+                                        />
+                                    </svg>
+                                </button>
+                            )}
+
+                            {/* Close Button */}
+                            <button
+                                className="absolute top-4 right-4 text-white/70 hover:text-white p-2 z-50"
+                                onClick={() => setSelectedPhoto(null)}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+
+                            {/* Image Counter */}
+                            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white/80 text-sm">
+                                {photos.findIndex(p => p.id === selectedPhoto.id) + 1} / {photos.length}
                             </div>
-                        )}
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
