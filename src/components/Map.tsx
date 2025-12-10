@@ -50,7 +50,8 @@ export default function Map() {
   useEffect(() => {
     const mapScript = document.createElement('script');
     mapScript.async = true;
-    mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&autoload=false`;
+    const apiKey = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
+    mapScript.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${apiKey}&autoload=false`;
     document.head.appendChild(mapScript);
 
     const onLoadKakaoMap = () => {
@@ -59,13 +60,13 @@ export default function Map() {
         if (!container) return;
 
         const options = {
-          center: new window.kakao.maps.LatLng(37.5252, 127.0382),
+          center: new window.kakao.maps.LatLng(37.4624, 127.0369),
           level: 3,
         };
         const map = new window.kakao.maps.Map(container, options);
 
         // Marker
-        const markerPosition = new window.kakao.maps.LatLng(37.5252, 127.0382);
+        const markerPosition = new window.kakao.maps.LatLng(37.4624, 127.0369);
         const marker = new window.kakao.maps.Marker({
           position: markerPosition,
         });

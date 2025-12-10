@@ -1,4 +1,3 @@
-const IMGBB_API_KEY = '37359e8024636f33fde2ec4057d3f43e';
 
 interface ImgBBResponse {
     url: string;
@@ -9,7 +8,7 @@ export async function uploadImageToImgBB(file: File): Promise<ImgBBResponse> {
     const formData = new FormData();
     formData.append('image', file);
 
-    const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+    const response = await fetch(`https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`, {
         method: 'POST',
         body: formData,
     });
