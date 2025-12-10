@@ -40,22 +40,28 @@ npm start
 
 **환경 변수**
 
-로컬에서 실행하려면 프로젝트 루트에 `.env.local` 파일을 만들고 필요한 값을 설정하세요. (환경변수 이름은 예시이며, 코드에서 사용하는 이름과 맞추어 주세요.)
+로컬에서 실행하려면 다음 단계를 따르세요:
+
+1. `.env.example` 파일을 복사하여 `.env.local` 파일을 생성합니다:
+
+```bash
+cp .env.example .env.local
+```
+
+2. `.env.local` 파일을 열어 실제 API 키 값을 입력합니다:
 
 ```env
-# 카카오맵 (클라이언트에서 사용)
+# 카카오맵 API 키 (필수)
 NEXT_PUBLIC_KAKAO_MAP_API_KEY=your_kakao_map_api_key
 
-# ImgBB (만약 ImgBB를 계속 사용한다면)
+# ImgBB (이미지 업로드용, 선택)
 NEXT_PUBLIC_IMGBB_API_KEY=your_imgbb_api_key
 
-# Cloudinary (추천: unsigned 업로드 프리셋 사용)
+# Cloudinary (이미지 업로드용, 추천)
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
 NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_unsigned_upload_preset
-# ImgBB (이미지 업로드, 클라이언트에서 호출 시 NEXT_PUBLIC로 노출될 수 있음)
-NEXT_PUBLIC_IMGBB_API_KEY=your_imgbb_api_key
 
-# Firebase 클라이언트 설정 (클라이언트에 노출되는 값들)
+# Firebase 클라이언트 설정 (필수)
 NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
@@ -64,7 +70,7 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
 ```
 
-보안 주의: 현재 `src/services/firebase.ts`와 `src/services/imgbb.ts`에 API 키가 하드코딩되어 있습니다. 저장소에 민감한 키가 노출되지 않도록 반드시 `.env.local`로 옮기고 소스에서는 `process.env.NEXT_PUBLIC_...` 형태로 불러오도록 변경하세요.
+**중요**: `.env.local` 파일은 `.gitignore`에 포함되어 있어 Git에 커밋되지 않습니다. API 키를 안전하게 보관하세요.
 
 **프로젝트 구조(요약)**
 
