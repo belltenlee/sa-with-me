@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { getAssetPath } from "@/utils/basePath";
 
 const HERO_IMAGES = [
@@ -14,18 +14,45 @@ const HERO_IMAGES = [
 
 export default function Hero() {
     const containerRef = useRef<HTMLElement>(null);
+    const [height, setHeight] = useState<number | string>("100vh"); // Default to 100vh for SSR/initial render
+
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end end"],
     });
+
+    // Handle dynamic viewport height without resizing on scroll (address bar toggle)
+    useEffect(() => {
+        const updateHeight = () => {
+            setHeight(window.innerHeight);
+        };
+
+        // Set initial height
+        updateHeight();
+
+        // Only update height if width changes (orientation change), ignore vertical resize (address bar)
+        let lastWidth = window.innerWidth;
+        const handleResize = () => {
+            if (window.innerWidth !== lastWidth) {
+                lastWidth = window.innerWidth;
+                updateHeight();
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Map scroll progress (0 to 1) to image index (0 to 4)
     // Adjusted range to distribute transitions evenly across the scroll
     const currentImageIndex = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0, 1, 2, 3, 4]);
 
     return (
-        <section ref={containerRef} className="relative w-full h-[300vh]">
-            <div className="sticky top-0 h-[100dvh] overflow-hidden">
+        <section ref={containerRef} className="relative w-full h-[300vh] bg-black">
+            <div
+                className="sticky top-0 overflow-hidden"
+                style={{ height: height }}
+            >
                 {/* Background Images */}
                 {HERO_IMAGES.map((img, index) => (
                     <motion.div
