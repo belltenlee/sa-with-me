@@ -69,7 +69,7 @@ export default function NoticePopup() {
                                     풍성하게 꾸미는 중입니다.
                                 </p>
                                 <p className="text-sm text-gray-500">
-                                    일부 기능이 완성되지 않았을 수 있습니다.<br />
+                                    일부 기능이 동작하지 않을 수 있습니다.<br />
                                     양해 부탁드립니다.
                                 </p>
                                 <br />
