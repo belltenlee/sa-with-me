@@ -43,12 +43,43 @@ export default function Hero() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    // Lock scroll until images are loaded
+    useEffect(() => {
+        // Prevent scrolling
+        document.body.style.overflow = 'hidden';
+
+        const preloadImages = async () => {
+            const promises = HERO_IMAGES.map((src) => {
+                return new Promise((resolve) => {
+                    const img = new Image();
+                    img.src = src;
+                    img.onload = resolve;
+                    img.onerror = resolve; // Proceed even if error
+                });
+            });
+
+            await Promise.all(promises);
+
+            // Add a small delay to ensure layout is stable and animations have started
+            setTimeout(() => {
+                document.body.style.overflow = '';
+            }, 100);
+        };
+
+        preloadImages();
+
+        // Cleanup in case component unmounts before loading finishes
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, []);
+
     // Map scroll progress (0 to 1) to image index (0 to 4)
-    // Adjusted range to distribute transitions evenly across the scroll
-    const currentImageIndex = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0, 1, 2, 3, 4]);
+    // Adjusted range: transitions finish at 0.8, leaving the last 20% of scroll for the last image to stay visible
+    const currentImageIndex = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8], [0, 1, 2, 3, 4]);
 
     return (
-        <section ref={containerRef} className="relative w-full h-[300vh] bg-black">
+        <section ref={containerRef} className="relative w-full h-[400vh] bg-white">
             <div
                 className="sticky top-0 overflow-hidden"
                 style={{ height: height }}
