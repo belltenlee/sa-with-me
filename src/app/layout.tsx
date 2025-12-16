@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${notoSerifKr.variable} ${playfair.variable}`}>
       <body className="font-serif bg-cream text-charcoal antialiased">
-        <main className="min-h-screen w-full max-w-md mx-auto bg-white shadow-2xl relative overflow-hidden">
+        <main className="min-h-screen w-full max-w-md mx-auto bg-white shadow-2xl relative">
           {children}
         </main>
       </body>
