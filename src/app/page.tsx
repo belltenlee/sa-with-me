@@ -7,10 +7,12 @@ import Gallery from "@/components/Gallery";
 import Map from "@/components/Map";
 import ShareButton from "@/components/ShareButton";
 import Account from "@/components/Account";
+import NoticePopup from "@/components/NoticePopup";
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-cream">
+      <NoticePopup />
       <Hero />
 
       <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen">
