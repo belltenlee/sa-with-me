@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import DDayCounter from "./DDayCounter";
 
 export default function Invitation() {
     return (
-        <section className="pt-20 pb-10 px-6 text-center bg-white">
+        <section className="pt-20 px-6 text-center bg-white">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -52,6 +53,8 @@ export default function Invitation() {
                     </div>
                 </div>
             </motion.div>
+
+            <DDayCounter />
         </section>
     );
 }

@@ -9,7 +9,7 @@ export default function Gallery() {
   const [displayedCount, setDisplayedCount] = useState(6);
   const [direction, setDirection] = useState(0);
 
-  const images = Array.from({ length: 11 }, (_, i) => ({
+  const images = Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,
     src: getAssetPath(`/images/gallery/G${String(i + 1).padStart(2, '0')}.jpg`),
     alt: `Wedding Photo ${i + 1}`,
