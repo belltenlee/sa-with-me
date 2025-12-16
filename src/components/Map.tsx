@@ -122,7 +122,7 @@ export default function Map() {
         <p className="text-sm text-gray-500">서울 서초구 16 라시따시어터 1층</p>
       </div>
 
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-3 flex-wrap">
         <a
           href="https://map.kakao.com/link/to/라시따시어터,37.4624,127.0369"
           target="_blank"
@@ -130,6 +130,14 @@ export default function Map() {
           className="bg-[#FAE100] text-[#3C1E1E] px-6 py-2 rounded-full text-sm font-bold hover:opacity-90 transition-opacity"
         >
           카카오맵
+        </a>
+        <a
+          href="https://map.naver.com/p/search/라시따시어터"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-[#03C75A] text-white px-6 py-2 rounded-full text-sm font-bold hover:opacity-90 transition-opacity"
+        >
+          네이버지도
         </a>
         <a
           href="tel:02-2155-2222"
