@@ -2,8 +2,12 @@
 
 import { motion } from "framer-motion";
 import DDayCounter from "./DDayCounter";
+import { useState } from "react";
+import InfoPopup from "./InfoPopup";
 
 export default function Invitation() {
+    const [isBuffetPopupOpen, setIsBuffetPopupOpen] = useState(false);
+
     return (
         <section className="pt-20 px-6 text-center bg-white">
             <motion.div
@@ -55,6 +59,46 @@ export default function Invitation() {
             </motion.div>
 
             <DDayCounter />
+
+            <div className="pb-10">
+                <button
+                    onClick={() => setIsBuffetPopupOpen(true)}
+                    className="text-gray-400 text-xs border-b border-gray-300 pb-0.5 hover:text-gold hover:border-gold transition-colors"
+                >
+                    식사 안내 보기
+                </button>
+            </div>
+
+            <InfoPopup
+                isOpen={isBuffetPopupOpen}
+                onClose={() => setIsBuffetPopupOpen(false)}
+                title="식사 안내"
+                content={
+                    <div className="space-y-6 text-center">
+                        <div className="bg-gray-100 rounded-lg p-4 text-sm text-gray-500 mb-4">
+                            [뷔페 메뉴 이미지 공간]
+                            <br />
+                            (맛있는 음식 사진을 넣어주세요)
+                        </div>
+                        <div>
+                            <h4 className="font-bold text-gold mb-2 text-lg">Premium Buffet</h4>
+                            <p className="text-sm leading-relaxed">
+                                엄선된 제철 식재료로 정성껏 준비한<br />
+                                120여 가지의 프리미엄 뷔페가 준비되어 있습니다.
+                            </p>
+                        </div>
+                        <div className="text-sm space-y-2">
+                            <p><span className="font-bold">운영 시간:</span> 예식 30분 전 ~ 예식 후 2시간</p>
+                            <p><span className="font-bold">위치:</span> 2층 연회장 (엘리베이터 이용)</p>
+                        </div>
+                        <div className="pt-4 border-t border-gray-100">
+                            <p className="text-xs text-gray-400">
+                                * 식권은 축의대에서 수령해 주시기 바랍니다.
+                            </p>
+                        </div>
+                    </div>
+                }
+            />
         </section>
     );
 }
