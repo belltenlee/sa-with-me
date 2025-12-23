@@ -37,7 +37,8 @@ export default function RsvpSection() {
                 >
                     <p className="font-serif text-charcoal/80 mb-6 leading-relaxed">
                         참석이 어려우시더라도<br />
-                        마음만은 축복해 주시길 바랍니다.
+                        마음으로 축복해 주시길 바랍니다.<br />
+                        방명록도 남겨주세요!
                     </p>
                     <button
                         onClick={() => setIsModalOpen(true)}

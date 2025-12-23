@@ -60,7 +60,7 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="p-6 border-b border-gray-100 text-center relative">
-                            <h3 className="font-playfair text-xl text-charcoal font-bold">참석 의사 전달</h3>
+                            <h3 className="font-serif text-xl text-charcoal font-bold">참석 의사 전달</h3>
                             <button
                                 onClick={onClose}
                                 className="absolute top-4 right-4 text-gray-400 hover:text-charcoal transition-colors p-2"
@@ -70,7 +70,9 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
                                 </svg>
                             </button>
                         </div>
-
+                        <div className="p-5 border-b border-gray-100 text-center relative">
+                            <h2 className="font-serif text-sm text-gray-600">원활한 식사 준비를 위해 참석 여부를 알려주세요.</h2>
+                        </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
                             <div>
                                 <label className="block text-sm font-serif text-gray-600 mb-1">성함</label>
@@ -85,7 +87,7 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
                             </div>
                             <div>
                                 <label className="block text-sm font-serif text-gray-600 mb-1">참석 인원 (본인 포함)</label>
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-4 space-y-2">
                                     <button
                                         type="button"
                                         onClick={() => setAttendeeCount(Math.max(1, attendeeCount - 1))}

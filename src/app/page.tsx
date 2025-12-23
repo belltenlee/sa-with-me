@@ -56,7 +56,7 @@ export default function Home() {
 
         <footer className="py-8 text-center text-gray-400 text-sm font-serif">
           <p>
-            © 2026 <a href="/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">성애 & 종열</a>. All rights reserved.
+            © 2026 <a href="/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">종열 & 성애</a>. All rights reserved.
           </p>
         </footer>
       </div>

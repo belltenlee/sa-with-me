@@ -162,21 +162,20 @@ export default function Map() {
         content={
           <div className="space-y-4">
             <div className="bg-gray-100 rounded-lg p-4 text-center text-sm text-gray-500 mb-4">
-              [주차장 약도 이미지 공간]
-              <br />
-              (추후 이미지를 전달주시면 넣어드립니다)
+              (주차장 약도 이미지 준비중)
             </div>
             <div>
               <h4 className="font-bold text-gold mb-2">주차장 위치</h4>
-              <p>라시따시어터 건물 내 지하 주차장</p>
-              <p className="text-sm text-gray-500 mt-1">서울 서초구 매헌로 16</p>
+              <p className="text-sm text-gray-500 mt-2 mb-2">서울 서초구 매헌로 16 라시따시어터</p>
+              <p>지상 타워 주차장 및 지하 3층 주차장</p>
+
             </div>
             <div>
               <h4 className="font-bold text-gold mb-2">주차 안내</h4>
               <ul className="list-disc list-inside space-y-1 text-sm">
-                <li>하객 2시간 무료 주차</li>
-                <li>안내 데스크에서 주차 등록 필수</li>
-                <li>만차 시 인근 공영주차장 이용 (안내요원 대기)</li>
+                <li>하객 3시간 무료 주차</li>
+                <li>주자 등록 불필요</li>
+                <li>지하주차장 이용 시 3층 이용 필수</li>
               </ul>
             </div>
           </div>

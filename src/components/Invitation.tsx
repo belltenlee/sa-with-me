@@ -63,7 +63,7 @@ export default function Invitation() {
             <div className="pb-10">
                 <button
                     onClick={() => setIsBuffetPopupOpen(true)}
-                    className="text-gray-400 text-xs border-b border-gray-300 pb-0.5 hover:text-gold hover:border-gold transition-colors"
+                    className="text-gray-400 text-sm border-b border-gray-300 pb-0.5 hover:text-gold hover:border-gold transition-colors"
                 >
                     식사 안내 보기
                 </button>
