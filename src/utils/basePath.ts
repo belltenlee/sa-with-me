@@ -4,7 +4,7 @@
  * In development, this will be ''
  */
 export const getBasePath = () => {
-    return process.env.NODE_ENV === 'production' ? '/sa-with-me' : '';
+    return '';
 };
 
 /**
