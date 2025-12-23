@@ -48,6 +48,7 @@ declare global {
 export default function Map() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isParkingPopupOpen, setIsParkingPopupOpen] = useState(false);
+  const [isMapInteractive, setIsMapInteractive] = useState(false);
 
   useEffect(() => {
     const mapScript = document.createElement('script');
@@ -112,6 +113,20 @@ export default function Map() {
     <div className="w-full space-y-6">
       <div className="relative w-full h-[300px] rounded-lg overflow-hidden shadow-md bg-gray-100">
         <div id="map" className="w-full h-full" />
+
+        {/* Map Interaction Overlay */}
+        {!isMapInteractive && isLoaded && (
+          <div
+            className="absolute inset-0 z-10 flex items-center justify-center bg-black/5 cursor-pointer"
+            onClick={() => setIsMapInteractive(true)}
+            onTouchStart={() => setIsMapInteractive(true)}
+          >
+            <div className="bg-white/90 px-4 py-2 rounded-full shadow-lg text-sm font-serif text-charcoal animate-pulse">
+              지도를 움직이려면 터치하세요
+            </div>
+          </div>
+        )}
+
         {!isLoaded && (
           <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm bg-gray-50">
             지도를 불러오는 중...
