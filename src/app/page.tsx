@@ -8,6 +8,7 @@ import Map from "@/components/Map";
 import ShareButton from "@/components/ShareButton";
 import Account from "@/components/Account";
 import NoticePopup from "@/components/NoticePopup";
+import RsvpSection from "@/components/RsvpSection";
 
 export default function Home() {
   return (
@@ -17,6 +18,8 @@ export default function Home() {
 
       <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen">
         <Invitation />
+
+        <RsvpSection />
 
         {/* Gallery */}
         <section className="py-16 px-6">
