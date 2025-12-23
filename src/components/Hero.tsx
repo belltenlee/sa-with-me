@@ -8,7 +8,6 @@ const HERO_IMAGES = [
     getAssetPath("/images/gallery/G01.jpg"),
     getAssetPath("/images/gallery/G02.jpg"),
     getAssetPath("/images/gallery/G03.jpg"),
-    getAssetPath("/images/gallery/G04.jpg"),
     getAssetPath("/images/gallery/G05.jpg"),
 ];
 
@@ -76,7 +75,7 @@ export default function Hero() {
 
     // Map scroll progress (0 to 1) to image index (0 to 4)
     // Adjusted range: transitions finish at 0.8, leaving the last 20% of scroll for the last image to stay visible
-    const currentImageIndex = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8], [0, 1, 2, 3, 4]);
+    const currentImageIndex = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75], [0, 1, 2, 3]);
 
     return (
         <section ref={containerRef} className="relative w-full h-[400vh] bg-white">
