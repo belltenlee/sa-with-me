@@ -27,7 +27,7 @@ export default function Home() {
           <Gallery />
           <div className="mt-8 text-center">
             <a
-              href="/sa-with-me/our-gallery"
+              href="/our-gallery"
               className="inline-block border-b border-charcoal text-charcoal text-sm pb-1 hover:text-gold hover:border-gold transition-colors font-serif"
             >
               하객 갤러리 보러가기 →
@@ -56,7 +56,7 @@ export default function Home() {
 
         <footer className="py-8 text-center text-gray-400 text-sm font-serif">
           <p>
-            © 2026 <a href="/sa-with-me/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">성애 & 종열</a>. All rights reserved.
+            © 2026 <a href="/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">성애 & 종열</a>. All rights reserved.
           </p>
         </footer>
       </div>
