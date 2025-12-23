@@ -32,9 +32,14 @@ export default function Gallery() {
     }
   };
 
-  // Keyboard navigation
+  // Keyboard navigation and scroll locking
   useEffect(() => {
-    if (selectedImage === null) return;
+    if (selectedImage === null) {
+      document.body.style.overflow = 'unset';
+      return;
+    }
+
+    document.body.style.overflow = 'hidden';
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') {
@@ -47,7 +52,10 @@ export default function Gallery() {
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
   }, [selectedImage]);
 
   const slideVariants = {

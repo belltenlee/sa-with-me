@@ -80,9 +80,14 @@ export default function SharedGallery({
         }
     };
 
-    // Keyboard navigation
+    // Keyboard navigation and scroll locking
     useEffect(() => {
-        if (!selectedPhoto) return;
+        if (!selectedPhoto) {
+            document.body.style.overflow = 'unset';
+            return;
+        }
+
+        document.body.style.overflow = 'hidden';
 
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'ArrowRight') {
@@ -95,7 +100,10 @@ export default function SharedGallery({
         };
 
         window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            document.body.style.overflow = 'unset';
+        };
     }, [selectedPhoto, photos]);
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {

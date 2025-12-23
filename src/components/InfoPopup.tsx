@@ -9,7 +9,20 @@ interface InfoPopupProps {
     content: React.ReactNode;
 }
 
+import { useEffect } from "react";
+
 export default function InfoPopup({ isOpen, onClose, title, content }: InfoPopupProps) {
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
+
     return (
         <AnimatePresence>
             {isOpen && (

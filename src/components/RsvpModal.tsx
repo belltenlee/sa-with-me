@@ -19,7 +19,13 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
         if (isOpen) {
             const savedName = localStorage.getItem("uploaderName");
             if (savedName) setName(savedName);
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
         }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
     }, [isOpen]);
 
     const handleSubmit = async (e: React.FormEvent) => {
