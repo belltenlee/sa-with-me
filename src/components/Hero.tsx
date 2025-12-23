@@ -128,7 +128,7 @@ export default function Hero() {
                         transition={{ duration: 0.8, delay: 0.4 }}
                     >
                         <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl mb-6 whitespace-nowrap">
-                            박성애 · 이종열
+                            이종열 · 박성애
                         </h1>
                     </motion.div>
 
