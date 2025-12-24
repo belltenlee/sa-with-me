@@ -22,7 +22,7 @@ export default function Home() {
         <RsvpSection />
 
         {/* Gallery */}
-        <section className="py-16 px-6">
+        <section className="py-16 px-6" hidden={true}>
           <h2 className="font-playfair text-3xl text-center mb-8 text-gold">갤러리</h2>
           <Gallery />
           <div className="mt-8 text-center">
@@ -56,7 +56,7 @@ export default function Home() {
 
         <footer className="py-8 text-center text-gray-400 text-sm font-serif">
           <p>
-            © 2026 <a href="/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">종열 & 성애</a>. All rights reserved.
+            © 2026 <a href="/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">종열 & 성애</a>. All rights <a href="/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">reserved.</a>
           </p>
         </footer>
       </div>
