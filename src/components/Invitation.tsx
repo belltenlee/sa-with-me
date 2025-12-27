@@ -72,9 +72,9 @@ export default function Invitation() {
             <div className="pb-10">
                 <button
                     onClick={() => setIsBuffetPopupOpen(true)}
-                    className="text-gray-400 text-sm border-b border-gray-300 pb-0.5 hover:text-gold hover:border-gold transition-colors"
+                    className="text-gray-400 text-md border-b border-gray-300 pb-0.5 hover:text-gold hover:border-gold transition-colors"
                 >
-                    식사 안내 보기
+                    예식 안내 보기
                 </button>
             </div>
 
@@ -84,11 +84,23 @@ export default function Invitation() {
                     setIsBuffetPopupOpen(false);
                     setActiveVideo(null);
                 }}
-                title="식사 안내"
+                title="예식 안내"
                 content={
-                    <div className="space-y-6 text-center">
+                    <div className="space-y-6 text-center mb-5">
+                        <div className="">
+                            <h4 className="font-bold text-gold mb-2 text-lg">Photo booth</h4>
+                            {/* <img src="/images/banquet/banquet001.jpg" alt="Photo booth" className="w-full h-auto mb-4" /> */}
+                            <p>
+                                예식 전 준비된 포토부스에서
+                                <br />
+                                인생네컷 사진을 촬영하시고,
+                                <br />
+                                소중한 축하 메시지를 남겨주세요.
+                                <span className="text-gold">❤️</span>
+                            </p>
+                        </div>
                         {/* Menu Video Buttons */}
-                        <div className="flex flex-wrap justify-center gap-2 mb-4">
+                        {/* <div className="flex flex-wrap justify-center gap-2 mb-4">
                             {menuVideos.map((video) => (
                                 <button
                                     key={video.title}
@@ -101,10 +113,10 @@ export default function Invitation() {
                                     #{video.title}
                                 </button>
                             ))}
-                        </div>
+                        </div> */}
 
                         {/* Video Player or Placeholder */}
-                        <div className="bg-gray-100 rounded-lg overflow-hidden aspect-[9/16] max-h-[400px] mx-auto relative shadow-inner">
+                        {/* <div className="bg-gray-100 rounded-lg overflow-hidden aspect-[9/16] max-h-[400px] mx-auto relative shadow-inner">
                             {activeVideo ? (
                                 <video
                                     key={activeVideo}
@@ -129,18 +141,19 @@ export default function Invitation() {
                                     </div>
                                 </div>
                             )}
-                        </div>
+                        </div> */}
 
                         <div>
                             <h4 className="font-bold text-gold mb-2 text-lg">Premium Buffet</h4>
+                            <img src="/images/banquet/banquet001.jpg" alt="Photo booth" className="w-full h-auto mb-4" />
                             <p className="text-sm leading-relaxed">
                                 엄선된 제철 식재료로 정성껏 준비한<br />
                                 120여 가지의 프리미엄 뷔페가 준비되어 있습니다.
                             </p>
                         </div>
                         <div className="text-sm space-y-2">
-                            <p><span className="font-bold">운영 시간:</span> 예식 30분 전 ~ 예식 후 2시간</p>
-                            <p><span className="font-bold">위치:</span> 2층 연회장 (엘리베이터 이용)</p>
+                            <p><span className="font-bold">운영 시간:</span> 오후 4시 30분 ~ 7시 30분</p>
+                            <p><span className="font-bold">위치:</span> 1층 연회장</p>
                         </div>
                         <div className="pt-4 border-t border-gray-100">
                             <p className="text-xs text-gray-400">

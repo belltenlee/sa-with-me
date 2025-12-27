@@ -136,7 +136,27 @@ export default function Map() {
 
       <div className="text-center space-y-2 font-serif text-charcoal">
         <p className="text-lg font-bold">라시따시어터</p>
-        <p className="text-sm text-gray-500">서울 서초구 16 라시따시어터 1층</p>
+        <p className="text-sm text-gray-500">서울 서초구 매헌로 16 라시따시어터 1층 그랜드볼룸</p>
+      </div>
+
+      <div className="space-y-3">
+        <div>
+          <h4 className="font-bold text-gold mb-2 text-center">주차 안내</h4>
+          {/* div 영역 내 좌측여백 추가 화면퍼센티지로 */}
+          <div className="pl-[10%] space-y-2">
+            <ul className="list-disc list-inside space-y-1 text-sm">
+              <li>주차 최대 1,000대 가능</li>
+              <li>3시간 무료 주차 (차량 등록 불필요)</li>
+              <li>
+                <span>주차 유도선을 따라 이동</span>
+                <div className="mt-1 space-y-1">
+                  <p className="pl-[8%] text-blue-600">파란색 유도선 {'=>'} <span className="font-bold">지하 3층 주차장 (추천)</span></p>
+                  <p className="pl-[8%] text-pink-500">분홍색 유도선 {'=>'} 지상 타워 주차장</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <div className="flex justify-center gap-3 flex-wrap">
@@ -162,12 +182,13 @@ export default function Map() {
         >
           전화하기
         </a>
+        {/*
         <button
           onClick={() => setIsParkingPopupOpen(true)}
           className="bg-white border border-charcoal text-charcoal px-6 py-2 rounded-full text-sm font-serif hover:bg-gray-50 transition-colors"
         >
           주차 안내
-        </button>
+        </button>*/}
       </div>
 
       <InfoPopup

@@ -1,13 +1,12 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, motionValue } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { getAssetPath } from "@/utils/basePath";
 
 const HERO_IMAGES = [
     getAssetPath("/images/gallery/G01.jpg"),
     getAssetPath("/images/gallery/G02.jpg"),
-    getAssetPath("/images/gallery/G03.jpg"),
     getAssetPath("/images/gallery/G05.jpg"),
 ];
 
@@ -73,12 +72,35 @@ export default function Hero() {
         };
     }, []);
 
-    // Map scroll progress (0 to 1) to image index (0 to 4)
-    // Adjusted range: transitions finish at 0.8, leaving the last 20% of scroll for the last image to stay visible
-    const currentImageIndex = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75], [0, 1, 2, 3]);
+    // 3D Zoom & Swap animations
+    // Image 0 (Initial)
+    const scale0 = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
+    const opacity0 = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+    const blur0 = useTransform(scrollYProgress, [0, 0.5], [0, 10]);
+
+    // Image 1 (Second) - Comes from front (scale 1.5) to focus (scale 1)
+    const scale1 = useTransform(scrollYProgress, [0, 0.5, 1], [1.5, 1, 0.8]);
+    const opacity1 = useTransform(scrollYProgress, [0.1, 0.45, 0.5, 0.9, 1], [0, 1, 1, 1, 0]);
+    const blur1 = useTransform(scrollYProgress, [0, 0.5, 1], [10, 0, 10]);
+
+    // Image 2 (Third) - Comes from front (scale 1.5) to focus (scale 1)
+    const scale2 = useTransform(scrollYProgress, [0.5, 1], [1.5, 1]);
+    const opacity2 = useTransform(scrollYProgress, [0.6, 0.95, 1], [0, 1, 1]);
+    const blur2 = useTransform(scrollYProgress, [0.5, 1], [10, 0]);
+
+    const scales = [scale0, scale1, scale2];
+    const opacities = [opacity0, opacity1, opacity2];
+    const blurs = [blur0, blur1, blur2];
 
     return (
-        <section ref={containerRef} className="relative w-full h-[400vh] bg-white">
+        <section ref={containerRef} className="relative w-full h-[300vh] bg-white">
+            {/* Snap Points */}
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+                <div className="h-[100vh] snap-start" />
+                <div className="h-[100vh] snap-start" />
+                <div className="h-[100vh] snap-start" />
+            </div>
+
             <div
                 className="sticky top-0 overflow-hidden"
                 style={{ height: height }}
@@ -90,18 +112,10 @@ export default function Hero() {
                         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                         style={{
                             backgroundImage: `url('${img}')`,
-                            opacity: useTransform(
-                                currentImageIndex,
-                                (latest) => {
-                                    // Smooth cross-fade logic
-                                    const diff = Math.abs(latest - index);
-                                    // If diff is 0, opacity is 1.
-                                    // If diff is 1, opacity is 0.
-                                    // Linear interpolation for smooth transition.
-                                    return Math.max(0, 1 - diff);
-                                }
-                            ),
-                            zIndex: 0
+                            scale: scales[index],
+                            opacity: opacities[index],
+                            filter: useTransform(blurs[index], (b) => `blur(${b}px)`),
+                            zIndex: index,
                         }}
                     >
                         {/* Overlay */}

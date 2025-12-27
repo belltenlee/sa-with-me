@@ -16,7 +16,7 @@ export default function Home() {
       <NoticePopup />
       <Hero />
 
-      <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen">
+      <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen snap-start">
         <Invitation />
 
         <RsvpSection />
@@ -56,7 +56,7 @@ export default function Home() {
 
         <footer className="py-8 text-center text-gray-400 text-sm font-serif">
           <p>
-            © 2026 <a href="/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">종열 & 성애</a>. All rights <a href="/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">reserved.</a>
+            © 2026 <a href="/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">종열 & 성애</a>. All rights <a href="/our-gallery" className="hover:text-gray-500 transition-colors cursor-default">reserved.</a>
           </p>
         </footer>
       </div>
