@@ -176,12 +176,12 @@ export default function Map() {
         >
           네이버지도
         </a>
-        <a
+        {/* <a
           href="tel:02-2155-2222"
           className="bg-charcoal text-white px-6 py-2 rounded-full text-sm font-serif hover:bg-gold transition-colors"
         >
           전화하기
-        </a>
+        </a> */}
         {/*
         <button
           onClick={() => setIsParkingPopupOpen(true)}

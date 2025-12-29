@@ -51,7 +51,7 @@ export default function DDayCounter() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="py-10 flex justify-center items-center bg-cream/30 rounded-2xl mx-4 my-8"
+            className="py-6 flex justify-center items-center bg-cream/30 rounded-2xl mx-4 my-4"
         >
             <TimeUnit value={timeLeft.days} label="Days" />
             <div className="text-gold/30 text-xl pb-4">:</div>

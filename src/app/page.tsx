@@ -8,6 +8,7 @@ import Map from "@/components/Map";
 import ShareButton from "@/components/ShareButton";
 import Account from "@/components/Account";
 import NoticePopup from "@/components/NoticePopup";
+import WeddingInfo from "@/components/WeddingInfo";
 import RsvpSection from "@/components/RsvpSection";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
 
       <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen snap-start">
         <Invitation />
+        <WeddingInfo />
 
         <RsvpSection />
 

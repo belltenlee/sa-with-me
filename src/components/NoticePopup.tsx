@@ -76,11 +76,11 @@ export default function NoticePopup() {
 
                             <div className="font-serif text-charcoal/80 text-md leading-relaxed space-y-3">
                                 <p>
-                                    모바일 청첩장을<br />
+                                    직접 만든 모바일 청첩장을<br />
                                     풍성하게 꾸미는 중입니다.
                                 </p>
                                 <p className="text-sm text-gray-500">
-                                    일부 기능이 동작하지 않을 수 있습니다.<br />
+                                    부족한 부분들을 보완 중이니<br />
                                     양해 부탁드립니다.
                                 </p>
                                 <br />
