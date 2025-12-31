@@ -10,6 +10,7 @@ import Account from "@/components/Account";
 import NoticePopup from "@/components/NoticePopup";
 import WeddingInfo from "@/components/WeddingInfo";
 import RsvpSection from "@/components/RsvpSection";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -19,15 +20,17 @@ export default function Home() {
 
       <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen snap-start">
         <Invitation />
+
+
         <WeddingInfo />
 
         <RsvpSection />
 
         {/* Gallery */}
-        <section className="py-16 px-6" hidden={true}>
+        <section className="py-16 px-6" hidden={false}>
           <h2 className="font-playfair text-3xl text-center mb-8 text-gold">갤러리</h2>
           <Gallery />
-          <div className="mt-8 text-center">
+          <div className="mt-8 text-center" hidden={true}>
             <a
               href="/our-gallery"
               className="inline-block border-b border-charcoal text-charcoal text-sm pb-1 hover:text-gold hover:border-gold transition-colors font-serif"
@@ -58,7 +61,7 @@ export default function Home() {
 
         <footer className="py-8 text-center text-gray-400 text-sm font-serif">
           <p>
-            © 2026 <a href="/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">종열 & 성애</a>. All rights <a href="/our-gallery" className="hover:text-gray-500 transition-colors cursor-default">reserved.</a>
+            <a href="/rsvp-admin" className="hover:text-gray-500 transition-colors cursor-default">©</a> 2026 <a href="/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">종열 & 성애</a>. All rights <a href="/our-gallery" className="hover:text-gray-500 transition-colors cursor-default">reserved.</a>
           </p>
         </footer>
       </div>

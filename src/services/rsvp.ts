@@ -1,10 +1,11 @@
 import { db } from "./firebase";
-import { collection, addDoc, query, where, getDocs, Timestamp, doc, updateDoc } from "firebase/firestore";
+import { collection, addDoc, query, where, getDocs, Timestamp, doc, updateDoc, orderBy, limit, startAfter, QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
 
 export interface RsvpData {
+    id: string;
     name: string;
     attendeeCount: number;
-    timestamp: Date;
+    timestamp: any;
 }
 
 export const checkExistingRsvp = async (name: string) => {
@@ -35,3 +36,24 @@ export const submitRsvp = async (name: string, attendeeCount: number) => {
     });
 };
 
+export const getAllRsvps = async (pageSize: number = 30, lastDoc: QueryDocumentSnapshot<DocumentData> | null = null) => {
+    const rsvpRef = collection(db, "rsvp");
+    let q;
+
+    if (lastDoc) {
+        q = query(rsvpRef, orderBy("timestamp", "desc"), startAfter(lastDoc), limit(pageSize));
+    } else {
+        q = query(rsvpRef, orderBy("timestamp", "desc"), limit(pageSize));
+    }
+
+    const querySnapshot = await getDocs(q);
+    const rsvps = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    })) as RsvpData[];
+
+    return {
+        rsvps,
+        lastDoc: querySnapshot.docs[querySnapshot.docs.length - 1] || null
+    };
+};

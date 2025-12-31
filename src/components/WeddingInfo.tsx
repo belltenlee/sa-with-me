@@ -31,6 +31,16 @@ export default function WeddingInfo() {
                             소중한 축하 메시지를 남겨주세요
                             <span className="text-gold">❤️</span>
                         </p>
+                        <div className="bg-gray-50 py-6 px-12 rounded-lg space-y-3 text-sm font-serif">
+                            <div className="flex justify-between border-b border-gray-200 pb-2">
+                                <span className="font-bold text-gray-600">운영 시간</span>
+                                <span className="text-charcoal">오후 4시 30분 ~ 5시 15분</span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="font-bold text-gray-600">장소</span>
+                                <span className="text-charcoal">로비 입구</span>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Premium Buffet */}
