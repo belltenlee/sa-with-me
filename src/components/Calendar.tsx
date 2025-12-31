@@ -58,11 +58,11 @@ export default function Calendar() {
                                     className="absolute bg-gold w-8 h-8 rounded-full -z-10 shadow-sm"
                                 />
                                 <motion.div
-                                    initial={{ opacity: 0, x: -10, rotate: -10 }}
-                                    whileInView={{ opacity: 1, x: 0, rotate: 10 }}
+                                    initial={{ opacity: 0, y: 10, rotate: -5 }}
+                                    whileInView={{ opacity: 1, y: 0, rotate: 5 }}
                                     transition={{ delay: 1, duration: 0.5 }}
                                     viewport={{ once: true }}
-                                    className="absolute left-full ml-2 whitespace-nowrap z-20 pointer-events-none"
+                                    className="absolute bottom-full mb-2 right-[-4px] whitespace-nowrap z-20 pointer-events-none"
                                 >
                                     <div className="bg-white border-2 border-gold/40 px-2 py-0.5 rounded-full shadow-sm flex items-center gap-1">
                                         <span className="text-[10px] sm:text-xs font-bold text-gold" style={{ fontFamily: 'cursive' }}>
@@ -76,7 +76,7 @@ export default function Calendar() {
                                             ♥
                                         </motion.span>
                                     </div>
-                                    <div className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 bg-white border-l-2 border-b-2 border-gold/40 rotate-45 -z-10" />
+                                    <div className="absolute -bottom-1 right-3 w-2 h-2 bg-white border-r-2 border-b-2 border-gold/40 rotate-45 -z-10" />
                                 </motion.div>
                             </>
                         )}
