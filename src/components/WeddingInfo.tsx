@@ -38,7 +38,7 @@ export default function WeddingInfo() {
                             </div>
                             <div className="flex justify-between">
                                 <span className="font-bold text-gray-600">장소</span>
-                                <span className="text-charcoal">로비 입구</span>
+                                <span className="text-charcoal">1층 로비 방향 입구</span>
                             </div>
                         </div>
                     </div>

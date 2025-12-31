@@ -153,10 +153,10 @@ export default function Hero() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.6 }}
                     >
-                        <p className="font-playfair text-xl sm:text-2xl md:text-3xl whitespace-nowrap">
+                        <p className="font-playfair text-xl font-bold sm:text-2xl md:text-3xl whitespace-nowrap">
                             2026. 02. 21
                         </p>
-                        <p className="mt-2 text-xs sm:text-sm tracking-widest uppercase opacity-80 whitespace-nowrap">
+                        <p className="mt-2 text-sm font-bold sm:text-sm tracking-widest uppercase opacity-80 whitespace-nowrap">
                             토요일 오후 5시
                         </p>
                         <p className="mt-2 font-playfair text-lg sm:text-xl md:text-2xl whitespace-nowrap">
