@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { submitRsvp } from "@/services/rsvp";
+import { submitRsvp, checkExistingRsvp, updateRsvp } from "@/services/rsvp";
 
 interface RsvpModalProps {
     isOpen: boolean;
@@ -14,6 +14,8 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
     const [attendeeCount, setAttendeeCount] = useState(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState("");
+    const [existingRsvp, setExistingRsvp] = useState<{ id: string, name: string, attendeeCount: number } | null>(null);
+    const [showConfirm, setShowConfirm] = useState(false);
 
     useEffect(() => {
         if (isOpen) {
@@ -22,6 +24,8 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'unset';
+            setShowConfirm(false);
+            setExistingRsvp(null);
         }
         return () => {
             document.body.style.overflow = 'unset';
@@ -36,16 +40,45 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
         setError("");
 
         try {
+            const existing = await checkExistingRsvp(name);
+            if (existing) {
+                setExistingRsvp(existing as any);
+                setShowConfirm(true);
+                setIsSubmitting(false);
+                return;
+            }
+
             await submitRsvp(name, attendeeCount);
-            localStorage.setItem("uploaderName", name); // Save for future use
-            localStorage.setItem("hasSubmittedRsvp", "true");
-            alert("참석 여부가 전달되었습니다. 감사합니다!");
-            onClose();
+            handleSuccess();
+        } catch (err: any) {
+            setError(err.message || "오류가 발생했습니다.");
+            setIsSubmitting(false);
+        }
+    };
+
+    const handleUpdate = async () => {
+        if (!existingRsvp) return;
+        setIsSubmitting(true);
+        try {
+            await updateRsvp(existingRsvp.id, attendeeCount);
+            handleSuccess();
         } catch (err: any) {
             setError(err.message || "오류가 발생했습니다.");
         } finally {
             setIsSubmitting(false);
+            setShowConfirm(false);
         }
+    };
+
+    const handleSuccess = () => {
+        localStorage.setItem("uploaderName", name);
+        localStorage.setItem("hasSubmittedRsvp", "true");
+        alert("참석 여부가 전달되었습니다. 감사합니다!");
+        onClose();
+        setName("");
+        setAttendeeCount(1);
+        setExistingRsvp(null);
+        setShowConfirm(false);
     };
 
     return (
@@ -76,52 +109,79 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
                                 </svg>
                             </button>
                         </div>
-                        <div className="p-5 border-b border-gray-100 text-center relative">
-                            <h2 className="font-serif text-sm text-gray-600">원활한 식사 준비를 위해 참석 여부를 알려주세요.</h2>
-                        </div>
-                        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                            <div>
-                                <label className="block text-sm font-serif text-gray-600 mb-1">성함</label>
-                                <input
-                                    type="text"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    placeholder="성함을 입력해주세요"
-                                    className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-gold transition-colors font-serif"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-serif text-gray-600 mb-1">참석 인원 (본인 포함)</label>
-                                <div className="flex items-center gap-4 space-y-2">
+
+                        {!showConfirm ? (
+                            <>
+                                <div className="p-5 border-b border-gray-100 text-center relative">
+                                    <h2 className="font-serif text-sm text-gray-600">원활한 식사 준비를 위해 참석 여부를 알려주세요.</h2>
+                                </div>
+                                <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-serif text-gray-600 mb-1">성함</label>
+                                        <input
+                                            type="text"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                            placeholder="성함을 입력해주세요"
+                                            className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-gold transition-colors font-serif"
+                                            required
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-serif text-gray-600 mb-1">참석 인원 (본인 포함)</label>
+                                        <div className="flex items-center gap-4 space-y-2">
+                                            <button
+                                                type="button"
+                                                onClick={() => setAttendeeCount(Math.max(1, attendeeCount - 1))}
+                                                className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gold hover:text-gold"
+                                            >
+                                                -
+                                            </button>
+                                            <span className="font-serif text-lg w-8 text-center">{attendeeCount}</span>
+                                            <button
+                                                type="button"
+                                                onClick={() => setAttendeeCount(attendeeCount + 1)}
+                                                className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gold hover:text-gold"
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {error && <p className="text-red-500 text-xs text-center">{error}</p>}
+
                                     <button
-                                        type="button"
-                                        onClick={() => setAttendeeCount(Math.max(1, attendeeCount - 1))}
-                                        className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gold hover:text-gold"
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="w-full bg-charcoal text-white py-3 rounded-lg hover:bg-gold transition-colors font-serif mt-4 disabled:opacity-50"
                                     >
-                                        -
+                                        {isSubmitting ? "전송 중..." : "참석 의사 보내기"}
                                     </button>
-                                    <span className="font-serif text-lg w-8 text-center">{attendeeCount}</span>
+                                </form>
+                            </>
+                        ) : (
+                            <div className="p-8 text-center space-y-6">
+                                <p className="font-serif text-gray-700 leading-relaxed">
+                                    이미 입력된 성함입니다.<br />
+                                    입력하신 내용으로 수정하시겠습니까?
+                                </p>
+                                <div className="flex gap-3">
                                     <button
-                                        type="button"
-                                        onClick={() => setAttendeeCount(attendeeCount + 1)}
-                                        className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gold hover:text-gold"
+                                        onClick={onClose}
+                                        className="flex-1 py-3 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition-colors font-serif"
                                     >
-                                        +
+                                        아니오
+                                    </button>
+                                    <button
+                                        onClick={handleUpdate}
+                                        disabled={isSubmitting}
+                                        className="flex-1 py-3 bg-charcoal text-white rounded-lg hover:bg-gold transition-colors font-serif disabled:opacity-50"
+                                    >
+                                        {isSubmitting ? "수정 중..." : "예"}
                                     </button>
                                 </div>
                             </div>
-
-                            {error && <p className="text-red-500 text-xs text-center">{error}</p>}
-
-                            <button
-                                type="submit"
-                                disabled={isSubmitting}
-                                className="w-full bg-charcoal text-white py-3 rounded-lg hover:bg-gold transition-colors font-serif mt-4 disabled:opacity-50"
-                            >
-                                {isSubmitting ? "전송 중..." : "참석 의사 보내기"}
-                            </button>
-                        </form>
+                        )}
                     </motion.div>
                 </motion.div>
             )}
