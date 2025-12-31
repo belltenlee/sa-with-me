@@ -22,6 +22,7 @@ interface Photo {
     format?: string;
     width?: number;
     height?: number;
+    mediaType?: 'image' | 'video';
 }
 
 interface SharedGalleryProps {
@@ -125,10 +126,15 @@ export default function SharedGallery({
         setIsUploading(true);
         setUploadProgress({ current: 0, total: files.length });
 
+
         try {
             for (let i = 0; i < files.length; i++) {
                 setUploadProgress(prev => ({ ...prev, current: i + 1 }));
                 const file = files[i];
+
+                // Detect media type
+                const isVideo = file.type.startsWith('video/');
+                const mediaType: 'image' | 'video' = isVideo ? 'video' : 'image';
 
                 // 1. Upload to selected provider (default: ImgBB)
                 let url: string;
@@ -151,49 +157,59 @@ export default function SharedGallery({
                     width = res.width;
                     height = res.height;
                 } else {
-                    // ImgBB: Dual upload strategy
-                    // 1. Upload Original
-                    const originalRes = await uploadImageToImgBB(file);
-                    const originalImgBbUrl = originalRes.url;
+                    // ImgBB upload
+                    if (isVideo) {
+                        // For videos: upload original only (no compression)
+                        const videoRes = await uploadImageToImgBB(file);
+                        url = videoRes.url;
+                        thumbUrl = videoRes.thumbUrl;
+                    } else {
+                        // For images: Dual upload strategy
+                        // 1. Upload Original
+                        const originalRes = await uploadImageToImgBB(file);
+                        const originalImgBbUrl = originalRes.url;
 
-                    // 2. Compress for display
-                    const compressedFile = await compressImage(file, {
-                        maxWidth: 1920,
-                        quality: 0.8
-                    });
+                        // 2. Compress for display
+                        const compressedFile = await compressImage(file, {
+                            maxWidth: 1920,
+                            quality: 0.8
+                        });
 
-                    // 3. Upload Compressed (Display version)
-                    const displayRes = await uploadImageToImgBB(compressedFile);
+                        // 3. Upload Compressed (Display version)
+                        const displayRes = await uploadImageToImgBB(compressedFile);
 
-                    url = displayRes.url;
-                    thumbUrl = displayRes.thumbUrl;
-                    originalUrl = originalImgBbUrl;
+                        url = displayRes.url;
+                        thumbUrl = displayRes.thumbUrl;
+                        originalUrl = originalImgBbUrl;
+                    }
                 }
 
                 // 2. Save URL and provider metadata to Firestore
                 const docData: any = {
                     url: url,
-                    thumbUrl: thumbUrl,
                     caption: "Wedding Moment",
                     uploaderName: uploaderName,
                     provider: uploadProvider,
-                    public_id: public_id,
-                    resource_type: resource_type,
-                    format: format,
-                    width: width,
-                    height: height,
+                    mediaType: mediaType,
                     timestamp: serverTimestamp(),
                 };
 
-                if (originalUrl) {
-                    docData.originalUrl = originalUrl;
-                }
+                // Only add defined values
+                if (thumbUrl) docData.thumbUrl = thumbUrl;
+                if (public_id) docData.public_id = public_id;
+                if (resource_type) docData.resource_type = resource_type;
+                if (format) docData.format = format;
+                if (width) docData.width = width;
+                if (height) docData.height = height;
+                if (originalUrl) docData.originalUrl = originalUrl;
 
                 await addDoc(collection(db, collectionName), docData);
             }
         } catch (err) {
             console.error("Upload failed:", err);
-            alert("사진 업로드에 실패했습니다.");
+            // alert("사진 업로드에 실패했습니다.");
+            const errorMessage = err instanceof Error ? err.message : "사진 업로드에 실패했습니다.";
+            alert(`업로드 실패: ${errorMessage}`);
         } finally {
             setIsUploading(false);
             setUploadProgress({ current: 0, total: 0 });
@@ -222,7 +238,7 @@ export default function SharedGallery({
 
                 <input
                     type="file"
-                    accept="image/*"
+                    accept="image/*,video/*"
                     multiple
                     className="hidden"
                     ref={fileInputRef}
@@ -261,12 +277,28 @@ export default function SharedGallery({
                             className="relative aspect-square overflow-hidden bg-gray-100 cursor-pointer group"
                             onClick={() => setSelectedPhoto(photo)}
                         >
-                            <img
-                                src={photo.thumbUrl || photo.url}
-                                alt="Shared moment"
-                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                loading="lazy"
-                            />
+                            {photo.mediaType === 'video' ? (
+                                <>
+                                    <video
+                                        src={photo.url}
+                                        className="w-full h-full object-cover"
+                                        muted
+                                        playsInline
+                                    />
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+                                        <svg className="w-12 h-12 text-white/80" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M8 5v14l11-7z" />
+                                        </svg>
+                                    </div>
+                                </>
+                            ) : (
+                                <img
+                                    src={photo.thumbUrl || photo.url}
+                                    alt="Shared moment"
+                                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                    loading="lazy"
+                                />
+                            )}
                             {photo.uploaderName && (
                                 <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-2">
                                     <p className="text-white text-[10px] font-serif text-right truncate">
@@ -357,15 +389,26 @@ export default function SharedGallery({
                                 className="flex flex-col items-center justify-center cursor-grab active:cursor-grabbing"
                                 onClick={(e) => e.stopPropagation()}
                             >
-                                <img
-                                    src={selectedPhoto.url}
-                                    alt="Full size"
-                                    className="max-w-full max-h-[85vh] object-contain rounded-sm select-none pointer-events-none"
-                                    style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
-                                />
+                                {selectedPhoto.mediaType === 'video' ? (
+                                    <video
+                                        src={selectedPhoto.url}
+                                        controls
+                                        autoPlay
+                                        loop
+                                        className="max-w-full max-h-[85vh] object-contain rounded-sm"
+                                        style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
+                                    />
+                                ) : (
+                                    <img
+                                        src={selectedPhoto.url}
+                                        alt="Full size"
+                                        className="max-w-full max-h-[85vh] object-contain rounded-sm select-none pointer-events-none"
+                                        style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
+                                    />
+                                )}
                                 {selectedPhoto.uploaderName && (
                                     <div className="mt-4">
-                                        <p className="text-white/80 font-serif text-sm">
+                                        <p className="text-white/80 font-serif text-sm pt-2">
                                             Uploaded by {selectedPhoto.uploaderName}
                                         </p>
                                     </div>
