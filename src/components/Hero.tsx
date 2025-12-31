@@ -93,7 +93,7 @@ export default function Hero() {
     const blurs = [blur0, blur1, blur2];
 
     return (
-        <section ref={containerRef} className="relative w-full h-[300vh] bg-white">
+        <section ref={containerRef} className="relative w-full h-[350vh] bg-white">
             {/* Snap Points */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
                 <div className="h-[100vh] snap-start" />
