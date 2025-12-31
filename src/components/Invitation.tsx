@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import DDayCounter from "./DDayCounter";
+import Calendar from "./Calendar";
 
 export default function Invitation() {
 
@@ -56,7 +57,10 @@ export default function Invitation() {
                 </div>
             </motion.div>
 
-            <DDayCounter />
+            <div className="mt-16">
+                <Calendar />
+                <DDayCounter />
+            </div>
 
 
         </section>
