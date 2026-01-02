@@ -136,7 +136,8 @@ export default function Map() {
 
       <div className="text-center space-y-2 font-serif text-charcoal">
         <p className="text-lg font-bold">라시따시어터</p>
-        <p className="text-sm text-gray-500">서울 서초구 매헌로 16 라시따시어터 1층 그랜드볼룸</p>
+        <p className="text-sm text-gray-500">서울 서초구 매헌로 16</p>
+        <p className="text-sm text-gray-500">라시따시어터 1층 그랜드볼룸</p>
       </div>
 
       <div className="space-y-3">
@@ -150,8 +151,8 @@ export default function Map() {
               <li>
                 <span>주차 유도선을 따라 이동</span>
                 <div className="mt-1 space-y-1">
-                  <p className="pl-[5%] text-blue-600">파란색 유도선 {'=>'} <span className="font-bold">지하 3층 주차장 (추천)</span></p>
-                  <p className="pl-[5%] text-pink-500">분홍색 유도선 {'=>'} 지상 타워 주차장</p>
+                  <p className="pl-[3%] text-blue-600">파란색 유도선 {'=>'} <span className="font-bold">지하 3층 주차장 (추천)</span></p>
+                  <p className="pl-[3%] text-pink-500">분홍색 유도선 {'=>'} 지상 타워 주차장</p>
                 </div>
               </li>
             </ul>

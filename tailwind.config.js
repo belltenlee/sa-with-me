@@ -15,6 +15,7 @@ module.exports = {
       fontFamily: {
         serif: ['var(--font-noto-serif)', 'serif'],
         playfair: ['var(--font-playfair)', 'serif'],
+        pretendard: ['Pretendard', 'sans-serif'],
       },
     },
   },

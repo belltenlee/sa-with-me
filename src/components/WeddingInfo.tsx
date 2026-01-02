@@ -17,16 +17,16 @@ export default function WeddingInfo() {
                 <div className="space-y-12 max-w-md mx-auto">
                     {/* Photo Booth */}
                     <div className="space-y-4">
-                        <h3 className="font-serif text-gold text-xl">포토 부스</h3>
+                        <h3 className="font-pretendard text-gold text-xl tracking-tight">포토부스</h3>
                         <div className="rounded-lg overflow-hidden shadow-md mb-4">
                             <img
                                 src={getAssetPath("/images/info/photobooth001.png")}
-                                alt="포토 부스"
+                                alt="포토부스"
                                 className="w-full h-auto object-cover"
                             />
                         </div>
-                        <p className="font-serif text-charcoal leading-relaxed break-keep">
-                            예식 전 준비된 포토 부스에서<br />
+                        <p className="font-pretendard text-charcoal leading-[1.8] tracking-tight break-keep">
+                            예식 전 준비된 포토부스에서<br />
                             인생네컷 사진을 촬영하시고,<br />
                             소중한 축하 메시지를 남겨주세요
                             <span className="text-gold">❤️</span>
@@ -45,7 +45,7 @@ export default function WeddingInfo() {
 
                     {/* Premium Buffet */}
                     <div className="space-y-4">
-                        <h3 className="font-serif text-gold text-xl">프리미엄 뷔페</h3>
+                        <h3 className="font-pretendard text-gold text-xl tracking-tight">프리미엄 뷔페</h3>
                         <div className="rounded-lg overflow-hidden shadow-md mb-4">
                             <img
                                 src={getAssetPath("/images/info/banquet001.png")}
@@ -53,7 +53,7 @@ export default function WeddingInfo() {
                                 className="w-full h-auto object-cover"
                             />
                         </div>
-                        <p className="font-serif text-charcoal leading-relaxed break-keep">
+                        <p className="font-pretendard text-charcoal leading-[1.8] tracking-tight break-keep">
                             제철 식재료로 정성껏 준비한<br />
                             120여 가지 메뉴의 프리미엄 뷔페가<br />
                             다양한 주류와 함께 준비되어 있습니다.
