@@ -15,7 +15,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-cream">
-      <NoticePopup />
+      {/* <NoticePopup /> */}
       <Hero />
 
       <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen snap-start">

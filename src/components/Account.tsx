@@ -69,7 +69,7 @@ export default function Account() {
                 onClick={() => toggleGroup(group.label)}
                 className="w-full px-6 py-4 flex justify-between items-center bg-cream/30 hover:bg-cream/50 transition-colors"
               >
-                <span className="text-charcoal font-medium">{group.label}</span>
+                <span className="text-charcoal font-medium whitespace-nowrap">{group.label}</span>
                 <span className={`transform transition-transform duration-300 ${openGroup === group.label ? 'rotate-180' : ''}`}>
                   ▼
                 </span>

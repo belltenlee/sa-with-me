@@ -144,14 +144,14 @@ export default function Map() {
           <h4 className="font-bold text-gold mb-2 text-center">주차 안내</h4>
           {/* div 영역 내 좌측여백 추가 화면퍼센티지로 */}
           <div className="pl-[10%] space-y-2">
-            <ul className="list-disc list-inside space-y-1 text-sm">
+            <ul className="list-disc list-inside space-y-1 text-sm break-keep">
               <li>주차 최대 1,000대 가능</li>
               <li>3시간 무료 주차 (차량 등록 불필요)</li>
               <li>
                 <span>주차 유도선을 따라 이동</span>
                 <div className="mt-1 space-y-1">
-                  <p className="pl-[8%] text-blue-600">파란색 유도선 {'=>'} <span className="font-bold">지하 3층 주차장 (추천)</span></p>
-                  <p className="pl-[8%] text-pink-500">분홍색 유도선 {'=>'} 지상 타워 주차장</p>
+                  <p className="pl-[5%] text-blue-600">파란색 유도선 {'=>'} <span className="font-bold">지하 3층 주차장 (추천)</span></p>
+                  <p className="pl-[5%] text-pink-500">분홍색 유도선 {'=>'} 지상 타워 주차장</p>
                 </div>
               </li>
             </ul>

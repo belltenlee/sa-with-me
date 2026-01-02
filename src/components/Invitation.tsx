@@ -18,7 +18,7 @@ export default function Invitation() {
                     초대합니다
                 </h2>
 
-                <div className="font-serif text-charcoal leading-loose text-base sm:text-lg space-y-6 mb-16 max-w-md mx-auto">
+                <div className="font-serif text-charcoal leading-loose text-base sm:text-lg space-y-6 mb-16 max-w-md mx-auto break-keep">
                     <p>
                         서로의 비슷함에 설레어 시작된 인연으로<br />
                         서로의 다름까지 품으며<br />

@@ -25,20 +25,20 @@ export default function WeddingInfo() {
                                 className="w-full h-auto object-cover"
                             />
                         </div>
-                        <p className="font-serif text-charcoal leading-relaxed">
+                        <p className="font-serif text-charcoal leading-relaxed break-keep">
                             예식 전 준비된 포토 부스에서<br />
                             인생네컷 사진을 촬영하시고,<br />
                             소중한 축하 메시지를 남겨주세요
                             <span className="text-gold">❤️</span>
                         </p>
-                        <div className="bg-gray-50 py-6 px-12 rounded-lg space-y-3 text-sm font-serif">
+                        <div className="bg-gray-50 py-6 px-6 sm:px-12 rounded-lg space-y-3 text-sm font-serif">
                             <div className="flex justify-between border-b border-gray-200 pb-2">
                                 <span className="font-bold text-gray-600">운영 시간</span>
-                                <span className="text-charcoal">오후 4시 ~ 5시 30분</span>
+                                <span className="text-charcoal whitespace-nowrap">오후 4시 ~ 5시 30분</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="font-bold text-gray-600">장소</span>
-                                <span className="text-charcoal">1층 로비 방향 입구</span>
+                                <span className="text-charcoal whitespace-nowrap">1층 로비 방향 입구</span>
                             </div>
                         </div>
                     </div>
@@ -53,20 +53,20 @@ export default function WeddingInfo() {
                                 className="w-full h-auto object-cover"
                             />
                         </div>
-                        <p className="font-serif text-charcoal leading-relaxed ">
+                        <p className="font-serif text-charcoal leading-relaxed break-keep">
                             제철 식재료로 정성껏 준비한<br />
                             120여 가지 메뉴의 프리미엄 뷔페가<br />
                             다양한 주류와 함께 준비되어 있습니다.
                         </p>
 
-                        <div className="bg-gray-50 py-6 px-12 rounded-lg space-y-3 text-sm font-serif">
+                        <div className="bg-gray-50 py-6 px-6 sm:px-12 rounded-lg space-y-3 text-sm font-serif">
                             <div className="flex justify-between border-b border-gray-200 pb-2">
                                 <span className="font-bold text-gray-600">운영 시간</span>
-                                <span className="text-charcoal">오후 4시 30분 ~ 7시 30분</span>
+                                <span className="text-charcoal whitespace-nowrap">오후 4시 30분 ~ 7시 30분</span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="font-bold text-gray-600">장소</span>
-                                <span className="text-charcoal">1층 연회장</span>
+                                <span className="text-charcoal whitespace-nowrap">1층 연회장</span>
                             </div>
                         </div>
 
