@@ -67,7 +67,7 @@ export default function ShareButton() {
       <button
         onClick={handleShare}
         // className="flex items-center justify-center gap-2 bg-yellow-400 text-black px-4 py-2 rounded-full hover:bg-yellow-500 transition-colors"
-        className="flex items-center justify-center gap-2 bg-[#FAE100] text-[#3C1E1E] px-8 py-3 rounded-full hover:bg-gold transition-colors duration-300 font-serif"
+        className="flex items-center justify-center gap-2 bg-[#FAE100] text-[#3C1E1E] px-8 py-3 rounded-full hover:bg-gold transition-colors duration-300 font-pretendard"
       >
         카카오톡 공유하기
       </button>

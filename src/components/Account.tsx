@@ -58,11 +58,20 @@ export default function Account() {
           viewport={{ once: true }}
           className="text-center mb-10"
         >
-          <h2 className="font-playfair text-3xl text-gold mb-4">마음 전하실 곳</h2>
-          <p className="font-serif text-charcoal/60 text-sm">축의금 계좌</p>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.6 }}
+            className="inline-block px-12 py-4 border border-[#EBC7C7] rounded-[50%] mb-6 bg-[#FFF5F5] shadow-[0_4px_15px_rgba(235,199,199,0.3)] relative group"
+          >
+            <div className="absolute inset-0 rounded-[50%] border border-[#F4E2E2] scale-[1.1] pointer-events-none group-hover:scale-[1.15] transition-transform duration-500" />
+            <h2 className="font-paperlogy font-semibold text-2xl text-[#D99A9A] tracking-widest relative z-10">마음 전하실 곳</h2>
+          </motion.div>
+          <p className="font-pretendard text-charcoal/60 text-sm">축의금 계좌</p>
         </motion.div>
 
-        <div className="space-y-4 font-serif">
+        <div className="space-y-4 font-pretendard">
           {accountGroups.map((group) => (
             <div key={group.label} className="border border-gray-100 rounded-lg overflow-hidden">
               <button

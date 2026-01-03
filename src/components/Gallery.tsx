@@ -100,14 +100,14 @@ export default function Gallery() {
         {displayedCount < images.length ? (
           <button
             onClick={() => setDisplayedCount(images.length)}
-            className="px-6 py-2 text-sm text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50 transition-colors duration-300"
+            className="px-6 py-2 text-sm text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50 transition-colors duration-300 font-pretendard"
           >
             사진 더 보기 (+{images.length - displayedCount})
           </button>
         ) : (
           <button
             onClick={() => setDisplayedCount(6)}
-            className="px-6 py-2 text-sm text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50 transition-colors duration-300"
+            className="px-6 py-2 text-sm text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50 transition-colors duration-300 font-pretendard"
           >
             접기
           </button>

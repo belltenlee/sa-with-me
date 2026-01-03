@@ -99,7 +99,7 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="p-6 border-b border-gray-100 text-center relative">
-                            <h3 className="font-serif text-xl text-charcoal font-bold">참석 의사 전달</h3>
+                            <h3 className="font-pretendard text-xl text-charcoal font-bold">참석 의사 전달</h3>
                             <button
                                 onClick={onClose}
                                 className="absolute top-4 right-4 text-gray-400 hover:text-charcoal transition-colors p-2"
@@ -113,22 +113,22 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
                         {!showConfirm ? (
                             <>
                                 <div className="p-5 border-b border-gray-100 text-center relative">
-                                    <h2 className="font-serif text-sm text-gray-600">원활한 식사 준비를 위해 참석 여부를 알려주세요.</h2>
+                                    <h2 className="font-pretendard text-sm text-gray-600">원활한 식사 준비를 위해 참석 여부를 알려주세요.</h2>
                                 </div>
                                 <form onSubmit={handleSubmit} className="p-6 space-y-4">
                                     <div>
-                                        <label className="block text-sm font-serif text-gray-600 mb-1">성함</label>
+                                        <label className="block text-sm font-pretendard text-gray-600 mb-1">성함</label>
                                         <input
                                             type="text"
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
                                             placeholder="성함을 입력해주세요"
-                                            className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-gold transition-colors font-serif"
+                                            className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-gold transition-colors font-pretendard"
                                             required
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-serif text-gray-600 mb-1">참석 인원 (본인 포함)</label>
+                                        <label className="block text-sm font-pretendard text-gray-600 mb-1">참석 인원 (본인 포함)</label>
                                         <div className="flex items-center gap-4 space-y-2">
                                             <button
                                                 type="button"
@@ -137,7 +137,7 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
                                             >
                                                 -
                                             </button>
-                                            <span className="font-serif text-lg w-8 text-center">{attendeeCount}</span>
+                                            <span className="font-pretendard text-lg w-8 text-center">{attendeeCount}</span>
                                             <button
                                                 type="button"
                                                 onClick={() => setAttendeeCount(attendeeCount + 1)}
@@ -153,7 +153,7 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="w-full bg-charcoal text-white py-3 rounded-lg hover:bg-gold transition-colors font-serif mt-4 disabled:opacity-50"
+                                        className="w-full bg-charcoal text-white py-3 rounded-lg hover:bg-gold transition-colors font-pretendard mt-4 disabled:opacity-50"
                                     >
                                         {isSubmitting ? "전송 중..." : "참석 의사 보내기"}
                                     </button>
@@ -161,21 +161,21 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
                             </>
                         ) : (
                             <div className="p-8 text-center space-y-6">
-                                <p className="font-serif text-gray-700 leading-relaxed">
+                                <p className="font-pretendard text-gray-700 leading-relaxed">
                                     이미 입력된 성함입니다.<br />
                                     입력하신 내용으로 수정하시겠습니까?
                                 </p>
                                 <div className="flex gap-3">
                                     <button
                                         onClick={onClose}
-                                        className="flex-1 py-3 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition-colors font-serif"
+                                        className="flex-1 py-3 rounded-lg border border-gray-200 text-gray-500 hover:bg-gray-50 transition-colors font-pretendard"
                                     >
                                         아니오
                                     </button>
                                     <button
                                         onClick={handleUpdate}
                                         disabled={isSubmitting}
-                                        className="flex-1 py-3 bg-charcoal text-white rounded-lg hover:bg-gold transition-colors font-serif disabled:opacity-50"
+                                        className="flex-1 py-3 bg-charcoal text-white rounded-lg hover:bg-gold transition-colors font-pretendard disabled:opacity-50"
                                     >
                                         {isSubmitting ? "수정 중..." : "예"}
                                     </button>

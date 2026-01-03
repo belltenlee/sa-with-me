@@ -86,7 +86,7 @@ export default function Map() {
             color: #2C2C2C;
             text-align: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            font-family: serif;
+            font-family: pretendard;
             border: 1px solid #F9F7F2;
           ">라시따시어터</div>
         `;
@@ -121,7 +121,7 @@ export default function Map() {
             onClick={() => setIsMapInteractive(true)}
             onTouchStart={() => setIsMapInteractive(true)}
           >
-            <div className="bg-white/90 px-4 py-2 rounded-full shadow-lg text-sm font-serif text-charcoal animate-pulse">
+            <div className="bg-white/90 px-4 py-2 rounded-full shadow-lg text-sm font-pretendard text-charcoal animate-pulse">
               지도를 움직이려면 터치하세요
             </div>
           </div>
@@ -134,17 +134,17 @@ export default function Map() {
         )}
       </div>
 
-      <div className="text-center space-y-2 font-serif text-charcoal">
+      <div className="text-center space-y-2 font-pretendard text-charcoal">
         <p className="text-lg font-bold">라시따시어터</p>
         <p className="text-sm text-gray-500">서울 서초구 매헌로 16</p>
         <p className="text-sm text-gray-500">라시따시어터 1층 그랜드볼룸</p>
       </div>
 
       <div className="space-y-3">
-        <div>
+        <div className="font-pretendard">
           <h4 className="font-bold text-gold mb-2 text-center">주차 안내</h4>
           {/* div 영역 내 좌측여백 추가 화면퍼센티지로 */}
-          <div className="pl-[10%] space-y-2">
+          <div className="pl-[10%] space-y-2 text-left">
             <ul className="list-disc list-inside space-y-1 text-sm break-keep">
               <li>주차 최대 1,000대 가능</li>
               <li>3시간 무료 주차 (차량 등록 불필요)</li>
@@ -160,7 +160,7 @@ export default function Map() {
         </div>
       </div>
 
-      <div className="flex justify-center gap-3 flex-wrap">
+      <div className="flex justify-center gap-3 flex-wrap font-pretendard">
         <a
           href="https://map.kakao.com/link/to/라시따시어터,37.4624,127.0369"
           target="_blank"
@@ -192,7 +192,7 @@ export default function Map() {
         </button>*/}
       </div>
 
-      <InfoPopup
+      {/* <InfoPopup
         isOpen={isParkingPopupOpen}
         onClose={() => setIsParkingPopupOpen(false)}
         title="주차 안내"
@@ -217,7 +217,7 @@ export default function Map() {
             </div>
           </div>
         }
-      />
+      /> */}
     </div>
   );
 }

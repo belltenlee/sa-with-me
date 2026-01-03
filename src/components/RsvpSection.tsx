@@ -28,17 +28,16 @@ export default function RsvpSection() {
 
     return (
         <>
-            <section ref={sectionRef} className="py-10 px-6 bg-cream/30 text-center">
+            <section ref={sectionRef} className="py-20 px-6 bg-[#FDFBF7] text-center">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
                 >
-                    <p className="font-serif text-charcoal/80 mb-6 leading-relaxed">
-                        참석이 어려우시더라도<br />
-                        마음으로 축복해 주시길 바랍니다.<br />
-                        방명록도 남겨주세요!
+                    <p className="font-pretendard text-charcoal/80 mb-6 leading-relaxed">
+                        원활한 식사 준비를 위해<br />
+                        참석 의사 전달을 부탁드립니다.<br />
                     </p>
                     <button
                         onClick={() => setIsModalOpen(true)}

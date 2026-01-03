@@ -16,6 +16,7 @@ module.exports = {
         serif: ['var(--font-noto-serif)', 'serif'],
         playfair: ['var(--font-playfair)', 'serif'],
         pretendard: ['Pretendard', 'sans-serif'],
+        paperlogy: ['Paperlogy', 'sans-serif'],
       },
     },
   },

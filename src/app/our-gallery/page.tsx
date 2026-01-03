@@ -23,7 +23,7 @@ export default function OurGalleryPage() {
                     <SharedGallery />
                 </main>
 
-                <footer className="py-8 text-center text-gray-400 text-sm font-serif border-t border-gray-100">
+                <footer className="py-8 text-center text-gray-400 text-sm font-pretendard border-t border-gray-100">
                     <p>© 2026 성애 & 종열. All rights reserved.</p>
                 </footer>
             </div>

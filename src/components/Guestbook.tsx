@@ -63,7 +63,7 @@ export default function Guestbook() {
     };
 
     return (
-        <section className="py-16 px-6 bg-cream">
+        <section className="py-16 px-6 bg-cream font-pretendard">
             <div className="max-w-md mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -71,8 +71,17 @@ export default function Guestbook() {
                     viewport={{ once: true }}
                     className="text-center mb-10"
                 >
-                    <h2 className="font-playfair text-3xl text-gold mb-4">방명록</h2>
-                    <p className="font-serif text-charcoal/60 text-sm">축복의 메시지를 남겨주세요</p>
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ duration: 0.6 }}
+                        className="inline-block px-12 py-4 border border-[#BDD3E9] rounded-[50%] mb-6 bg-[#F0F7FF] shadow-[0_4px_15px_rgba(189,211,233,0.3)] relative group"
+                    >
+                        <div className="absolute inset-0 rounded-[50%] border border-[#E1EEFB] scale-[1.1] pointer-events-none group-hover:scale-[1.15] transition-transform duration-500" />
+                        <h2 className="font-paperlogy font-semibold text-2xl text-[#7DA2C7] tracking-widest relative z-10">방명록</h2>
+                    </motion.div>
+                    <p className="font-pretendard text-charcoal/60 text-sm">축복의 메시지를 남겨주세요</p>
                 </motion.div>
 
                 <form onSubmit={handleSubmit} className="space-y-4 mb-12">
@@ -82,7 +91,7 @@ export default function Guestbook() {
                             placeholder="이름"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-colors bg-white font-serif"
+                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-colors bg-white font-pretendard"
                             maxLength={10}
                         />
                     </div>
@@ -91,14 +100,14 @@ export default function Guestbook() {
                             placeholder="축하 메시지를 작성해주세요"
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-colors bg-white h-32 resize-none font-serif"
+                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-colors bg-white h-32 resize-none font-pretendard"
                             maxLength={200}
                         />
                     </div>
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-charcoal text-white py-3 rounded-lg font-serif hover:bg-gold transition-colors disabled:opacity-50"
+                        className="w-full bg-charcoal text-white py-3 rounded-lg font-pretendard hover:bg-gold transition-colors disabled:opacity-50"
                     >
                         {isSubmitting ? '등록 중...' : '메시지 남기기'}
                     </button>
@@ -126,7 +135,7 @@ export default function Guestbook() {
                     </AnimatePresence>
 
                     {messages.length === 0 && (
-                        <div className="text-center text-gray-400 py-8 font-serif text-sm">
+                        <div className="text-center text-gray-400 py-8 font-pretendard text-sm">
                             첫 번째로 축하 메시지를 남겨주세요!
                         </div>
                     )}
