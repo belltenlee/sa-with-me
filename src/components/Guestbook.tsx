@@ -63,7 +63,7 @@ export default function Guestbook() {
     };
 
     return (
-        <section className="py-16 px-6 bg-cream font-pretendard">
+        <section className="py-16 px-6 font-pretendard">
             <div className="max-w-md mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -77,12 +77,11 @@ export default function Guestbook() {
                         whileHover={{ scale: 1.02 }}
                         transition={{ duration: 0.6 }}
                         // className="inline-block px-12 py-4 border border-[#BDD3E9] rounded-[50%] mb-6 bg-[#F0F7FF] shadow-[0_4px_15px_rgba(189,211,233,0.3)] relative group"
-                        className="inline-block px-10 py-4 border border-[#EBC7C7] rounded-[50%] mb-6 bg-[#FFF5F5] shadow-[0_4px_15px_rgba(235,199,199,0.3)] relative group"
+                        className="inline-block px-10 py-4 border border-[#EBC7C7] rounded-[50%] mb-6 bg-[#FFF5F5] shadow-[0_4px_15px_rgba(235,199,199,0.3)]"
                     >
                         {/* <div className="absolute inset-0 rounded-[50%] border border-[#E1EEFB] scale-[1.1] pointer-events-none group-hover:scale-[1.15] transition-transform duration-500" />
                         <h2 className="font-paperlogy font-semibold text-2xl text-[#7DA2C7] tracking-widest relative z-10">방명록</h2> */}
-                        <div className="absolute inset-0 rounded-[50%] border border-[#F4E2E2] scale-[1.1] pointer-events-none group-hover:scale-[1.15] transition-transform duration-500" />
-                        <h2 className="font-paperlogy font-semibold text-2xl text-[#D99A9A] tracking-widest relative z-10">방명록</h2>
+                        <h2 className="font-paperlogy font-semibold text-2xl text-[#D99A9A] tracking-widest">방명록</h2>
                     </motion.div>
                     <p className="font-pretendard text-charcoal/60 text-sm">축복의 메시지를 남겨주세요</p>
                 </motion.div>
