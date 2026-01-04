@@ -57,3 +57,19 @@ export const getAllRsvps = async (pageSize: number = 30, lastDoc: QueryDocumentS
         lastDoc: querySnapshot.docs[querySnapshot.docs.length - 1] || null
     };
 };
+
+export const getTotalAttendeeCount = async () => {
+    const rsvpRef = collection(db, "rsvp");
+    const querySnapshot = await getDocs(rsvpRef);
+    return querySnapshot.docs.reduce((acc, doc) => acc + (doc.data().attendeeCount || 0), 0);
+};
+
+export const fetchAllRsvps = async () => {
+    const rsvpRef = collection(db, "rsvp");
+    const q = query(rsvpRef, orderBy("timestamp", "desc"));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    })) as RsvpData[];
+};
