@@ -63,7 +63,7 @@ export default function Account() {
             whileInView={{ opacity: 1, scale: 1 }}
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.6 }}
-            className="inline-block px-12 py-4 border border-[#EBC7C7] rounded-[50%] mb-6 bg-[#FFF5F5] shadow-[0_4px_15px_rgba(235,199,199,0.3)] relative group"
+            className="inline-block px-10 py-4 border border-[#EBC7C7] rounded-[50%] mb-6 bg-[#FFF5F5] shadow-[0_4px_15px_rgba(235,199,199,0.3)] relative group"
           >
             <div className="absolute inset-0 rounded-[50%] border border-[#F4E2E2] scale-[1.1] pointer-events-none group-hover:scale-[1.15] transition-transform duration-500" />
             <h2 className="font-paperlogy font-semibold text-2xl text-[#D99A9A] tracking-widest relative z-10">마음 전하실 곳</h2>

@@ -142,8 +142,7 @@ export default function Map() {
 
       <div className="space-y-3">
         <div className="font-pretendard">
-          <h4 className="font-bold text-gold mb-2 text-center">주차 안내</h4>
-          {/* div 영역 내 좌측여백 추가 화면퍼센티지로 */}
+          <h4 className="font-bold text-gold mb-2 text-center font-pretendard">주차 안내</h4>
           <div className="pl-[10%] space-y-2 text-left">
             <ul className="list-disc list-inside space-y-1 text-sm break-keep">
               <li>주차 최대 1,000대 가능</li>
@@ -154,6 +153,22 @@ export default function Map() {
                   <p className="pl-[3%] text-blue-600">파란색 유도선 {'=>'} <span className="font-bold">지하 3층 주차장 (추천)</span></p>
                   <p className="pl-[3%] text-pink-500">분홍색 유도선 {'=>'} 지상 타워 주차장</p>
                 </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <div className="font-pretendard">
+          <h4 className="font-bold text-gold mb-2 text-center font-pretendard">셔틀 안내</h4>
+          <div className="pl-[10%] space-y-2 text-left">
+            <ul className="list-disc list-inside space-y-1 text-sm break-keep">
+              <li>양재시민의숲역 5번 출구 </li>
+              <li>예식 1시간 전부터 10분 간격으로 운행</li>
+              <li>[마을버스] 5번 출구 건너편 서초20 탑승
+                <br />
+                <span className="pl-[8%] inline-block">→ [하이브랜드] 하차</span>
               </li>
             </ul>
           </div>

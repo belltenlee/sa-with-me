@@ -112,9 +112,9 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
 
                         {!showConfirm ? (
                             <>
-                                <div className="p-5 border-b border-gray-100 text-center relative">
+                                {/* <div className="p-5 border-b border-gray-100 text-center relative">
                                     <h2 className="font-pretendard text-sm text-gray-600">원활한 식사 준비를 위해 참석 여부를 알려주세요.</h2>
-                                </div>
+                                </div> */}
                                 <form onSubmit={handleSubmit} className="p-6 space-y-4">
                                     <div>
                                         <label className="block text-sm font-pretendard text-gray-600 mb-1">성함</label>
@@ -129,15 +129,16 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
                                     </div>
                                     <div>
                                         <label className="block text-sm font-pretendard text-gray-600 mb-1">참석 인원 (본인 포함)</label>
+                                        {/* //수평정렬 class 추가 */}
                                         <div className="flex items-center gap-4 space-y-2">
                                             <button
                                                 type="button"
                                                 onClick={() => setAttendeeCount(Math.max(1, attendeeCount - 1))}
-                                                className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gold hover:text-gold"
+                                                className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gold hover:text-gold mt-2"
                                             >
                                                 -
                                             </button>
-                                            <span className="font-pretendard text-lg w-8 text-center">{attendeeCount}</span>
+                                            <span className="font-pretendard text-lg w-8 text-center pt-0.5">{attendeeCount}</span>
                                             <button
                                                 type="button"
                                                 onClick={() => setAttendeeCount(attendeeCount + 1)}

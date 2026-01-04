@@ -17,7 +17,7 @@ export default function WeddingInfo() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.6 }}
-                    className="inline-block px-12 py-4 border border-[#EBC7C7] rounded-[50%] mb-12 bg-[#FFF5F5] shadow-[0_4px_15px_rgba(235,199,199,0.3)] relative group"
+                    className="inline-block px-10 py-4 border border-[#EBC7C7] rounded-[50%] mb-12 bg-[#FFF5F5] shadow-[0_4px_15px_rgba(235,199,199,0.3)] relative group"
                 >
                     <div className="absolute inset-0 rounded-[50%] border border-[#F4E2E2] scale-[1.1] pointer-events-none group-hover:scale-[1.15] transition-transform duration-500" />
                     <h2 className="font-paperlogy font-semibold text-2xl text-[#D99A9A] tracking-widest relative z-10">예식 안내</h2>
@@ -31,11 +31,11 @@ export default function WeddingInfo() {
                             <h3 className="font-paperlogy text-[#D99A9A] text-xl tracking-widest font-bold mb-2">포토부스</h3>
                             <div className="w-8 h-[1px] bg-[#EBC7C7]/50" />
                         </div>
-                        <div className="rounded-lg overflow-hidden shadow-md mb-4">
+                        <div className="rounded-lg overflow-hidden shadow-md mb-4 bg-white p-2">
                             <img
-                                src={getAssetPath("/images/info/photobooth001.png")}
-                                alt="포토부스"
-                                className="w-full h-auto object-cover"
+                                src={getAssetPath("/images/info/photobooth_v3.png")}
+                                alt="포토부스 샘플"
+                                className="w-full h-auto object-cover rounded-sm"
                             />
                         </div>
                         <p className="font-pretendard text-charcoal leading-[1.8] tracking-tight break-keep">
@@ -44,14 +44,14 @@ export default function WeddingInfo() {
                             소중한 축하 메시지를 남겨주세요
                             <span className="text-gold">❤️</span>
                         </p>
-                        <div className="bg-gray-50 py-6 px-6 sm:px-12 rounded-lg space-y-3 text-sm font-pretendard">
-                            <div className="flex justify-between border-b border-gray-200 pb-2">
-                                <span className="font-bold text-gray-600">운영 시간</span>
-                                <span className="text-charcoal whitespace-nowrap">오후 4시 ~ 5시 30분</span>
+                        <div className="bg-white/70 border border-[#EBC7C7]/20 py-7 px-6 sm:px-10 rounded-2xl space-y-4 text-sm font-pretendard shadow-[0_4px_12px_rgba(235,199,199,0.1)]">
+                            <div className="flex justify-between items-center border-b border-[#EBC7C7]/10 pb-3">
+                                <span className="text-[#D99A9A] font-semibold tracking-tight">운영 시간</span>
+                                <span className="text-charcoal font-medium">오후 4시 ~ 5시 30분</span>
                             </div>
-                            <div className="flex justify-between">
-                                <span className="font-bold text-gray-600">장소</span>
-                                <span className="text-charcoal whitespace-nowrap">1층 로비 방향 입구</span>
+                            <div className="flex justify-between items-center">
+                                <span className="text-[#D99A9A] font-semibold tracking-tight">장소</span>
+                                <span className="text-charcoal font-medium">1층 로비 방향 입구</span>
                             </div>
                         </div>
                     </div>
@@ -63,11 +63,11 @@ export default function WeddingInfo() {
                             <h3 className="font-paperlogy text-[#D99A9A] text-xl tracking-widest font-bold mb-2">프리미엄 뷔페</h3>
                             <div className="w-8 h-[1px] bg-[#EBC7C7]/50" />
                         </div>
-                        <div className="rounded-lg overflow-hidden shadow-md mb-4">
+                        <div className="rounded-lg overflow-hidden shadow-md mb-4 bg-white p-2">
                             <img
                                 src={getAssetPath("/images/info/banquet001.png")}
                                 alt="프리미엄 뷔페"
-                                className="w-full h-auto object-cover"
+                                className="w-full h-auto object-cover rounded-sm"
                             />
                         </div>
                         {/* <p className="font-pretendard text-charcoal leading-[1.8] tracking-tight break-keep">
@@ -76,14 +76,14 @@ export default function WeddingInfo() {
                             다양한 주류와 함께 준비되어 있습니다.
                         </p> */}
 
-                        <div className="bg-gray-50 py-6 px-6 sm:px-12 rounded-lg space-y-3 text-sm font-pretendard">
-                            <div className="flex justify-between border-b border-gray-200 pb-2">
-                                <span className="font-bold text-gray-600">운영 시간</span>
-                                <span className="text-charcoal whitespace-nowrap">오후 4시 30분 ~ 7시 30분</span>
+                        <div className="bg-white/70 border border-[#EBC7C7]/20 py-7 px-6 sm:px-10 rounded-2xl space-y-4 text-sm font-pretendard shadow-[0_4px_12px_rgba(235,199,199,0.1)]">
+                            <div className="flex justify-between items-center border-b border-[#EBC7C7]/10 pb-3">
+                                <span className="text-[#D99A9A] font-semibold tracking-tight">운영 시간</span>
+                                <span className="text-charcoal font-medium">오후 4시 30분 ~ 7시 30분</span>
                             </div>
-                            <div className="flex justify-between">
-                                <span className="font-bold text-gray-600">장소</span>
-                                <span className="text-charcoal whitespace-nowrap">1층 연회장</span>
+                            <div className="flex justify-between items-center">
+                                <span className="text-[#D99A9A] font-semibold tracking-tight">장소</span>
+                                <span className="text-charcoal font-medium">1층 연회장</span>
                             </div>
                         </div>
 
