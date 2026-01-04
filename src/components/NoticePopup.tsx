@@ -66,7 +66,7 @@ export default function NoticePopup() {
                                     </svg>
                                 </div> */}
                                 <div>
-                                    <h2 className="font-playfair text-2xl text-charcoal">
+                                    <h2 className="font-pretendard text-2xl text-charcoal">
                                         Notice
                                     </h2>
                                 </div>
@@ -74,7 +74,7 @@ export default function NoticePopup() {
 
 
 
-                            <div className="font-serif text-charcoal/80 text-md leading-relaxed space-y-3">
+                            <div className="font-pretendard text-charcoal/80 text-md leading-relaxed space-y-3">
                                 <p>
                                     직접 만든 모바일 청첩장을<br />
                                     풍성하게 꾸미는 중입니다.
@@ -88,7 +88,7 @@ export default function NoticePopup() {
 
                             <button
                                 onClick={handleClose}
-                                className="w-full bg-charcoal text-white py-3 rounded-full hover:bg-gold transition-colors font-serif text-sm mt-6"
+                                className="w-full bg-charcoal text-white py-3 rounded-full hover:bg-gold transition-colors font-pretendard text-sm mt-6"
                             >
                                 확인
                             </button>

@@ -54,7 +54,7 @@ export default function InfoPopup({ isOpen, onClose, title, content }: InfoPopup
                         </div>
 
                         {/* Content */}
-                        <div className="p-6 max-h-[70vh] overflow-y-auto font-serif text-charcoal/80 leading-relaxed">
+                        <div className="p-6 max-h-[70vh] overflow-y-auto font-pretendard text-charcoal/80 leading-relaxed">
                             {content}
                         </div>
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import InfoPopup from './InfoPopup';
+import { motion } from 'framer-motion';
 
 interface KakaoLatLng {
   getLat(): number;
@@ -110,7 +111,13 @@ export default function Map() {
   }, []);
 
   return (
-    <div className="w-full space-y-6">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="w-full space-y-6"
+    >
       <div className="relative w-full h-[300px] rounded-lg overflow-hidden shadow-md bg-gray-100">
         <div id="map" className="w-full h-full" />
 
@@ -177,31 +184,26 @@ export default function Map() {
 
       <div className="flex justify-center gap-3 flex-wrap font-pretendard">
         <a
+          href="https://apis.naver.com/mobile_place/places/11566861"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-[#03C75A] text-white px-6 py-2 rounded-full text-sm font-bold hover:opacity-90 transition-opacity flex items-center gap-2"
+        >
+          <span>네이버 지도</span>
+        </a>
+        <a
           href="https://map.kakao.com/link/to/라시따시어터,37.4624,127.0369"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-[#FAE100] text-[#3C1E1E] px-6 py-2 rounded-full text-sm font-bold hover:opacity-90 transition-opacity"
+          className="bg-[#FAE100] text-[#3C1E1E] px-6 py-2 rounded-full text-sm font-bold hover:opacity-90 transition-opacity flex items-center gap-2"
         >
-          카카오맵
+          <span>카카오맵</span>
         </a>
-        <a
-          href="https://map.naver.com/p/search/라시따시어터"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-[#03C75A] text-white px-6 py-2 rounded-full text-sm font-bold hover:opacity-90 transition-opacity"
-        >
-          네이버지도
-        </a>
-        {/* <a
-          href="tel:02-2155-2222"
-          className="bg-charcoal text-white px-6 py-2 rounded-full text-sm font-serif hover:bg-gold transition-colors"
-        >
-          전화하기
-        </a> */}
+
         {/*
         <button
           onClick={() => setIsParkingPopupOpen(true)}
-          className="bg-white border border-charcoal text-charcoal px-6 py-2 rounded-full text-sm font-serif hover:bg-gray-50 transition-colors"
+          className="bg-white border border-charcoal text-charcoal px-6 py-2 rounded-full text-sm font-pretendard hover:bg-gray-50 transition-colors"
         >
           주차 안내
         </button>*/}
@@ -233,6 +235,6 @@ export default function Map() {
           </div>
         }
       /> */}
-    </div>
+    </motion.div>
   );
 }

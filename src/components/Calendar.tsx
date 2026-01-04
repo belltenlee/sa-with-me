@@ -26,7 +26,7 @@ export default function Calendar() {
                 </h3>
             </div>
 
-            <div className="grid grid-cols-7 gap-y-4 text-center text-sm font-serif">
+            <div className="grid grid-cols-7 gap-y-4 text-center text-sm font-pretendard">
                 {/* 요일 헤더 */}
                 {days.map((day, i) => (
                     <div key={day} className={`text-xs ${i === 0 ? 'text-red-400' : 'text-gray-400'}`}>

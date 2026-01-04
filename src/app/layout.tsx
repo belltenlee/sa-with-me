@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Noto_Serif_KR, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const notoSerifKr = Noto_Serif_KR({
   subsets: ["latin"],
@@ -14,8 +16,30 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Sungae & Joneyeol's Wedding",
-  description: "We invite you to our wedding.",
+  title: "이종열 ❤️ 박성애 결혼합니다",
+  description: "2026년 2월 21일 토요일 오후 5시 라시따시어터",
+  openGraph: {
+    title: "이종열 ❤️ 박성애 결혼합니다",
+    description: "2026년 2월 21일 토요일 오후 5시 라시따시어터",
+    url: "https://sa-with-me.vercel.app", // Assuming Vercel deployment or similar
+    siteName: "이종열 & 박성애 모바일 청첩장",
+    images: [
+      {
+        url: "/images/gallery/G01.jpg", // Next.js will resolve this relative to metadataBase
+        width: 800,
+        height: 600,
+        alt: "Wedding Couple",
+      },
+    ],
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "이종열 ❤️ 박성애 결혼합니다",
+    description: "2026년 2월 21일 토요일 오후 5시 라시따시어터",
+    images: ["/images/gallery/G01.jpg"],
+  },
 };
 
 export default function RootLayout({
@@ -29,6 +53,19 @@ export default function RootLayout({
         <main className="min-h-screen w-full max-w-md mx-auto bg-white shadow-2xl relative">
           {children}
         </main>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable
+          pauseOnHover={false}
+          theme="light"
+          toastClassName="font-pretendard text-sm rounded-full shadow-lg m-4"
+        />
       </body>
     </html>
   );

@@ -12,11 +12,14 @@ import WeddingInfo from "@/components/WeddingInfo";
 import RsvpSection from "@/components/RsvpSection";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import BottomNav from "@/components/BottomNav";
+import FallingPetals from "@/components/FallingPetals";
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-cream">
       {/* <NoticePopup /> */}
+      <FallingPetals />
       <Hero />
 
       <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen snap-start">
@@ -25,7 +28,9 @@ export default function Home() {
 
         <WeddingInfo />
 
-        <RsvpSection />
+        <div id="rsvp-section">
+          <RsvpSection />
+        </div>
 
         {/* Gallery */  /*bg-[#F9FAFB] */}
         <section className="py-20 px-6 text-center bg-[#F8F6F2]" hidden={false}>
@@ -54,7 +59,7 @@ export default function Home() {
         </section>
 
         {/* Location */}
-        <section className="py-16 px-6 text-center">
+        <section id="map-section" className="py-16 px-6 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}

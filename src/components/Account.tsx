@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { toast } from 'react-toastify';
 
 interface AccountInfo {
   bank: string;
@@ -32,16 +33,15 @@ const accountGroups: AccountGroup[] = [
 ];
 
 export default function Account() {
-  const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
   const [openGroup, setOpenGroup] = useState<string | null>(null);
 
-  const handleCopy = async (number: string, id: string) => {
+  const handleCopy = async (number: string) => {
     try {
       await navigator.clipboard.writeText(number);
-      setCopiedIndex(id);
-      setTimeout(() => setCopiedIndex(null), 2000);
+      toast.success('계좌번호가 복사되었습니다 ✨');
     } catch (err) {
       console.error('Failed to copy:', err);
+      toast.error('복사에 실패했습니다.');
     }
   };
 
@@ -72,15 +72,22 @@ export default function Account() {
 
         <div className="space-y-4 font-pretendard">
           {accountGroups.map((group) => (
-            <div key={group.label} className="border border-gray-100 rounded-lg overflow-hidden">
+            <div key={group.label} className="border border-[#EBC7C7]/20 rounded-2xl overflow-hidden bg-white/40 backdrop-blur-[2px]">
               <button
                 onClick={() => toggleGroup(group.label)}
-                className="w-full px-6 py-4 flex justify-between items-center bg-cream/30 hover:bg-cream/50 transition-colors"
+                className="w-full px-6 py-5 flex justify-between items-center hover:bg-white/60 transition-all duration-300 group"
               >
-                <span className="text-charcoal font-medium whitespace-nowrap">{group.label}</span>
-                <span className={`transform transition-transform duration-300 ${openGroup === group.label ? 'rotate-180' : ''}`}>
-                  ▼
+                <span className={`text-[15px] font-semibold tracking-tight transition-colors duration-300 ${openGroup === group.label ? 'text-[#D99A9A]' : 'text-charcoal/80'}`}>
+                  {group.label}
                 </span>
+                <motion.span
+                  animate={{ rotate: openGroup === group.label ? 180 : 0 }}
+                  className={`${openGroup === group.label ? 'text-[#D99A9A]' : 'text-charcoal/30'}`}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </motion.span>
               </button>
 
               <AnimatePresence>
@@ -89,28 +96,27 @@ export default function Account() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
                   >
-                    <div className="bg-white p-6 space-y-4 border-t border-gray-100">
-                      {group.accounts.map((account, idx) => {
-                        const id = `${group.label}-${idx}`;
-                        return (
-                          <div key={idx} className="flex justify-between items-center">
-                            <div className="text-sm">
-                              <p className="text-charcoal mb-1">
-                                <span className="font-bold">{account.holder}</span>
-                              </p>
-                              <p className="text-gray-500">{account.bank} {account.number}</p>
-                            </div>
-                            <button
-                              onClick={() => handleCopy(`${account.bank} ${account.number}`, id)}
-                              className="px-3 py-1.5 text-xs border border-gray-200 rounded-full hover:border-gold hover:text-gold transition-colors"
-                            >
-                              {copiedIndex === id ? '복사완료' : '복사하기'}
-                            </button>
+                    <div className="bg-white/80 p-6 space-y-5 border-t border-[#EBC7C7]/10">
+                      {group.accounts.map((account, idx) => (
+                        <div key={idx} className="flex justify-between items-center">
+                          <div className="space-y-1">
+                            <p className="text-charcoal font-bold text-[15px]">
+                              {account.holder}
+                            </p>
+                            <p className="text-charcoal/50 text-[13px] tracking-tight">
+                              {account.bank} <span className="text-[#EBC7C7]">|</span> {account.number}
+                            </p>
                           </div>
-                        );
-                      })}
+                          <button
+                            onClick={() => handleCopy(account.number)}
+                            className="px-4 py-1.5 text-[11px] font-bold text-[#D99A9A] bg-white border border-[#EBC7C7]/40 rounded-full hover:bg-[#FFF5F5] hover:border-[#D99A9A]/60 transition-all duration-300 active:scale-95"
+                          >
+                            복사
+                          </button>
+                        </div>
+                      ))}
                     </div>
                   </motion.div>
                 )}

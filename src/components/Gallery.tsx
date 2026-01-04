@@ -9,11 +9,19 @@ export default function Gallery() {
   const [displayedCount, setDisplayedCount] = useState(6);
   const [direction, setDirection] = useState(0);
 
-  const images = Array.from({ length: 10 }, (_, i) => ({
+  const sample_images = Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,
     src: getAssetPath(`/images/gallery/G${String(i + 1).padStart(2, '0')}.jpg`),
     alt: `Wedding Photo ${i + 1}`,
   }));
+
+  const soho_images = Array.from({ length: 20 }, (_, i) => ({
+    id: i + 1,
+    src: getAssetPath(`/images/gallery/soho${String(i + 1).padStart(2, '0')}.jpg`),
+    alt: `Soho Photo ${i + 1}`,
+  }));
+
+  const images = sample_images.concat(soho_images);
 
   const visibleImages = images.slice(0, displayedCount);
 
@@ -215,14 +223,14 @@ export default function Gallery() {
 
               {/* Close Button */}
               <button
-                className="absolute top-4 right-4 text-white/80 hover:text-white text-sm tracking-widest uppercase"
+                className="absolute top-4 right-4 text-white/80 hover:text-white text-sm tracking-widest uppercase font-pretendard"
                 onClick={() => setSelectedImage(null)}
               >
                 닫기
               </button>
 
               {/* Image Counter */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white/80 text-sm">
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white/80 text-sm font-pretendard">
                 {selectedImage} / {images.length}
               </div>
             </div>

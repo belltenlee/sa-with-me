@@ -220,7 +220,7 @@ export default function SharedGallery({
     return (
         <div className="p-4 min-h-screen bg-white">
             <div className="mb-8 text-center space-y-2">
-                <p className="font-serif text-charcoal/80 text-sm leading-relaxed">
+                <p className="font-pretendard text-charcoal/80 text-sm leading-relaxed">
                     {title}
                 </p>
             </div>
@@ -232,7 +232,7 @@ export default function SharedGallery({
                     placeholder="이름을 입력해주세요"
                     value={uploaderName}
                     onChange={handleNameChange}
-                    className="w-48 px-4 py-2 text-center border-b border-gray-300 focus:border-gold outline-none font-serif text-sm bg-transparent placeholder-gray-400"
+                    className="w-48 px-4 py-2 text-center border-b border-gray-300 focus:border-gold outline-none font-pretendard text-sm bg-transparent placeholder-gray-400"
                     maxLength={10}
                 />
 
@@ -247,7 +247,7 @@ export default function SharedGallery({
                 <button
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isUploading}
-                    className="flex items-center gap-2 bg-charcoal text-white px-6 py-3 rounded-full hover:bg-gold transition-colors font-serif text-sm disabled:opacity-80 shadow-md w-full justify-center sm:w-auto"
+                    className="flex items-center gap-2 bg-charcoal text-white px-6 py-3 rounded-full hover:bg-gold transition-colors font-pretendard text-sm disabled:opacity-80 shadow-md w-full justify-center sm:w-auto"
                 >
                     {isUploading ? (
                         <div className="flex items-center gap-2">
@@ -301,7 +301,7 @@ export default function SharedGallery({
                             )}
                             {photo.uploaderName && (
                                 <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 to-transparent p-2">
-                                    <p className="text-white text-[10px] font-serif text-right truncate">
+                                    <p className="text-white text-[10px] font-pretendard text-right truncate">
                                         by {photo.uploaderName}
                                     </p>
                                 </div>
@@ -312,7 +312,7 @@ export default function SharedGallery({
             </div>
 
             {photos.length === 0 && !isUploading && (
-                <div className="py-20 text-center text-gray-400 font-serif text-sm">
+                <div className="py-20 text-center text-gray-400 font-pretendard text-sm">
                     <p>아직 공유된 사진이 없습니다.</p>
                     <p>첫 번째 사진을 올려주세요!</p>
                 </div>
@@ -408,7 +408,7 @@ export default function SharedGallery({
                                 )}
                                 {selectedPhoto.uploaderName && (
                                     <div className="mt-4">
-                                        <p className="text-white/80 font-serif text-sm pt-2">
+                                        <p className="text-white/80 font-pretendard text-sm pt-2">
                                             Uploaded by {selectedPhoto.uploaderName}
                                         </p>
                                     </div>

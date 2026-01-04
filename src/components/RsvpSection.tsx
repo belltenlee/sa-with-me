@@ -41,7 +41,7 @@ export default function RsvpSection() {
                     </p>
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="bg-white border border-gold text-gold px-8 py-3 rounded-full font-serif hover:bg-gold hover:text-white transition-colors shadow-sm"
+                        className="bg-white border border-gold text-gold px-8 py-3 rounded-full font-pretendard hover:bg-gold hover:text-white transition-colors shadow-sm"
                     >
                         참석 의사 전달하기
                     </button>

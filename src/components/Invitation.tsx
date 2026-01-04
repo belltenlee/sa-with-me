@@ -15,7 +15,7 @@ export default function Invitation() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
                 >
-                    <h2 className="font-playfair text-gold text-3xl tracking-[0.1em] uppercase mb-12">
+                    <h2 className="font-serif text-gold text-3xl tracking-[0.1em] uppercase mb-12">
                         초대합니다
                     </h2>
 

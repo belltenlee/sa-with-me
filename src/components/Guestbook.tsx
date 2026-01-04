@@ -86,7 +86,14 @@ export default function Guestbook() {
                     <p className="font-pretendard text-charcoal/60 text-sm">축복의 메시지를 남겨주세요</p>
                 </motion.div>
 
-                <form onSubmit={handleSubmit} className="space-y-4 mb-12">
+                <motion.form
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    onSubmit={handleSubmit}
+                    className="space-y-4 mb-12"
+                >
                     <div>
                         <input
                             type="text"
@@ -113,7 +120,7 @@ export default function Guestbook() {
                     >
                         {isSubmitting ? '등록 중...' : '메시지 남기기'}
                     </button>
-                </form>
+                </motion.form>
 
                 <div className="space-y-4">
                     <AnimatePresence>
