@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { useState } from "react";
 import { getAssetPath } from "@/utils/basePath";
 
@@ -73,11 +73,6 @@ export default function WeddingInfo() {
                                 className="w-full h-auto object-cover rounded-sm"
                             />
                         </div>
-                        {/* <p className="font-pretendard text-charcoal leading-[1.8] tracking-tight break-keep">
-                            제철 식재료로 정성껏 준비한<br />
-                            120여 가지 메뉴의 프리미엄 뷔페가<br />
-                            다양한 주류와 함께 준비되어 있습니다.
-                        </p> */}
 
                         <div className="bg-white/70 border border-[#EBC7C7]/20 py-7 px-6 sm:px-10 rounded-2xl space-y-4 text-sm font-pretendard shadow-[0_4px_12px_rgba(235,199,199,0.1)]">
                             <div className="flex justify-between items-center border-b border-[#EBC7C7]/10 pb-3">
@@ -162,13 +157,15 @@ export default function WeddingInfo() {
             <AnimatePresence>
                 {isMainModalOpen && (
                     <motion.div
+                        key="wedding-info-modal-backdrop"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-md"
+                        className="fixed inset-0 z-[100] grid place-items-center p-6 bg-black/80 backdrop-blur-md"
                         onClick={() => setIsMainModalOpen(false)}
                     >
                         <motion.div
+                            key="wedding-info-modal-content"
                             initial={{ scale: 0.9, opacity: 0, y: 30 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 30 }}
@@ -176,118 +173,121 @@ export default function WeddingInfo() {
                             className="bg-white rounded-[2.5rem] shadow-2xl w-full max-w-md h-[680px] overflow-hidden flex flex-col"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            {/* Tab Header */}
-                            <div className="flex border-b border-gray-100">
-                                <button
-                                    onClick={() => setActiveTab('photobooth')}
-                                    className={`flex-1 py-4 font-pretendard text-sm font-bold transition-all relative ${activeTab === 'photobooth' ? 'text-[#D99A9A]' : 'text-gray-400'}`}
-                                >
-                                    포토부스
-                                    {activeTab === 'photobooth' && (
-                                        <motion.div
-                                            layoutId="activeTab"
-                                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D99A9A]"
-                                        />
-                                    )}
-                                </button>
-                                <button
-                                    onClick={() => setActiveTab('buffet')}
-                                    className={`flex-1 py-4 font-pretendard text-sm font-bold transition-all relative ${activeTab === 'buffet' ? 'text-[#D99A9A]' : 'text-gray-400'}`}
-                                >
-                                    연회장
-                                    {activeTab === 'buffet' && (
-                                        <motion.div
-                                            layoutId="activeTab"
-                                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D99A9A]"
-                                        />
-                                    )}
-                                </button>
-                            </div>
+                            <LayoutGroup id="wedding-info-tabs">
+                                {/* Tab Header */}
+                                <div className="flex border-b border-gray-100">
+                                    <button
+                                        onClick={() => setActiveTab('photobooth')}
+                                        className={`flex-1 py-4 font-pretendard text-sm font-bold transition-all relative ${activeTab === 'photobooth' ? 'text-[#D99A9A]' : 'text-gray-400'}`}
+                                    >
+                                        포토부스
+                                        {activeTab === 'photobooth' && (
+                                            <motion.div
+                                                layoutId="wedding-info-tab-indicator"
+                                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D99A9A]"
+                                            />
+                                        )}
+                                    </button>
+                                    <button
+                                        onClick={() => setActiveTab('buffet')}
+                                        className={`flex-1 py-4 font-pretendard text-sm font-bold transition-all relative ${activeTab === 'buffet' ? 'text-[#D99A9A]' : 'text-gray-400'}`}
+                                    >
+                                        연회장
+                                        {activeTab === 'buffet' && (
+                                            <motion.div
+                                                layoutId="wedding-info-tab-indicator"
+                                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D99A9A]"
+                                            />
+                                        )}
+                                    </button>
+                                </div>
 
-                            {/* Modal Content (Scrollable) */}
-                            <div className="flex-1 overflow-y-auto scrollbar-hide relative">
-                                <AnimatePresence initial={false}>
-                                    {activeTab === 'photobooth' ? (
-                                        <motion.div
-                                            key="photobooth"
-                                            drag="x"
-                                            dragConstraints={{ left: 0, right: 0 }}
-                                            dragElastic={0.2}
-                                            onDragEnd={(e, info) => {
-                                                if (info.offset.x < -50) setActiveTab('buffet');
-                                            }}
-                                            initial={{ opacity: 0, x: -20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            exit={{ opacity: 0, x: 20, position: 'absolute', width: '100%' }}
-                                            transition={{ duration: 0.15, ease: "easeOut" }}
-                                            className="p-1.5 w-full cursor-grab active:cursor-grabbing"
-                                        >
-                                            <div className="relative mb-5 mt-1">
-                                                <img
-                                                    src={getAssetPath("/images/info/photobooth_v3.png")}
-                                                    alt="포토부스"
-                                                    className="w-[82%] aspect-[0.9] object-cover rounded-[1.8rem] mx-auto"
-                                                />
-                                            </div>
-                                            <div className="px-5 pb-2 text-left">
-                                                <h4 className="font-pretendard text-lg text-charcoal font-bold mb-3 ml-1">포토부스 안내</h4>
-                                                <p className="font-pretendard text-gray-500 text-[13px] leading-relaxed mb-5 break-keep ml-1">
-                                                    예식 전 준비된 포토부스에서 소중한 추억을 남겨주세요. 촬영하신 사진은 인화하여 드립니다.
-                                                </p>
-                                                <div className="space-y-2.5 font-pretendard bg-[#FFF5F5]/50 p-4 rounded-2xl border border-[#EBC7C7]/20">
-                                                    <div className="flex justify-between items-center text-[13px]">
-                                                        <span className="text-[#D99A9A] font-semibold">운영 시간</span>
-                                                        <span className="text-charcoal">오후 4시 ~ 5시 30분</span>
-                                                    </div>
-                                                    <div className="flex justify-between items-center text-[13px]">
-                                                        <span className="text-[#D99A9A] font-semibold">장소</span>
-                                                        <span className="text-charcoal">1층 로비 입구</span>
+                                {/* Modal Content (Scrollable) */}
+                                <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide relative">
+                                    <AnimatePresence>
+                                        {activeTab === 'photobooth' ? (
+                                            <motion.div
+                                                key="photobooth"
+                                                drag="x"
+                                                dragConstraints={{ left: 0, right: 0 }}
+                                                dragElastic={0.2}
+                                                onDragEnd={(e, info) => {
+                                                    if (info.offset.x < -50) setActiveTab('buffet');
+                                                }}
+                                                initial={{ opacity: 0, x: -20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                exit={{ opacity: 0, x: 20, position: 'absolute', width: '100%' }}
+                                                transition={{ duration: 0.15, ease: "easeOut" }}
+                                                className="p-1.5 w-full cursor-grab active:cursor-grabbing"
+                                            >
+                                                <div className="relative mb-5 mt-1">
+                                                    <img
+                                                        src={getAssetPath("/images/info/photobooth_v3.png")}
+                                                        alt="포토부스"
+                                                        className="w-[82%] aspect-[0.9] object-cover rounded-[1.8rem] mx-auto"
+                                                    />
+                                                </div>
+                                                <div className="px-5 pb-2 text-left">
+                                                    <h4 className="font-pretendard text-lg text-charcoal font-bold mb-3 ml-1">포토부스 안내</h4>
+                                                    <p className="font-pretendard text-gray-500 text-[13px] leading-relaxed mb-5 break-keep ml-1">
+                                                        예식 전 준비된 포토부스에서 인생네컷 사진을 촬영하시고, 소중한 축하 메시지를 남겨주세요
+                                                        <span className="text-pink-400 ml-1">♥</span>
+                                                    </p>
+                                                    <div className="space-y-2.5 font-pretendard bg-[#FFF5F5]/50 p-4 rounded-2xl border border-[#EBC7C7]/20">
+                                                        <div className="flex justify-between items-center text-[13px]">
+                                                            <span className="text-[#D99A9A] font-semibold">운영 시간</span>
+                                                            <span className="text-charcoal">오후 4시 ~ 5시 30분</span>
+                                                        </div>
+                                                        <div className="flex justify-between items-center text-[13px]">
+                                                            <span className="text-[#D99A9A] font-semibold">장소</span>
+                                                            <span className="text-charcoal">1층 로비 입구</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </motion.div>
-                                    ) : (
-                                        <motion.div
-                                            key="buffet"
-                                            drag="x"
-                                            dragConstraints={{ left: 0, right: 0 }}
-                                            dragElastic={0.2}
-                                            onDragEnd={(e, info) => {
-                                                if (info.offset.x > 50) setActiveTab('photobooth');
-                                            }}
-                                            initial={{ opacity: 0, x: 20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            exit={{ opacity: 0, x: -20, position: 'absolute', width: '100%' }}
-                                            transition={{ duration: 0.15, ease: "easeOut" }}
-                                            className="p-1.5 w-full cursor-grab active:cursor-grabbing"
-                                        >
-                                            <div className="relative mb-5 mt-1">
-                                                <img
-                                                    src={getAssetPath("/images/info/banquet001.png")}
-                                                    alt="연회장"
-                                                    className="w-[82%] aspect-[0.9] object-cover rounded-[1.8rem] mx-auto"
-                                                />
-                                            </div>
-                                            <div className="px-5 pb-2 text-left">
-                                                <h4 className="font-pretendard text-lg text-charcoal font-bold mb-3 ml-1">연회장 안내</h4>
-                                                <p className="font-pretendard text-gray-500 text-[13px] leading-relaxed mb-5 break-keep ml-1">
-                                                    신선한 제철 식재료로 정성껏 준비한 프리미엄 뷔페가 마련되어 있습니다.
-                                                </p>
-                                                <div className="space-y-2.5 font-pretendard bg-[#FFF5F5]/50 p-4 rounded-2xl border border-[#EBC7C7]/20">
-                                                    <div className="flex justify-between items-center text-[13px]">
-                                                        <span className="text-[#D99A9A] font-semibold">운영 시간</span>
-                                                        <span className="text-charcoal">오후 4시 30분 ~ 7시 30분</span>
-                                                    </div>
-                                                    <div className="flex justify-between items-center text-[13px]">
-                                                        <span className="text-[#D99A9A] font-semibold">장소</span>
-                                                        <span className="text-charcoal">1층 연회장</span>
+                                            </motion.div>
+                                        ) : (
+                                            <motion.div
+                                                key="buffet"
+                                                drag="x"
+                                                dragConstraints={{ left: 0, right: 0 }}
+                                                dragElastic={0.2}
+                                                onDragEnd={(e, info) => {
+                                                    if (info.offset.x > 50) setActiveTab('photobooth');
+                                                }}
+                                                initial={{ opacity: 0, x: 20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                exit={{ opacity: 0, x: -20, position: 'absolute', width: '100%' }}
+                                                transition={{ duration: 0.15, ease: "easeOut" }}
+                                                className="p-1.5 w-full cursor-grab active:cursor-grabbing"
+                                            >
+                                                <div className="relative mb-5 mt-1">
+                                                    <img
+                                                        src={getAssetPath("/images/info/banquet001.png")}
+                                                        alt="연회장"
+                                                        className="w-[82%] aspect-[0.9] object-cover rounded-[1.8rem] mx-auto"
+                                                    />
+                                                </div>
+                                                <div className="px-5 pb-2 text-left">
+                                                    <h4 className="font-pretendard text-lg text-charcoal font-bold mb-3 ml-1">연회장 안내</h4>
+                                                    <p className="font-pretendard text-gray-500 text-[13px] leading-relaxed mb-5 break-keep ml-1">
+                                                        신선한 제철 식재료로 정성껏 준비한 프리미엄 뷔페가 마련되어 있습니다.
+                                                    </p>
+                                                    <div className="space-y-2.5 font-pretendard bg-[#FFF5F5]/50 p-4 rounded-2xl border border-[#EBC7C7]/20">
+                                                        <div className="flex justify-between items-center text-[13px]">
+                                                            <span className="text-[#D99A9A] font-semibold">운영 시간</span>
+                                                            <span className="text-charcoal">오후 4시 30분 ~ 7시 30분</span>
+                                                        </div>
+                                                        <div className="flex justify-between items-center text-[13px]">
+                                                            <span className="text-[#D99A9A] font-semibold">장소</span>
+                                                            <span className="text-charcoal">1층 연회장</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            </LayoutGroup>
 
                             {/* Close Button */}
                             <div className="px-6 pb-6 pt-2 border-t border-gray-50">

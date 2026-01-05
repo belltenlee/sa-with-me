@@ -33,7 +33,7 @@ export default function Home() {
         </div>
 
         {/* Gallery */  /*bg-[#F9FAFB] */}
-        <section className="py-20 px-6 text-center bg-[#F8F6F2] snap-start" hidden={false}>
+        <section className="py-20 px-6 text-center bg-[#F8F6F2]" hidden={false}>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -59,7 +59,7 @@ export default function Home() {
         </section>
 
         {/* Location */}
-        <section id="map-section" className="py-16 px-6 text-center snap-start">
+        <section id="map-section" className="py-16 px-6 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -85,7 +85,7 @@ export default function Home() {
           </button>
         </section> */}
 
-        <footer className="py-8 text-center text-gray-400 text-sm font-serif snap-start">
+        <footer className="py-8 text-center text-gray-400 text-sm font-serif">
           <p>
             <a href="/rsvp-admin" className="hover:text-gray-500 transition-colors cursor-default">©</a> 2026 <a href="/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">종열 & 성애</a>. All rights <a href="/our-gallery" className="hover:text-gray-500 transition-colors cursor-default">reserved.</a>
           </p>
