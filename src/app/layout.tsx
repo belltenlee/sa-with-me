@@ -4,6 +4,7 @@ import "./globals.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BottomNav from "@/components/BottomNav";
+import KakaoRedirect from "@/components/KakaoRedirect";
 
 const notoSerifKr = Noto_Serif_KR({
   subsets: ["latin"],
@@ -52,6 +53,7 @@ export default function RootLayout({
     <html lang="ko" className={`${notoSerifKr.variable} ${playfair.variable} snap-y snap-proximity scroll-smooth`}>
       <body className="font-serif bg-cream text-charcoal antialiased">
         <main className="min-h-screen w-full max-w-md mx-auto bg-white shadow-2xl relative">
+          <KakaoRedirect />
           {children}
         </main>
         <ToastContainer

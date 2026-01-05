@@ -42,7 +42,7 @@ export default function WeddingInfo() {
 
                 <div className="space-y-20 max-w-md mx-auto">
                     {/* Photo Booth */}
-                    <div className="space-y-6">
+                    {/* <div className="space-y-6">
                         <div className="flex flex-col items-center mb-8">
                             <span className="font-playfair text-[10px] text-[#D99A9A]/60 tracking-[0.4em] uppercase mb-1">Memory Point</span>
                             <h3 className="font-paperlogy text-[#D99A9A] text-xl tracking-widest font-bold mb-2">포토부스</h3>
@@ -71,10 +71,10 @@ export default function WeddingInfo() {
                                 <span className="text-charcoal font-medium">1층 로비 방향 입구</span>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* Premium Buffet */}
-                    <div className="space-y-4">
+                    {/* <div className="space-y-4">
                         <div className="flex flex-col items-center mb-6">
                             <span className="font-playfair text-[10px] text-[#D99A9A]/60 tracking-[0.4em] uppercase mb-1">Dining Experience</span>
                             <h3 className="font-paperlogy text-[#D99A9A] text-xl tracking-widest font-bold mb-2">프리미엄 뷔페</h3>
@@ -102,15 +102,21 @@ export default function WeddingInfo() {
                         <p className="font-pretendard text-xs text-gray-500 mt-4">
                             * 식권은 축의대에서 수령해 주시기 바랍니다.
                         </p>
-                    </div>
+                    </div> */}
+                    {/* <p className="font-pretendard text-charcoal leading-[1.8] tracking-tight break-keep">
+                        제철 식재료로 정성껏 준비한<br />
+                        120여 가지 메뉴의 프리미엄 뷔페가<br />
+                        다양한 주류와 함께 준비되어 있습니다.
+                    </p> */}
 
-                    {/* Wedding Details Card (Trigger) */}
-                    <div className="border-t border-[#EBC7C7]/30 pt-16 space-y-8">
-                        <div className="flex flex-col items-center mb-4">
+                    {/* Wedding Details Card (Trigger) border-t border-[#EBC7C7]/30 pt-16 */}
+                    <div className="space-y-8">
+                        {/* <div className="flex flex-col items-center mb-1">
                             <span className="font-playfair text-[10px] text-[#D99A9A]/60 tracking-[0.4em] uppercase mb-1">Wedding Information</span>
+                            <h3 className="font-paperlogy text-[#D99A9A] text-xl tracking-widest font-bold mb-2">포토부스 및 연회장 안내</h3>
                             <h3 className="font-paperlogy text-[#D99A9A] text-xl tracking-widest font-bold mb-2">예식 상세 안내</h3>
                             <div className="w-8 h-[1px] bg-[#EBC7C7]/50" />
-                        </div>
+                        </div> */}
 
                         <div className="group relative bg-white rounded-[3rem] p-1 shadow-[0_20px_60px_rgba(235,199,199,0.15)] overflow-hidden">
                             <div className="bg-gradient-to-b from-[#FFFDFD] via-[#FFF9F9] to-[#FFF5F5] rounded-[2.8rem] p-8 sm:p-12 border border-[#FDF2F2] relative overflow-hidden">
