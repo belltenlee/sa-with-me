@@ -184,7 +184,7 @@ export default function Map() {
 
       <div className="flex justify-center gap-3 flex-wrap font-pretendard">
         <a
-          href="https://apis.naver.com/mobile_place/places/11566861"
+          href="https://map.naver.com/v5/entry/place/1501290445"
           target="_blank"
           rel="noopener noreferrer"
           className="bg-[#03C75A] text-white px-6 py-2 rounded-full text-sm font-bold hover:opacity-90 transition-opacity flex items-center gap-2"
