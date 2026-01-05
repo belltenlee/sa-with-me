@@ -15,24 +15,29 @@ export default function KakaoRedirect() {
             setIsKakao(true);
             const currentUrl = window.location.href;
 
-            // KakaoTalk outlink scheme - This typically opens the system's default browser
-            const outlinkUrl = `kakaotalk://web/openExternalApp?url=${encodeURIComponent(currentUrl)}`;
+            // Latest KakaoTalk outlink scheme (openExternal is often more reliable than openExternalApp in 2024/2025)
+            const outlinkUrl = `kakaotalk://web/openExternal?url=${encodeURIComponent(currentUrl)}`;
 
             const triggerRedirect = () => {
-                // Standard outlink scheme (most compatible for "default browser")
+                // Focus on the newest scheme
                 window.location.href = outlinkUrl;
 
-                // Method 2: Create a hidden link and click it (backup)
-                const a = document.createElement('a');
-                a.href = outlinkUrl;
-                a.style.display = 'none';
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => document.body.removeChild(a), 100);
+                // Backup logic for extremely old or specific versions
+                const backupUrl = `kakaotalk://web/openExternalApp?url=${encodeURIComponent(currentUrl)}`;
+
+                // If it hasn't redirected in 500ms, try the backup or hidden link
+                setTimeout(() => {
+                    const a = document.createElement('a');
+                    a.href = outlinkUrl;
+                    a.style.display = 'none';
+                    document.body.appendChild(a);
+                    a.click();
+                    setTimeout(() => document.body.removeChild(a), 100);
+                }, 500);
             };
 
-            // First attempt after 600ms
-            const timer1 = setTimeout(triggerRedirect, 600);
+            // First attempt after 500ms
+            const timer1 = setTimeout(triggerRedirect, 500);
             // Second attempt after 2500ms
             const timer2 = setTimeout(triggerRedirect, 2500);
 
@@ -106,7 +111,7 @@ export default function KakaoRedirect() {
                             }}
                             transition={{ duration: 2, repeat: Infinity }}
                             onClick={() => {
-                                window.location.href = `kakaotalk://web/openExternalApp?url=${encodeURIComponent(window.location.href)}`;
+                                window.location.href = `kakaotalk://web/openExternal?url=${encodeURIComponent(window.location.href)}`;
                             }}
                             className="w-full py-4 bg-[#D99A9A] text-white rounded-2xl font-pretendard text-sm font-bold flex items-center justify-center gap-2 group transition-all"
                         >
