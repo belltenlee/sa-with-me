@@ -22,7 +22,7 @@ export default function Home() {
       <FallingPetals />
       <Hero />
 
-      <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen snap-start">
+      <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen snap-start pb-32">
         <Invitation />
 
 
@@ -85,7 +85,7 @@ export default function Home() {
           </button>
         </section> */}
 
-        <footer className="py-8 text-center text-gray-400 text-sm font-serif">
+        <footer className="py-8 text-center text-gray-400 text-sm font-serif snap-start">
           <p>
             <a href="/rsvp-admin" className="hover:text-gray-500 transition-colors cursor-default">©</a> 2026 <a href="/secret-gallery" className="hover:text-gray-500 transition-colors cursor-default">종열 & 성애</a>. All rights <a href="/our-gallery" className="hover:text-gray-500 transition-colors cursor-default">reserved.</a>
           </p>
