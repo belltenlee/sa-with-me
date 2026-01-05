@@ -8,7 +8,7 @@ export default function Invitation() {
 
     return (
         <section className="text-center bg-white">
-            <div className="bg-paper-texture pt-20 pb-16 px-6">
+            <div className="bg-paper-texture pt-20 pb-20 px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
