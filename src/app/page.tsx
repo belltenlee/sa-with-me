@@ -28,7 +28,7 @@ export default function Home() {
 
         <WeddingInfo />
 
-        <div id="rsvp-section" className="snap-start scroll-mt-20">
+        <div id="rsvp-section">
           <RsvpSection />
         </div>
 
