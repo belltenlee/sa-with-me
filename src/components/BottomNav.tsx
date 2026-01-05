@@ -11,7 +11,7 @@ export default function BottomNav() {
     useEffect(() => {
         const handleScroll = () => {
             // Show nav after Hero section images (approx 3.1 * viewport height)
-            const threshold = window.innerHeight * 3.1;
+            const threshold = window.innerHeight * 3.6;
             if (window.scrollY > threshold) {
                 setIsVisible(true);
             } else {
