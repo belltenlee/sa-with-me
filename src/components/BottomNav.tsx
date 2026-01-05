@@ -6,16 +6,40 @@ import { toast } from 'react-toastify';
 
 export default function BottomNav() {
     const [isVisible, setIsVisible] = useState(false);
+    const [activeSection, setActiveSection] = useState<string | null>(null);
 
     useEffect(() => {
         const handleScroll = () => {
-            // Show nav after Hero section images (approx 2.3 * viewport height)
+            // Show nav after Hero section images (approx 3.1 * viewport height)
             const threshold = window.innerHeight * 3.1;
             if (window.scrollY > threshold) {
                 setIsVisible(true);
             } else {
                 setIsVisible(false);
             }
+
+            // Track active section
+            const mapSection = document.getElementById('map-section');
+            const rsvpSection = document.getElementById('rsvp-section');
+
+            let currentActive: string | null = null;
+
+            const sections = [
+                { id: 'rsvp', element: rsvpSection },
+                { id: 'map', element: mapSection }
+            ];
+
+            for (const section of sections) {
+                if (section.element) {
+                    const rect = section.element.getBoundingClientRect();
+                    // If the section occupies the middle part of the screen
+                    if (rect.top < window.innerHeight * 0.6 && rect.bottom > window.innerHeight * 0.4) {
+                        currentActive = section.id;
+                        break;
+                    }
+                }
+            }
+            setActiveSection(currentActive);
         };
 
         window.addEventListener('scroll', handleScroll);
@@ -81,7 +105,7 @@ export default function BottomNav() {
 
                 <button
                     onClick={() => scrollToSection('map-section')}
-                    className="flex flex-col items-center gap-1 text-gray-500 hover:text-gold transition-colors"
+                    className={`flex flex-col items-center gap-1 transition-colors ${activeSection === 'map' ? 'text-gold' : 'text-gray-500 hover:text-gold'}`}
                 >
                     {/* Map Icon */}
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,7 +117,7 @@ export default function BottomNav() {
 
                 <button
                     onClick={() => scrollToSection('rsvp-section')}
-                    className="flex flex-col items-center gap-1 text-gray-500 hover:text-gold transition-colors"
+                    className={`flex flex-col items-center gap-1 transition-colors ${activeSection === 'rsvp' ? 'text-gold' : 'text-gray-500 hover:text-gold'}`}
                 >
                     {/* Envelope Icon */}
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

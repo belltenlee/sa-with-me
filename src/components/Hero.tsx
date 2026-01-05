@@ -73,35 +73,35 @@ export default function Hero() {
     }, []);
 
     // 3D Zoom & Swap animations
-    // Total height: 330vh. Viewport height: 100vh. Scrollable range: 230vh.
-    // Snap points: 0vh (Progress 0), 100vh (Progress 100/230 ≈ 0.435), 200vh (Progress 200/260 ≈ 0.870)
+    // Total height: 360vh. Viewport height: 100vh. Scrollable range: 260vh.
+    // Snap points: 0vh (P: 0), 130vh (P: 130/260 = 0.5), 260vh (P: 1.0)
 
     // Image 0 (Initial)
-    const scale0 = useTransform(scrollYProgress, [0, 0.478], [1, 0.85]);
-    const opacity0 = useTransform(scrollYProgress, [0.3, 0.478], [1, 0]);
-    const blur0 = useTransform(scrollYProgress, [0, 0.478], [0, 10]);
+    const scale0 = useTransform(scrollYProgress, [0, 0.5], [1, 0.85]);
+    const opacity0 = useTransform(scrollYProgress, [0.3, 0.5], [1, 0]);
+    const blur0 = useTransform(scrollYProgress, [0, 0.5], [0, 10]);
 
-    // Image 1 (Second) - Reaches focus at 0.478
-    const scale1 = useTransform(scrollYProgress, [0, 0.478, 0.956], [1.3, 1, 0.85]);
-    const opacity1 = useTransform(scrollYProgress, [0.1, 0.4, 0.55, 0.85], [0, 1, 1, 0]);
-    const blur1 = useTransform(scrollYProgress, [0, 0.43, 0.478, 0.52, 0.956], [10, 0, 0, 0, 10]);
+    // Image 1 (Second) - Reaches focus at 0.5
+    const scale1 = useTransform(scrollYProgress, [0, 0.5, 1], [1.3, 1, 0.85]);
+    const opacity1 = useTransform(scrollYProgress, [0.1, 0.4, 0.6, 0.9], [0, 1, 1, 0]);
+    const blur1 = useTransform(scrollYProgress, [0, 0.45, 0.5, 0.55, 1], [10, 0, 0, 0, 10]);
 
-    // Image 2 (Third) - Reaches focus at 0.956
-    const scale2 = useTransform(scrollYProgress, [0.6, 0.956, 1], [1.3, 1, 1.02]);
-    const opacity2 = useTransform(scrollYProgress, [0.7, 0.956], [0, 1]);
-    const blur2 = useTransform(scrollYProgress, [0.6, 0.9, 0.956], [10, 0, 0]);
+    // Image 2 (Third) - Reaches focus at 0.8 and stays until the end
+    const scale2 = useTransform(scrollYProgress, [0.5, 0.8, 1], [1.3, 1, 1.02]);
+    const opacity2 = useTransform(scrollYProgress, [0.6, 0.8], [0, 1]);
+    const blur2 = useTransform(scrollYProgress, [0.5, 0.75, 0.8], [10, 0, 0]);
 
     const scales = [scale0, scale1, scale2];
     const opacities = [opacity0, opacity1, opacity2];
     const blurs = [blur0, blur1, blur2];
 
     return (
-        <section ref={containerRef} className="relative w-full h-[330vh] bg-white">
+        <section ref={containerRef} className="relative w-full h-[360vh] bg-white">
             {/* Snap Points */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-                <div className="h-[110vh] snap-start" />
-                <div className="h-[110vh] snap-start" />
-                <div className="h-[110vh] snap-start" />
+                <div className="h-[120vh] snap-start" />
+                <div className="h-[120vh] snap-start" />
+                <div className="h-[120vh] snap-start" />
             </div>
 
             <div

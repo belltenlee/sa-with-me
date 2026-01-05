@@ -11,11 +11,14 @@ export default function WeddingInfo() {
     useEffect(() => {
         if (isMainModalOpen) {
             document.body.style.overflow = 'hidden';
+            document.body.style.overscrollBehavior = 'none';
         } else {
             document.body.style.overflow = 'unset';
+            document.body.style.overscrollBehavior = 'unset';
         }
         return () => {
             document.body.style.overflow = 'unset';
+            document.body.style.overscrollBehavior = 'unset';
         };
     }, [isMainModalOpen]);
 
@@ -172,7 +175,7 @@ export default function WeddingInfo() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] grid place-items-center p-6 bg-black/80 backdrop-blur-md"
+                        className="fixed inset-0 z-[100] grid place-items-center p-6 bg-black/80 backdrop-blur-md overscroll-none touch-none"
                         onClick={() => setIsMainModalOpen(false)}
                     >
                         <motion.div
@@ -214,7 +217,7 @@ export default function WeddingInfo() {
                                 </div>
 
                                 {/* Modal Content (Scrollable) */}
-                                <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide relative">
+                                <div className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide relative overscroll-contain touch-pan-y">
                                     <AnimatePresence>
                                         {activeTab === 'photobooth' ? (
                                             <motion.div
