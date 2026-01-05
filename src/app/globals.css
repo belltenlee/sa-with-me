@@ -70,9 +70,11 @@ h6 {
 }
 
 .bg-paper-texture {
-  background-image: url('/images/texture/paper.png');
-  background-repeat: repeat;
-  background-size: 400px;
+  background-image: url('/images/texture/paper01.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   position: relative;
 }
 
