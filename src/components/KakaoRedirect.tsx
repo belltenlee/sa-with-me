@@ -5,48 +5,39 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function KakaoRedirect() {
     const [isKakao, setIsKakao] = useState(false);
+    const [hasAttempted, setHasAttempted] = useState(false);
 
     useEffect(() => {
         const userAgent = navigator.userAgent.toLowerCase();
         const isKakaoTalk = userAgent.includes("kakaotalk");
-        const isAndroid = /android/i.test(userAgent);
 
-        if (isKakaoTalk) {
+        if (isKakaoTalk && !hasAttempted) {
             setIsKakao(true);
             const currentUrl = window.location.href;
-
-            // Latest KakaoTalk outlink scheme (openExternal is often more reliable than openExternalApp in 2024/2025)
             const outlinkUrl = `kakaotalk://web/openExternal?url=${encodeURIComponent(currentUrl)}`;
 
             const triggerRedirect = () => {
-                // Focus on the newest scheme
+                setHasAttempted(true);
+                // Method 1: location.href
                 window.location.href = outlinkUrl;
 
-                // Backup logic for extremely old or specific versions
-                const backupUrl = `kakaotalk://web/openExternalApp?url=${encodeURIComponent(currentUrl)}`;
-
-                // If it hasn't redirected in 500ms, try the backup or hidden link
+                // Method 2: Create a hidden link and click it (simultaneous backup)
+                const a = document.createElement('a');
+                a.href = outlinkUrl;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
                 setTimeout(() => {
-                    const a = document.createElement('a');
-                    a.href = outlinkUrl;
-                    a.style.display = 'none';
-                    document.body.appendChild(a);
-                    a.click();
-                    setTimeout(() => document.body.removeChild(a), 100);
-                }, 500);
+                    if (document.body.contains(a)) document.body.removeChild(a);
+                }, 100);
             };
 
-            // First attempt after 500ms
-            const timer1 = setTimeout(triggerRedirect, 500);
-            // Second attempt after 2500ms
-            const timer2 = setTimeout(triggerRedirect, 2500);
+            // Single attempt after a brief settle time
+            const timer = setTimeout(triggerRedirect, 800);
 
-            return () => {
-                clearTimeout(timer1);
-                clearTimeout(timer2);
-            };
+            return () => clearTimeout(timer);
         }
-    }, []);
+    }, [hasAttempted]);
 
     if (!isKakao) return null;
 
