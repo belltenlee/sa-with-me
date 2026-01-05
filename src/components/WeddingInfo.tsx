@@ -1,12 +1,23 @@
 "use client";
 
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getAssetPath } from "@/utils/basePath";
 
 export default function WeddingInfo() {
     const [isMainModalOpen, setIsMainModalOpen] = useState(false);
     const [activeTab, setActiveTab] = useState<'photobooth' | 'buffet'>('photobooth');
+
+    useEffect(() => {
+        if (isMainModalOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isMainModalOpen]);
 
     return (
         <section className="py-24 px-6 bg-[#F8F6F2] text-center">
