@@ -63,7 +63,7 @@ export default function Guestbook() {
     };
 
     return (
-        <section className="py-16 px-6 font-pretendard">
+        <section className="py-16 px-6 font-pretendard snap-start">
             <div className="max-w-md mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

@@ -8,6 +8,7 @@ export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [displayedCount, setDisplayedCount] = useState(6);
   const [direction, setDirection] = useState(0);
+  const galleryRef = React.useRef<HTMLDivElement>(null);
 
   const sample_images = Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,
@@ -82,7 +83,7 @@ export default function Gallery() {
   };
 
   return (
-    <div className="py-4">
+    <div ref={galleryRef} className="py-4">
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
         {visibleImages.map((image) => (
           <motion.div
@@ -114,7 +115,10 @@ export default function Gallery() {
           </button>
         ) : (
           <button
-            onClick={() => setDisplayedCount(6)}
+            onClick={() => {
+              setDisplayedCount(6);
+              galleryRef.current?.scrollIntoView({ behavior: 'smooth' });
+            }}
             className="px-6 py-2 text-sm text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50 transition-colors duration-300 font-pretendard"
           >
             접기

@@ -22,7 +22,7 @@ export default function Home() {
       <FallingPetals />
       <Hero />
 
-      <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen">
+      <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen snap-start">
         <Invitation />
 
 
@@ -33,7 +33,7 @@ export default function Home() {
         </div>
 
         {/* Gallery */  /*bg-[#F9FAFB] */}
-        <section className="py-20 px-6 text-center bg-[#F8F6F2]" hidden={false}>
+        <section className="py-20 px-6 text-center bg-[#F8F6F2] snap-start" hidden={false}>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -59,7 +59,7 @@ export default function Home() {
         </section>
 
         {/* Location */}
-        <section id="map-section" className="py-16 px-6 text-center">
+        <section id="map-section" className="py-16 px-6 text-center snap-start">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
