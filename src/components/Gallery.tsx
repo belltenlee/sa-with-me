@@ -10,19 +10,20 @@ export default function Gallery() {
   const [direction, setDirection] = useState(0);
   const galleryRef = React.useRef<HTMLDivElement>(null);
 
-  const sample_images = Array.from({ length: 10 }, (_, i) => ({
-    id: i + 1,
+  const sample_sources = Array.from({ length: 10 }, (_, i) => ({
     src: getAssetPath(`/images/gallery/G${String(i + 1).padStart(2, '0')}.jpg`),
     alt: `Wedding Photo ${i + 1}`,
   }));
 
-  const soho_images = Array.from({ length: 20 }, (_, i) => ({
-    id: i + 1,
+  const soho_sources = Array.from({ length: 20 }, (_, i) => ({
     src: getAssetPath(`/images/gallery/soho${String(i + 1).padStart(2, '0')}.jpg`),
     alt: `Soho Photo ${i + 1}`,
   }));
 
-  const images = sample_images.concat(soho_images);
+  const images = [...sample_sources, ...soho_sources].map((img, index) => ({
+    ...img,
+    id: index + 1,
+  }));
 
   const visibleImages = images.slice(0, displayedCount);
 
