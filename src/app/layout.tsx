@@ -50,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ko" className={`${notoSerifKr.variable} ${playfair.variable} snap-y snap-proximity scroll-smooth`}>
+    <html lang="ko" className={`${notoSerifKr.variable} ${playfair.variable} snap-y snap-mandatory scroll-smooth`}>
       <body className="font-serif bg-cream text-charcoal antialiased">
         <main className="min-h-screen w-full max-w-md mx-auto bg-white shadow-2xl relative">
           <KakaoRedirect />
