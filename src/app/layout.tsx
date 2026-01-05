@@ -3,6 +3,7 @@ import { Noto_Serif_KR, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import BottomNav from "@/components/BottomNav";
 
 const notoSerifKr = Noto_Serif_KR({
   subsets: ["latin"],
@@ -48,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ko" className={`${notoSerifKr.variable} ${playfair.variable} snap-y snap-mandatory scroll-smooth`}>
+    <html lang="ko" className={`${notoSerifKr.variable} ${playfair.variable} snap-y snap-proximity scroll-smooth`}>
       <body className="font-serif bg-cream text-charcoal antialiased">
         <main className="min-h-screen w-full max-w-md mx-auto bg-white shadow-2xl relative">
           {children}
@@ -66,6 +67,7 @@ export default function RootLayout({
           theme="light"
           toastClassName="font-pretendard text-sm rounded-full shadow-lg m-4"
         />
+        <BottomNav />
       </body>
     </html>
   );

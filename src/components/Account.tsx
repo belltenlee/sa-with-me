@@ -19,7 +19,7 @@ const accountGroups: AccountGroup[] = [
   {
     label: '신랑 측 마음 전하실 곳',
     accounts: [
-      { bank: '농협은행', number: '123-456-789', holder: '남순자' },
+      { bank: '농협은행', number: '302-1639-137951', holder: '남순자' },
       { bank: '신한은행', number: '110-475-959829', holder: '이종열' },
     ],
   },

@@ -9,8 +9,9 @@ export default function BottomNav() {
 
     useEffect(() => {
         const handleScroll = () => {
-            // Show nav after scrolling down a bit (e.g., 200px)
-            if (window.scrollY > 200) {
+            // Show nav after Hero section images (approx 2.3 * viewport height)
+            const threshold = window.innerHeight * 3.1;
+            if (window.scrollY > threshold) {
                 setIsVisible(true);
             } else {
                 setIsVisible(false);
@@ -18,6 +19,7 @@ export default function BottomNav() {
         };
 
         window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Check initial scroll position
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -55,8 +57,6 @@ export default function BottomNav() {
             }
         }
     };
-
-    // If not visible, don't render or render hidden (using AnimatePresence is better for exit animations but simple motion.div works)
 
     return (
         <motion.div

@@ -157,8 +157,8 @@ export default function Map() {
               <li>
                 <span>주차 유도선을 따라 이동</span>
                 <div className="mt-1 space-y-1">
-                  <p className="pl-[3%] text-blue-600">파란색 유도선 {'=>'} <span className="font-bold">지하 3층 주차장 (추천)</span></p>
-                  <p className="pl-[3%] text-pink-500">분홍색 유도선 {'=>'} 지상 타워 주차장</p>
+                  <p className="pl-[3%] text-blue-600">파란색 유도선 → <span className="font-bold">지하 3층 주차장 (추천)</span></p>
+                  <p className="pl-[3%] text-pink-500">분홍색 유도선 → 지상 타워 주차장</p>
                 </div>
               </li>
             </ul>

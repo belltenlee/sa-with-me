@@ -22,7 +22,7 @@ export default function Home() {
       <FallingPetals />
       <Hero />
 
-      <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen snap-start">
+      <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen">
         <Invitation />
 
 
