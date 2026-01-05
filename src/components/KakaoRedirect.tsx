@@ -8,20 +8,50 @@ export default function KakaoRedirect() {
 
     useEffect(() => {
         const userAgent = navigator.userAgent.toLowerCase();
+        const isKakaoTalk = userAgent.includes("kakaotalk");
+        const isAndroid = /android/i.test(userAgent);
 
-        if (userAgent.includes("kakaotalk")) {
+        if (isKakaoTalk) {
             setIsKakao(true);
             const currentUrl = window.location.href;
 
-            // 외부 브라우저로 강제 이동 시도
-            window.location.href = `kakaotalk://web/openExternalApp?url=${encodeURIComponent(currentUrl)}`;
+            // KakaoTalk outlink schemes
+            const outlinkUrl = `kakaotalk://web/openExternalApp?url=${encodeURIComponent(currentUrl)}`;
+            // Alternative for Android Chrome
+            const androidIntent = `intent://${currentUrl.replace(/^https?:\/\//, "")}#Intent;scheme=https;package=com.android.chrome;end`;
 
-            // 만약 자동으로 안 넘어갈 경우를 대비해 1.5초 뒤에 한 번 더 시도하거나 안내 유지
-            const timer = setTimeout(() => {
-                window.location.href = `kakaotalk://web/openExternalApp?url=${encodeURIComponent(currentUrl)}`;
-            }, 1500);
+            const triggerRedirect = () => {
+                if (isAndroid) {
+                    // Try Intent first for Android (more reliable for Chrome)
+                    window.location.href = androidIntent;
+                    // Fallback to standard scheme
+                    setTimeout(() => {
+                        window.location.href = outlinkUrl;
+                    }, 500);
+                } else {
+                    // iOS or other
+                    window.location.href = outlinkUrl;
+                }
 
-            return () => clearTimeout(timer);
+                // Method 2: Create a hidden link and click it (sometimes bypasses restrictions)
+                const a = document.createElement('a');
+                a.href = isAndroid ? androidIntent : outlinkUrl;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => document.body.removeChild(a), 100);
+            };
+
+            // First attempt after 500ms (ensure page is ready)
+            const timer1 = setTimeout(triggerRedirect, 500);
+
+            // Second attempt after 2500ms as a fallback
+            const timer2 = setTimeout(triggerRedirect, 2500);
+
+            return () => {
+                clearTimeout(timer1);
+                clearTimeout(timer2);
+            };
         }
     }, []);
 
