@@ -73,6 +73,7 @@ export default function Gallery() {
     }
 
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') {
@@ -97,6 +98,7 @@ export default function Gallery() {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('touchmove', preventPinchZoom);
       document.body.style.overflow = 'unset';
+      document.body.classList.remove('modal-open');
     };
   }, [selectedImage, currentIndex]);
 

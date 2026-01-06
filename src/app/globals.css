@@ -109,3 +109,8 @@ h6 {
   background: #ddd;
   border-radius: 3px;
 }
+
+/* Hide BottomNav when modal is open */
+body.modal-open .bottom-nav-container {
+  display: none !important;
+}

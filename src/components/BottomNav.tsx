@@ -87,7 +87,7 @@ export default function BottomNav() {
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: isVisible ? 0 : 100, opacity: isVisible ? 1 : 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed bottom-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none"
+            className="fixed bottom-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none bottom-nav-container"
         >
             <div className="bg-white/80 backdrop-blur-md border border-white/40 shadow-lg rounded-full px-6 py-3 flex items-center gap-6 pointer-events-auto">
                 <button
