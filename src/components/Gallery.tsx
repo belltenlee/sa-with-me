@@ -65,7 +65,7 @@ export default function Gallery() {
     }
   };
 
-  // Keyboard navigation and scroll locking
+  // Keyboard navigation, scroll locking, and preventing pinch-zoom
   useEffect(() => {
     if (selectedImage === null) {
       document.body.style.overflow = 'unset';
@@ -84,12 +84,21 @@ export default function Gallery() {
       }
     };
 
+    const preventPinchZoom = (e: TouchEvent) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('touchmove', preventPinchZoom, { passive: false });
+
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('touchmove', preventPinchZoom);
       document.body.style.overflow = 'unset';
     };
-  }, [selectedImage, currentIndex]); // Added currentIndex to dependency-array
+  }, [selectedImage, currentIndex]);
 
   const slideVariants = {
     enter: (direction: number) => ({
