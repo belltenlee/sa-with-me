@@ -6,11 +6,13 @@ import { getAssetPath } from '@/utils/basePath';
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [shuffledImages, setShuffledImages] = useState<any[]>([]);
   const [displayedCount, setDisplayedCount] = useState(6);
   const [direction, setDirection] = useState(0);
   const galleryRef = React.useRef<HTMLDivElement>(null);
 
-  const images = useMemo(() => {
+  // Define base images
+  const baseImages = useMemo(() => {
     const sample_sources = Array.from({ length: 10 }, (_, i) => ({
       src: getAssetPath(`/images/gallery/G${String(i + 1).padStart(2, '0')}.jpg`),
       alt: `Wedding Photo ${i + 1}`,
@@ -21,20 +23,29 @@ export default function Gallery() {
       alt: `Soho Photo ${i + 1}`,
     }));
 
-    const combined = [...sample_sources, ...soho_sources];
+    const tell_love_sources = Array.from({ length: 20 }, (_, i) => ({
+      src: getAssetPath(`/images/gallery/tell${String(i + 1).padStart(2, '0')}.jpg`),
+      alt: `Tell Love Photo ${i + 1}`,
+    }));
 
-    // Fisher-Yates Shuffle
-    for (let i = combined.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [combined[i], combined[j]] = [combined[j], combined[i]];
-    }
-
-    return combined.map((img, index) => ({
+    return [...sample_sources, ...soho_sources, ...tell_love_sources].map((img, index) => ({
       ...img,
       id: index + 1,
     }));
   }, []);
 
+  // Shuffle only on client side after mount to avoid hydration mismatch
+  useEffect(() => {
+    const combined = [...baseImages];
+    for (let i = combined.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [combined[i], combined[j]] = [combined[j], combined[i]];
+    }
+    setShuffledImages(combined);
+  }, [baseImages]);
+
+  // Use baseImages for initial render (server) and shuffledImages for client
+  const images = shuffledImages.length > 0 ? shuffledImages : baseImages;
   const visibleImages = images.slice(0, displayedCount);
 
   // Navigation functions

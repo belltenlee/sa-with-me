@@ -25,7 +25,6 @@ export default function Home() {
       <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen snap-start pb-32">
         <Invitation />
 
-
         <WeddingInfo />
 
         <div id="rsvp-section">
