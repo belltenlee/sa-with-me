@@ -18,7 +18,7 @@ export default function Gallery() {
       alt: `Wedding Photo ${i + 1}`,
     }));
 
-    const soho_sources = Array.from({ length: 20 }, (_, i) => ({
+    const soho_sources = Array.from({ length: 16 }, (_, i) => ({
       src: getAssetPath(`/images/gallery/soho${String(i + 1).padStart(2, '0')}.jpg`),
       alt: `Soho Photo ${i + 1}`,
     }));
