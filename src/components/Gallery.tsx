@@ -48,18 +48,20 @@ export default function Gallery() {
   const images = shuffledImages.length > 0 ? shuffledImages : baseImages;
   const visibleImages = images.slice(0, displayedCount);
 
-  // Navigation functions
+  // Navigation functions based on current array order (shuffled)
+  const currentIndex = images.findIndex((img) => img.id === selectedImage);
+
   const goToNext = () => {
-    if (selectedImage !== null && selectedImage < images.length) {
+    if (currentIndex >= 0 && currentIndex < images.length - 1) {
       setDirection(1);
-      setSelectedImage(selectedImage + 1);
+      setSelectedImage(images[currentIndex + 1].id);
     }
   };
 
   const goToPrev = () => {
-    if (selectedImage !== null && selectedImage > 1) {
+    if (currentIndex > 0) {
       setDirection(-1);
-      setSelectedImage(selectedImage - 1);
+      setSelectedImage(images[currentIndex - 1].id);
     }
   };
 
@@ -87,7 +89,7 @@ export default function Gallery() {
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'unset';
     };
-  }, [selectedImage]);
+  }, [selectedImage, currentIndex]); // Added currentIndex to dependency-array
 
   const slideVariants = {
     enter: (direction: number) => ({
@@ -158,17 +160,30 @@ export default function Gallery() {
             onClick={() => setSelectedImage(null)}
           >
             <div
-              className="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center"
+              className="relative max-w-4xl w-full h-full flex items-center justify-center"
               style={{ touchAction: 'pan-x' }}
             >
+              {/* Close Button - High Visibility Icon */}
+              <button
+                className="absolute top-6 right-6 z-[60] w-10 h-10 flex items-center justify-center bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white/90 transition-all active:scale-95"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedImage(null);
+                }}
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
               {/* Previous Button */}
-              {selectedImage > 1 && (
+              {currentIndex > 0 && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     goToPrev();
                   }}
-                  className="absolute left-4 z-10 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors duration-300"
+                  className="absolute left-4 z-10 w-12 h-12 flex items-center justify-center bg-white/5 hover:bg-white/10 rounded-full text-white transition-colors duration-300"
                   aria-label="Previous image"
                 >
                   <svg
@@ -210,25 +225,25 @@ export default function Gallery() {
                     goToPrev();
                   }
                 }}
-                className="flex items-center justify-center cursor-grab active:cursor-grabbing"
+                className="flex items-center justify-center cursor-grab active:cursor-grabbing w-full h-full"
                 onClick={(e) => e.stopPropagation()}
               >
                 <img
                   src={images.find((img) => img.id === selectedImage)?.src}
                   alt={images.find((img) => img.id === selectedImage)?.alt}
-                  className="max-w-full max-h-[90vh] object-contain shadow-2xl select-none pointer-events-none"
+                  className="max-w-full max-h-[85vh] object-contain shadow-2xl select-none pointer-events-none"
                   style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
                 />
               </motion.div>
 
               {/* Next Button */}
-              {selectedImage < images.length && (
+              {currentIndex < images.length - 1 && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     goToNext();
                   }}
-                  className="absolute right-4 z-10 w-12 h-12 flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors duration-300"
+                  className="absolute right-4 z-10 w-12 h-12 flex items-center justify-center bg-white/5 hover:bg-white/10 rounded-full text-white transition-colors duration-300"
                   aria-label="Next image"
                 >
                   <svg
@@ -247,17 +262,9 @@ export default function Gallery() {
                 </button>
               )}
 
-              {/* Close Button */}
-              <button
-                className="absolute top-4 right-4 text-white/80 hover:text-white text-sm tracking-widest uppercase font-pretendard"
-                onClick={() => setSelectedImage(null)}
-              >
-                닫기
-              </button>
-
               {/* Image Counter */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white/80 text-sm font-pretendard">
-                {selectedImage} / {images.length}
+              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 px-4 py-1.5 bg-black/30 backdrop-blur-md rounded-full text-white/80 text-xs font-pretendard tracking-widest leading-none">
+                {currentIndex + 1} / {images.length}
               </div>
             </div>
           </motion.div>
