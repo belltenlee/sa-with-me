@@ -11,10 +11,11 @@ interface RsvpModalProps {
 
 export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
     const [name, setName] = useState("");
+    const [isAttending, setIsAttending] = useState(true);
     const [attendeeCount, setAttendeeCount] = useState(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState("");
-    const [existingRsvp, setExistingRsvp] = useState<{ id: string, name: string, attendeeCount: number } | null>(null);
+    const [existingRsvp, setExistingRsvp] = useState<{ id: string, name: string, isAttending: boolean, attendeeCount: number } | null>(null);
     const [showConfirm, setShowConfirm] = useState(false);
 
     useEffect(() => {
@@ -26,6 +27,8 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
             document.body.style.overflow = 'unset';
             setShowConfirm(false);
             setExistingRsvp(null);
+            setIsAttending(true);
+            setAttendeeCount(1);
         }
         return () => {
             document.body.style.overflow = 'unset';
@@ -48,7 +51,7 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
                 return;
             }
 
-            await submitRsvp(name, attendeeCount);
+            await submitRsvp(name, isAttending, attendeeCount);
             handleSuccess();
         } catch (err: any) {
             setError(err.message || "오류가 발생했습니다.");
@@ -60,7 +63,7 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
         if (!existingRsvp) return;
         setIsSubmitting(true);
         try {
-            await updateRsvp(existingRsvp.id, attendeeCount);
+            await updateRsvp(existingRsvp.id, isAttending, attendeeCount);
             handleSuccess();
         } catch (err: any) {
             setError(err.message || "오류가 발생했습니다.");
@@ -76,6 +79,7 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
         alert("참석 여부가 전달되었습니다. 감사합니다!");
         onClose();
         setName("");
+        setIsAttending(true);
         setAttendeeCount(1);
         setExistingRsvp(null);
         setShowConfirm(false);
@@ -116,37 +120,70 @@ export default function RsvpModal({ isOpen, onClose }: RsvpModalProps) {
                                     <h2 className="font-pretendard text-sm text-gray-600">원활한 식사 준비를 위해 참석 여부를 알려주세요.</h2>
                                 </div> */}
                                 <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                                    <div>
-                                        <label className="block text-sm font-pretendard text-gray-600 mb-1">성함</label>
-                                        <input
-                                            type="text"
-                                            value={name}
-                                            onChange={(e) => setName(e.target.value)}
-                                            placeholder="성함을 입력해주세요"
-                                            className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-gold transition-colors font-pretendard"
-                                            required
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-pretendard text-gray-600 mb-1">참석 인원 (본인 포함)</label>
-                                        {/* //수평정렬 class 추가 */}
-                                        <div className="flex items-center gap-4 space-y-2">
-                                            <button
-                                                type="button"
-                                                onClick={() => setAttendeeCount(Math.max(1, attendeeCount - 1))}
-                                                className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gold hover:text-gold mt-2"
-                                            >
-                                                -
-                                            </button>
-                                            <span className="font-pretendard text-lg w-8 text-center pt-0.5">{attendeeCount}</span>
-                                            <button
-                                                type="button"
-                                                onClick={() => setAttendeeCount(attendeeCount + 1)}
-                                                className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gold hover:text-gold"
-                                            >
-                                                +
-                                            </button>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-pretendard text-gray-600 mb-2">참석 여부</label>
+                                            <div className="grid grid-cols-2 gap-3">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setIsAttending(true)}
+                                                    className={`py-2.5 rounded-lg border font-pretendard text-sm transition-all ${isAttending
+                                                        ? "bg-charcoal text-white border-charcoal"
+                                                        : "bg-white text-gray-400 border-gray-200 hover:border-gray-300"}`}
+                                                >
+                                                    참석합니다
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setIsAttending(false)}
+                                                    className={`py-2.5 rounded-lg border font-pretendard text-sm transition-all ${!isAttending
+                                                        ? "bg-charcoal text-white border-charcoal"
+                                                        : "bg-white text-gray-400 border-gray-200 hover:border-gray-300"}`}
+                                                >
+                                                    미참석합니다
+                                                </button>
+                                            </div>
                                         </div>
+
+                                        <div>
+                                            <label className="block text-sm font-pretendard text-gray-600 mb-1">성함</label>
+                                            <input
+                                                type="text"
+                                                value={name}
+                                                onChange={(e) => setName(e.target.value)}
+                                                placeholder="성함을 입력해주세요"
+                                                className="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-gold transition-colors font-pretendard"
+                                                required
+                                            />
+                                        </div>
+
+                                        {isAttending && (
+                                            <motion.div
+                                                initial={{ opacity: 0, height: 0 }}
+                                                animate={{ opacity: 1, height: 'auto' }}
+                                                exit={{ opacity: 0, height: 0 }}
+                                                className="space-y-2 overflow-hidden"
+                                            >
+                                                <label className="block text-sm font-pretendard text-gray-600 mb-1">참석 인원 (본인 포함)</label>
+                                                <div className="flex items-center gap-4">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setAttendeeCount(Math.max(1, attendeeCount - 1))}
+                                                        className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gold hover:text-gold"
+                                                    >
+                                                        -
+                                                    </button>
+                                                    <span className="font-pretendard text-lg w-8 text-center">{attendeeCount}</span>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setAttendeeCount(attendeeCount + 1)}
+                                                        className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:border-gold hover:text-gold"
+                                                    >
+                                                        +
+                                                    </button>
+                                                </div>
+                                            </motion.div>
+                                        )}
                                     </div>
 
                                     {error && <p className="text-red-500 text-xs text-center">{error}</p>}

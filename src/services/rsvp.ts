@@ -4,6 +4,7 @@ import { collection, addDoc, query, where, getDocs, Timestamp, doc, updateDoc, o
 export interface RsvpData {
     id: string;
     name: string;
+    isAttending: boolean;
     attendeeCount: number;
     timestamp: any;
 }
@@ -19,19 +20,21 @@ export const checkExistingRsvp = async (name: string) => {
     return null;
 };
 
-export const updateRsvp = async (docId: string, attendeeCount: number) => {
+export const updateRsvp = async (docId: string, isAttending: boolean, attendeeCount: number) => {
     const rsvpDoc = doc(db, "rsvp", docId);
     await updateDoc(rsvpDoc, {
-        attendeeCount,
+        isAttending,
+        attendeeCount: isAttending ? attendeeCount : 0,
         timestamp: Timestamp.now()
     });
 };
 
-export const submitRsvp = async (name: string, attendeeCount: number) => {
+export const submitRsvp = async (name: string, isAttending: boolean, attendeeCount: number) => {
     const rsvpRef = collection(db, "rsvp");
     await addDoc(rsvpRef, {
         name,
-        attendeeCount,
+        isAttending,
+        attendeeCount: isAttending ? attendeeCount : 0,
         timestamp: Timestamp.now()
     });
 };
@@ -61,7 +64,10 @@ export const getAllRsvps = async (pageSize: number = 30, lastDoc: QueryDocumentS
 export const getTotalAttendeeCount = async () => {
     const rsvpRef = collection(db, "rsvp");
     const querySnapshot = await getDocs(rsvpRef);
-    return querySnapshot.docs.reduce((acc, doc) => acc + (doc.data().attendeeCount || 0), 0);
+    return querySnapshot.docs.reduce((acc, doc) => {
+        const data = doc.data();
+        return acc + (data.isAttending ? (data.attendeeCount || 0) : 0);
+    }, 0);
 };
 
 export const fetchAllRsvps = async () => {
