@@ -36,8 +36,8 @@ export default function RsvpSection() {
                     transition={{ duration: 0.8 }}
                 >
                     <p className="font-pretendard text-charcoal/80 mb-6 leading-relaxed">
-                        원활한 예식 준비를 위해<br />
-                        참석 의사 전달을 부탁드립니다.<br />
+                        예식 준비를 위하여 참석 여부를 알려주시면<br />
+                        감사한 마음으로 준비하겠습니다.
                     </p>
                     <button
                         onClick={() => setIsModalOpen(true)}
