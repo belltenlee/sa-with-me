@@ -13,12 +13,12 @@ export default function Gallery() {
 
   // Define base images
   const baseImages = useMemo(() => {
-    const sample_sources = Array.from({ length: 10 }, (_, i) => ({
+    const sample_sources = Array.from({ length: 9 }, (_, i) => ({
       src: getAssetPath(`/images/gallery/G${String(i + 1).padStart(2, '0')}.jpg`),
       alt: `Wedding Photo ${i + 1}`,
     }));
 
-    const soho_sources = Array.from({ length: 16 }, (_, i) => ({
+    const soho_sources = Array.from({ length: 14 }, (_, i) => ({
       src: getAssetPath(`/images/gallery/soho${String(i + 1).padStart(2, '0')}.jpg`),
       alt: `Soho Photo ${i + 1}`,
     }));
