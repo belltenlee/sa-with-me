@@ -159,29 +159,27 @@ export default function SharedGallery({
                 } else {
                     // ImgBB upload
                     if (isVideo) {
-                        // For videos: upload original only (no compression)
-                        const videoRes = await uploadImageToImgBB(file);
-                        url = videoRes.url;
-                        thumbUrl = videoRes.thumbUrl;
-                    } else {
-                        // For images: Dual upload strategy
-                        // 1. Upload Original
-                        const originalRes = await uploadImageToImgBB(file);
-                        const originalImgBbUrl = originalRes.url;
-
-                        // 2. Compress for display
-                        const compressedFile = await compressImage(file, {
-                            maxWidth: 1920,
-                            quality: 0.8
-                        });
-
-                        // 3. Upload Compressed (Display version)
-                        const displayRes = await uploadImageToImgBB(compressedFile);
-
-                        url = displayRes.url;
-                        thumbUrl = displayRes.thumbUrl;
-                        originalUrl = originalImgBbUrl;
+                        // ImgBB does not support videos
+                        console.warn("ImgBB does not support video uploads. Skipping...");
+                        continue; // Skip this file
                     }
+                    // For images: Dual upload strategy
+                    // 1. Upload Original
+                    const originalRes = await uploadImageToImgBB(file);
+                    const originalImgBbUrl = originalRes.url;
+
+                    // 2. Compress for display
+                    const compressedFile = await compressImage(file, {
+                        maxWidth: 1920,
+                        quality: 0.8
+                    });
+
+                    // 3. Upload Compressed (Display version)
+                    const displayRes = await uploadImageToImgBB(compressedFile);
+
+                    url = displayRes.url;
+                    thumbUrl = displayRes.thumbUrl;
+                    originalUrl = originalImgBbUrl;
                 }
 
                 // 2. Save URL and provider metadata to Firestore
@@ -238,7 +236,7 @@ export default function SharedGallery({
 
                 <input
                     type="file"
-                    accept="image/*,video/*"
+                    accept={uploadProvider === 'cloudinary' ? "image/*,video/*" : "image/*"}
                     multiple
                     className="hidden"
                     ref={fileInputRef}
