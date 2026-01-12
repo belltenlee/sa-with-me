@@ -28,9 +28,9 @@ export const metadata: Metadata = {
     siteName: "이종열 & 박성애 모바일 청첩장",
     images: [
       {
-        url: "/images/gallery/G01.jpg", // Next.js will resolve this relative to metadataBase
-        width: 800,
-        height: 600,
+        url: "/images/gallery/G05.jpg", // Next.js will resolve this relative to metadataBase
+        width: 1200,
+        height: 675,
         alt: "Wedding Couple",
       },
     ],
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "이종열 ❤️ 박성애 결혼합니다",
     description: "2026년 2월 21일 토요일 오후 5시 라시따시어터",
-    images: ["/images/gallery/G01.jpg"],
+    images: ["/images/gallery/G05.jpg"],
   },
 };
 
