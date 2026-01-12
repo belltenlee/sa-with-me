@@ -1,5 +1,5 @@
-"use client";
-
+import fs from 'fs';
+import path from 'path';
 import Hero from "@/components/Hero";
 import Invitation from "@/components/Invitation";
 import Guestbook from "@/components/Guestbook";
@@ -7,15 +7,35 @@ import Gallery from "@/components/Gallery";
 import Map from "@/components/Map";
 import ShareButton from "@/components/ShareButton";
 import Account from "@/components/Account";
-import NoticePopup from "@/components/NoticePopup";
 import WeddingInfo from "@/components/WeddingInfo";
 import RsvpSection from "@/components/RsvpSection";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import BottomNav from "@/components/BottomNav";
 import FallingPetals from "@/components/FallingPetals";
+import SectionHeader from "@/components/SectionHeader";
 
 export default function Home() {
+  // Read gallery images at build time (Server-side)
+  const galleryDir = path.join(process.cwd(), 'public/images/gallery');
+  let initialImages: { src: string; alt: string }[] = [];
+
+  try {
+    const files = fs.readdirSync(galleryDir);
+    initialImages = files
+      .filter(file => /^(G|soho|tell)\d+\.jpg$/i.test(file))
+      .map(file => {
+        const prefix = file.match(/^(G|soho|tell)/i)?.[0].toLowerCase();
+        let altPrefix = "Wedding";
+        if (prefix === 'soho') altPrefix = "Soho";
+        if (prefix === 'tell') altPrefix = "Tell Love";
+
+        return {
+          src: `/images/gallery/${file}`,
+          alt: `${altPrefix} Photo`,
+        };
+      });
+  } catch (error) {
+    console.error("Failed to read gallery directory:", error);
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-cream">
       {/* <NoticePopup /> */}
@@ -33,20 +53,8 @@ export default function Home() {
 
         {/* Gallery */  /*bg-[#F9FAFB] */}
         <section className="py-20 px-6 text-center bg-[#F8F6F2]" hidden={false}>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.6 }}  /*bg-[#F0F7FF] */
-            // className="inline-block px-12 py-4 border border-[#BDD3E9] rounded-[50%] mb-12 bg-[#F0F7FF] shadow-[0_4px_15px_rgba(189,211,233,0.3)] relative group"
-            className="inline-block px-10 py-4 border border-[#EBC7C7] rounded-[50%] mb-12 bg-[#FFF5F5] shadow-[0_4px_15px_rgba(235,199,199,0.3)]"
-          >
-            {/* <div className="absolute inset-0 rounded-[50%] border border-[#E1EEFB] scale-[1.1] pointer-events-none group-hover:scale-[1.15] transition-transform duration-500" />
-            <h2 className="font-paperlogy font-semibold text-2xl text-[#7DA2C7] tracking-widest relative z-10">갤러리</h2>
-           */}
-            <h2 className="font-paperlogy font-semibold text-2xl text-[#D99A9A] tracking-widest">갤러리</h2>
-          </motion.div>
-          <Gallery />
+          <SectionHeader title="갤러리" />
+          <Gallery initialImages={initialImages} />
           <div className="mt-8 text-center" hidden={true}>
             <a
               href="/our-gallery"
@@ -59,15 +67,7 @@ export default function Home() {
 
         {/* Location */}
         <section id="map-section" className="py-16 px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.6 }}
-            className="inline-block px-10 py-4 border border-[#EBC7C7] rounded-[50%] mb-12 bg-[#FFF5F5] shadow-[0_4px_15px_rgba(235,199,199,0.3)]"
-          >
-            <h2 className="font-paperlogy font-semibold text-2xl text-[#D99A9A] tracking-widest">오시는 길</h2>
-          </motion.div>
+          <SectionHeader title="오시는 길" />
           <Map />
         </section>
 

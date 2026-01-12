@@ -1,54 +1,38 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getAssetPath } from '@/utils/basePath';
 
-export default function Gallery() {
+interface GalleryProps {
+  initialImages: { src: string; alt: string }[];
+}
+
+export default function Gallery({ initialImages }: GalleryProps) {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [shuffledImages, setShuffledImages] = useState<any[]>([]);
   const [displayedCount, setDisplayedCount] = useState(6);
   const [direction, setDirection] = useState(0);
   const galleryRef = React.useRef<HTMLDivElement>(null);
 
-  // Define base images
-  const baseImages = useMemo(() => {
-    const sample_sources = Array.from({ length: 8 }, (_, i) => ({
-      src: getAssetPath(`/images/gallery/G${String(i + 1).padStart(2, '0')}.jpg`),
-      alt: `Wedding Photo ${i + 1}`,
-    }));
-
-    const soho_sources = Array.from({ length: 14 }, (_, i) => ({
-      src: getAssetPath(`/images/gallery/soho${String(i + 1).padStart(2, '0')}.jpg`),
-      alt: `Soho Photo ${i + 1}`,
-    }));
-
-    const tell_love_sources = Array.from({ length: 20 }, (_, i) => ({
-      src: getAssetPath(`/images/gallery/tell${String(i + 1).padStart(2, '0')}.jpg`),
-      alt: `Tell Love Photo ${i + 1}`,
-    }));
-
-    return [...sample_sources, ...soho_sources, ...tell_love_sources].map((img, index) => ({
-      ...img,
-      id: index + 1,
-    }));
-  }, []);
-
-  // Shuffle only on client side after mount to avoid hydration mismatch
+  // Shuffle on client mount
   useEffect(() => {
-    const combined = [...baseImages];
+    // Fisher-Yates Shuffle
+    const combined = [...initialImages];
     for (let i = combined.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [combined[i], combined[j]] = [combined[j], combined[i]];
     }
-    setShuffledImages(combined);
-  }, [baseImages]);
 
-  // Use baseImages for initial render (server) and shuffledImages for client
-  const images = shuffledImages.length > 0 ? shuffledImages : baseImages;
+    // Re-assign unique IDs for the final order
+    setShuffledImages(combined.map((img, index) => ({
+      ...img,
+      id: index + 1
+    })));
+  }, [initialImages]);
+
+  // Use initialImages for initial render (SSR) and shuffledImages for client
+  const images = shuffledImages.length > 0 ? shuffledImages : initialImages.map((img, i) => ({ ...img, id: i + 1 }));
   const visibleImages = images.slice(0, displayedCount);
-
-  // Navigation functions based on current array order (shuffled)
   const currentIndex = images.findIndex((img) => img.id === selectedImage);
 
   const goToNext = () => {
@@ -65,30 +49,22 @@ export default function Gallery() {
     }
   };
 
-  // Keyboard navigation, scroll locking, and preventing pinch-zoom
   useEffect(() => {
     if (selectedImage === null) {
       document.body.style.overflow = 'unset';
       return;
     }
-
     document.body.style.overflow = 'hidden';
     document.body.classList.add('modal-open');
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') {
-        goToNext();
-      } else if (e.key === 'ArrowLeft') {
-        goToPrev();
-      } else if (e.key === 'Escape') {
-        setSelectedImage(null);
-      }
+      if (e.key === 'ArrowRight') goToNext();
+      else if (e.key === 'ArrowLeft') goToPrev();
+      else if (e.key === 'Escape') setSelectedImage(null);
     };
 
     const preventPinchZoom = (e: TouchEvent) => {
-      if (e.touches.length > 1) {
-        e.preventDefault();
-      }
+      if (e.touches.length > 1) e.preventDefault();
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -107,15 +83,14 @@ export default function Gallery() {
       x: direction > 0 ? 1000 : -1000,
       opacity: 0,
     }),
-    center: {
-      x: 0,
-      opacity: 1,
-    },
+    center: { x: 0, opacity: 1 },
     exit: (direction: number) => ({
       x: direction < 0 ? 1000 : -1000,
       opacity: 0,
     }),
   };
+
+  if (images.length === 0) return null;
 
   return (
     <div ref={galleryRef} className="py-4">
@@ -197,18 +172,8 @@ export default function Gallery() {
                   className="absolute left-4 z-10 w-12 h-12 flex items-center justify-center bg-white/5 hover:bg-white/10 rounded-full text-white transition-colors duration-300"
                   aria-label="Previous image"
                 >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 19l-7-7 7-7"
-                    />
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
               )}
@@ -230,11 +195,8 @@ export default function Gallery() {
                 dragElastic={1}
                 onDragEnd={(e, { offset, velocity }) => {
                   const swipe = Math.abs(offset.x) * velocity.x;
-                  if (swipe < -10000) {
-                    goToNext();
-                  } else if (swipe > 10000) {
-                    goToPrev();
-                  }
+                  if (swipe < -10000) goToNext();
+                  else if (swipe > 10000) goToPrev();
                 }}
                 className="flex items-center justify-center cursor-grab active:cursor-grabbing w-full h-full"
                 onClick={(e) => e.stopPropagation()}
@@ -243,7 +205,6 @@ export default function Gallery() {
                   src={images.find((img) => img.id === selectedImage)?.src}
                   alt={images.find((img) => img.id === selectedImage)?.alt}
                   className="max-w-full max-h-[85vh] object-contain shadow-2xl select-none pointer-events-none"
-                  style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
                 />
               </motion.div>
 
@@ -257,18 +218,8 @@ export default function Gallery() {
                   className="absolute right-4 z-10 w-12 h-12 flex items-center justify-center bg-white/5 hover:bg-white/10 rounded-full text-white transition-colors duration-300"
                   aria-label="Next image"
                 >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
               )}

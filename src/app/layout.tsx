@@ -18,6 +18,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://sa-with-me.vercel.app"),
   title: "이종열 ❤️ 박성애 결혼합니다",
   description: "2026년 2월 21일 토요일 오후 5시 라시따시어터",
   openGraph: {
