@@ -118,7 +118,7 @@ export default function Gallery({ initialImages }: GalleryProps) {
       <div className="mt-8 flex justify-center">
         {displayedCount < images.length ? (
           <button
-            onClick={() => setDisplayedCount(images.length)}
+            onClick={() => setDisplayedCount(prev => Math.min(prev + 15, images.length))}
             className="px-6 py-2 text-sm text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50 transition-colors duration-300 font-pretendard"
           >
             사진 더 보기 (+{images.length - displayedCount})
