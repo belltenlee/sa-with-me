@@ -10,7 +10,7 @@ interface GalleryProps {
 export default function Gallery({ initialImages }: GalleryProps) {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [shuffledImages, setShuffledImages] = useState<any[]>([]);
-  const [displayedCount, setDisplayedCount] = useState(6);
+  const [displayedCount, setDisplayedCount] = useState(15);
   const [direction, setDirection] = useState(0);
   const galleryRef = React.useRef<HTMLDivElement>(null);
 
@@ -94,7 +94,7 @@ export default function Gallery({ initialImages }: GalleryProps) {
 
   return (
     <div ref={galleryRef} className="py-4">
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+      <div className="grid grid-cols-3 gap-2">
         {visibleImages.map((image) => (
           <motion.div
             key={image.id}
@@ -126,7 +126,7 @@ export default function Gallery({ initialImages }: GalleryProps) {
         ) : (
           <button
             onClick={() => {
-              setDisplayedCount(6);
+              setDisplayedCount(15);
               galleryRef.current?.scrollIntoView({ behavior: 'smooth' });
             }}
             className="px-6 py-2 text-sm text-gray-600 border border-gray-300 rounded-full hover:bg-gray-50 transition-colors duration-300 font-pretendard"
