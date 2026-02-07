@@ -37,7 +37,10 @@ export default function Invitation() {
 
                     <div className="space-y-4 font-serif">
                         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-base sm:text-lg">
-                            <span className="font-bold whitespace-nowrap">이상규</span>
+                            <span className="font-bold whitespace-nowrap relative">
+                                <span className="absolute -left-7 top-1/2 -translate-y-1/2 text-[0.65em] text-gray-900 font-normal tracking-tighter whitespace-nowrap leading-none">(故)</span>
+                                이상규
+                            </span>
                             <span className="text-gray-400 text-sm">·</span>
                             <span className="font-bold whitespace-nowrap">남순자</span>
                             <span className="text-gray-500 text-xs sm:text-sm whitespace-nowrap">의 차남</span>
