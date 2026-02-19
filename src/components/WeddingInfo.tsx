@@ -295,7 +295,7 @@ export default function WeddingInfo() {
                                                     <div className="space-y-2.5 font-pretendard bg-[#FFF5F5]/50 p-4 rounded-2xl border border-[#EBC7C7]/20">
                                                         <div className="flex justify-between items-center text-[13px]">
                                                             <span className="text-[#D99A9A] font-semibold">운영 시간</span>
-                                                            <span className="text-charcoal">오후 4시 30분 ~ 7시 30분</span>
+                                                            <span className="text-charcoal">오후 4시 30분 ~ 7시 (탄력적 운영) </span>
                                                         </div>
                                                         <div className="flex justify-between items-center text-[13px]">
                                                             <span className="text-[#D99A9A] font-semibold">장소</span>

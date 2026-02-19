@@ -48,7 +48,7 @@ export default function RsvpSection() {
                 </motion.div>
             </section>
 
-            <RsvpModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            {/* <RsvpModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} /> */}
         </>
     );
 }
