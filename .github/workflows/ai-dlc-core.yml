@@ -50,17 +50,17 @@ jobs:
         
         if [ "${{ github.event_name }}" = "issues" ]; then
           TITLE="${{ github.event.issue.title }}"
-          # [AI-Dev] 접두어가 있는 이슈만 자율 개발 에이전트를 기동
-          if [[ "$TITLE" =~ ^\[AI-Dev\] ]]; then
+          # [AI-Dev] 접두어가 있는 이슈만 자율 개발 에이전트를 기동 (대소문자 무관하게 감지)
+          if [[ "$TITLE" =~ ^\[[aA][iI]-[dD][eE][vV]\] ]]; then
             TASK="${{ github.event.issue.body }}"
             if [ -z "$TASK" ]; then TASK="$TITLE"; fi
             RUN_AGENT="true"
           fi
         elif [ "${{ github.event_name }}" = "issue_comment" ]; then
           BODY="${{ github.event.comment.body }}"
-          # /ai-dev 로 시작하는 댓글만 자율 개발 에이전트를 기동
-          if [[ "$BODY" =~ ^/ai-dev ]]; then
-            TASK=$(echo "$BODY" | sed 's/^\/ai-dev\s*//i')
+          # /ai-dev 로 시작하는 댓글만 자율 개발 에이전트를 기동 (대소문자 무관하게 감지)
+          if [[ "$BODY" =~ ^/[aA][iI]-[dD][eE][vV] ]]; then
+            TASK=$(echo "$BODY" | sed 's|^/[aA][iI]-[dD][eE][vV]\s*||i')
             RUN_AGENT="true"
           fi
         fi
