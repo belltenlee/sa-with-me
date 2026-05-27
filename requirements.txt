@@ -1,9 +1,3 @@
-# Core AI Agent Framework
-crewai[google-genai]>=1.14.0
-google-genai
-
-# Vector Database (로컬 시맨틱 검색 검색기)
-chromadb>=0.4.0
-
-# Web Application UI Framework
-streamlit>=1.30.0
+# 이 기능은 Python 표준 라이브러리만 사용하므로, 
+# 현재로서는 추가적인 외부 의존성이 없습니다.
+# 만약 더 복잡한 이름 생성 라이브러리 등이 필요하다면 여기에 추가합니다.
