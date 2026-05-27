@@ -20,8 +20,8 @@ def parse_arguments():
     parser.add_argument(
         "--dir", 
         type=str, 
-        default="./input", 
-        help="리뷰를 진행할 대상 소스코드 디렉토리 경로 (기본값: ./input)"
+        default="./src", 
+        help="리뷰를 진행할 대상 소스코드 디렉토리 경로 (기본값: ./src)"
     )
     parser.add_argument(
         "--patch",
@@ -141,7 +141,7 @@ def create_github_pull_request(branch_name: str, pr_title: str, pr_body: str) ->
         "title": pr_title,
         "body": pr_body,
         "head": branch_name,
-        "base": "main"
+        "base": "feature/v2-upgrade"
     }
     
     try:

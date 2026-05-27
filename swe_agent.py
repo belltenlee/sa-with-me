@@ -26,8 +26,8 @@ def parse_arguments():
     parser.add_argument(
         "--dir", 
         type=str, 
-        default="./input", 
-        help="개발 및 스캔 대상 소스코드 디렉토리 경로 (기본값: ./input)"
+        default="./src", 
+        help="개발 및 스캔 대상 소스코드 디렉토리 경로 (기본값: ./src)"
     )
     parser.add_argument(
         "--patch",
@@ -49,7 +49,7 @@ def parse_arguments():
 
 
 # 2. 멀티 파일 패치 정밀 파서 엔진
-def extract_and_apply_multi_patches(coder_output: str, default_dir: str = "./input") -> dict:
+def extract_and_apply_multi_patches(coder_output: str, default_dir: str = "./src") -> dict:
     """
     에이전트 출력 리포트에서 FILE: [경로]와 코드 블록을 탐색하여 멀티 파일 패치를 수행합니다.
     대괄호([])가 있든 없든, 다양한 소스 확장자(python, tsx, typescript, json 등)를 지니든 모두 정밀하게 감지합니다.
@@ -189,7 +189,7 @@ def create_github_pull_request(branch_name: str, pr_title: str, pr_body: str) ->
         "title": pr_title,
         "body": pr_body,
         "head": branch_name,
-        "base": "main"
+        "base": "feature/v2-upgrade"
     }
     
     try:
@@ -375,7 +375,7 @@ validator = Agent(
 # 환경 변수 'AUTO_MERGE_DEFAULT'가 'false' 또는 '0'이면 위험도 평가가 LOW이더라도 Auto-Merge를 호출하지 않고 수동 승인으로 전환합니다.
 AUTO_MERGE_DEFAULT = os.environ.get("AUTO_MERGE_DEFAULT", "true").lower() in ("true", "1", "yes")
 
-def run_swe_agent(task_prompt: str, target_dir="./input", is_patch=False, max_spend=999.0, no_auto_merge=False):
+def run_swe_agent(task_prompt: str, target_dir="./src", is_patch=False, max_spend=999.0, no_auto_merge=False):
     # 🚨 [Spend Guardrail]: 시작 전 누적 요금 비상 점검
     current_spend = calculate_cumulative_spend("token_usage_history.txt")
     if max_spend is not None and current_spend >= max_spend:
