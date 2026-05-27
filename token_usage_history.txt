@@ -1,0 +1,6 @@
+[2026-05-27 19:34:59] -------------------------------
+ - Prompt (Input) Tokens : 1500 tokens
+ - Completion (Output) Tokens : 500 tokens
+ - This Run Total Tokens : 2000 tokens
+ - Cumulative Total: 2000 tokens
+
