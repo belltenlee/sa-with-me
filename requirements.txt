@@ -1,0 +1,9 @@
+# Core AI Agent Framework
+crewai[google-genai]>=1.14.0
+google-genai
+
+# Vector Database (로컬 시맨틱 검색 검색기)
+chromadb>=0.4.0
+
+# Web Application UI Framework
+streamlit>=1.30.0

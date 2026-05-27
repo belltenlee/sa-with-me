@@ -1,0 +1,122 @@
+name: AI-DLC Core Code Review Scanner
+
+on:
+  push:
+    branches: [ "feature/v2-upgrade" ]
+  pull_request:
+    branches: [ "feature/v2-upgrade" ]
+  issues:
+    types: [ opened ]
+  issue_comment:
+    types: [ created ]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  scan:
+    name: Headless Batch Code Review
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pip'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Restore Token Usage History Cache
+      uses: actions/cache/restore@v4
+      with:
+        path: token_usage_history.txt
+        key: token-usage-cache-${{ github.run_id }}
+        restore-keys: |
+          token-usage-cache-
+
+    - name: Extract Requirement Task
+      id: task_extractor
+      run: |
+        TASK=""
+        RUN_AGENT="false"
+        
+        if [ "${{ github.event_name }}" = "issues" ]; then
+          TITLE="${{ github.event.issue.title }}"
+          # [AI-Dev] 접두어가 있는 이슈만 자율 개발 에이전트를 기동
+          if [[ "$TITLE" =~ ^\[AI-Dev\] ]]; then
+            TASK="${{ github.event.issue.body }}"
+            if [ -z "$TASK" ]; then TASK="$TITLE"; fi
+            RUN_AGENT="true"
+          fi
+        elif [ "${{ github.event_name }}" = "issue_comment" ]; then
+          BODY="${{ github.event.comment.body }}"
+          # /ai-dev 로 시작하는 댓글만 자율 개발 에이전트를 기동
+          if [[ "$BODY" =~ ^/ai-dev ]]; then
+            TASK=$(echo "$BODY" | sed 's/^\/ai-dev\s*//i')
+            RUN_AGENT="true"
+          fi
+        fi
+        
+        # 💡 [Multi-line string GHA 크래시 방어]: 개행 문자가 포함된 장문 텍스트를 고유한 난수 델리미터로 안전하게 유실 없이 전달
+        EOF_DELIMITER=$(dd if=/dev/urandom bs=15 count=1 2>/dev/null | base64 | tr -dc 'a-zA-Z0-9')
+        echo "run=$RUN_AGENT" >> $GITHUB_OUTPUT
+        echo "task<<$EOF_DELIMITER" >> $GITHUB_OUTPUT
+        echo "$TASK" >> $GITHUB_OUTPUT
+        echo "$EOF_DELIMITER" >> $GITHUB_OUTPUT
+
+    - name: Run AI Autonomous SWE-Agent
+      if: steps.task_extractor.outputs.run == 'true'
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GEMINI_MODEL: "gemini/gemini-2.5-flash"
+        AUTO_MERGE_DEFAULT: ${{ vars.AUTO_MERGE_DEFAULT || 'true' }}
+        # 💡 [따옴표 이스케이프 쉘 크래시 방어]: 지시문 텍스트를 쉘 명령 인자가 아닌 환경 변수로 통째로 주입하여 안전하게 전달
+        AI_TASK_PROMPT: ${{ steps.task_extractor.outputs.task }}
+      run: |
+        python swe_agent.py --task "$AI_TASK_PROMPT" --dir ./src --patch --max-spend 3.0
+
+    - name: Save Token Usage History Cache
+      uses: actions/cache/save@v4
+      if: always()
+      with:
+        path: token_usage_history.txt
+        key: token-usage-cache-${{ github.run_id }}
+
+    - name: Upload Review Report Artifact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-review-report
+        path: code_review_report.md
+        retention-days: 7
+
+    - name: Append Report to GitHub Job Summary
+      if: always()
+      run: |
+        if [ -f code_review_report.md ]; then
+          cat code_review_report.md >> $GITHUB_STEP_SUMMARY
+        else
+          echo "### ⚠️ Warning: code_review_report.md not found!" >> $GITHUB_STEP_SUMMARY
+        fi
+
+    # 🚀 Day 9~10: 자율 배포(CD) Vercel 통합 연동 단계
+    - name: Deploy to Vercel Production
+      if: success() && github.event_name == 'push' && github.ref == 'refs/heads/feature/v2-upgrade' && env.VERCEL_TOKEN != ''
+      continue-on-error: true
+      uses: amondnet/vercel-action@v20
+      env:
+        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        vercel-args: '--prod'
