@@ -386,7 +386,9 @@ def run_swe_agent(task_prompt: str, target_dir="./src", is_patch=False, max_spen
     print(f" 📋 개발 명령: '{task_prompt}'\n")
 
     # 기존 대상 폴더 내 파일 검색 (맥락 수집용)
-    existing_files = glob.glob(os.path.join(target_dir, "**", "*.py"), recursive=True)
+    existing_files = []
+    for ext in ["*.py", "*.ts", "*.tsx", "*.js", "*.jsx", "*.json"]:
+        existing_files.extend(glob.glob(os.path.join(target_dir, "**", ext), recursive=True))
     existing_tree = "\n".join([f" - {os.path.relpath(x)}" for x in existing_files]) if existing_files else " (기존 파일 없음)"
     
     # 💡 [실시간 코드 맥락 수집 엔진]: 파일의 이름뿐만 아니라 실제 소스코드 내용까지 긁어모아 프레임워크 혼동을 물리적 방어!
@@ -397,14 +399,22 @@ def run_swe_agent(task_prompt: str, target_dir="./src", is_patch=False, max_spen
                 with open(fpath, "r", encoding="utf-8") as rf:
                     content = rf.read()
                 rel_path = os.path.relpath(fpath, target_dir)
-                code_context_list.append(f"### [파일 경로: {rel_path}]\n```python\n{content}\n```")
+                ext = os.path.splitext(fpath)[1].lower()
+                lang = "python"
+                if ext in [".ts", ".tsx"]:
+                    lang = "typescript"
+                elif ext in [".js", ".jsx"]:
+                    lang = "javascript"
+                elif ext in [".json"]:
+                    lang = "json"
+                code_context_list.append(f"### [파일 경로: {rel_path}]\n```{lang}\n{content}\n```")
             except Exception:
                 pass
     existing_code_context = "\n\n".join(code_context_list) if code_context_list else " (기존 소스코드 내용 없음)"
     
     # 7. 태스크 사슬 정의
     task_plan = Task(
-        description=f"개발자가 제시한 다음 자연어 요구사항에 맞추어 기능 기획 설계서를 작성하세요.\n\n[개발 요구사항]:\n{task_prompt}\n\n[기존 소스코드 상세 맥락 (프레임워크 및 구조 분석용)]:\n{existing_code_context}\n\n[현재 프로젝트 파일 트리]:\n{existing_tree}\n\n반드시 기존 프레임워크(FastAPI, Flask 등)와 코딩 스타일을 100% 분석하여 구조적으로 완벽히 일치시켜야 합니다. '#### FILE: [파일명]' 형식으로 어떤 파일을 새로 생성하고 어떤 파일을 수정해야 하는지 파일 수정 및 생성 정책 목록을 설계서에 명시하세요.",
+        description=f"개발자가 제시한 다음 자연어 요구사항에 맞추어 기능 기획 설계서를 작성하세요.\n\n[개발 요구사항]:\n{task_prompt}\n\n[기존 소스코드 상세 맥락 (프레임워크 및 구조 분석용)]:\n{existing_code_context}\n\n[현재 프로젝트 파일 트리]:\n{existing_tree}\n\n반드시 기존 프레임워크(Next.js, React, FastAPI 등)와 코딩 스타일을 100% 분석하여 구조적으로 완벽히 일치시켜야 합니다. 🚨 [핵심 규칙]: 절대로 프로젝트 구조와 무관한 가상의 폴더나 가상의 파일을 신규 생성하지 마십시오. 반드시 기존 프로젝트 파일 트리({existing_tree})에 존재하는 파일들 중 수정이 필요한 파일을 탐색하여, 기존 소스 코드 안에서 로직 변경(Modify)을 처리하는 것을 최우선으로 하십시오. '#### FILE: [파일명]' 형식으로 어떤 파일을 새로 생성하고 어떤 파일을 수정해야 하는지 파일 수정 및 생성 정책 목록을 설계서에 명시하세요.",
         expected_output="### 📋 기능 상세 설계 명세서 및 파일 생성/수정 계획 리스트",
         agent=planner
     )
