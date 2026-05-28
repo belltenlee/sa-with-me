@@ -44,23 +44,28 @@ jobs:
 
     - name: Extract Requirement Task
       id: task_extractor
+      env:
+        EVENT_NAME: ${{ github.event_name }}
+        ISSUE_TITLE: ${{ github.event.issue.title }}
+        ISSUE_BODY: ${{ github.event.issue.body }}
+        COMMENT_BODY: ${{ github.event.comment.body }}
       run: |
         TASK=""
         RUN_AGENT="false"
         
-        if [ "${{ github.event_name }}" = "issues" ]; then
-          TITLE="${{ github.event.issue.title }}"
+        if [ "$EVENT_NAME" = "issues" ]; then
+          TITLE="$ISSUE_TITLE"
           # [AI-Dev] 접두어가 있는 이슈만 자율 개발 에이전트를 기동 (대소문자 무관하게 감지)
           if [[ "$TITLE" =~ ^\[[aA][iI]-[dD][eE][vV]\] ]]; then
-            TASK="${{ github.event.issue.body }}"
+            TASK="$ISSUE_BODY"
             if [ -z "$TASK" ]; then TASK="$TITLE"; fi
             RUN_AGENT="true"
           fi
-        elif [ "${{ github.event_name }}" = "issue_comment" ]; then
-          BODY="${{ github.event.comment.body }}"
+        elif [ "$EVENT_NAME" = "issue_comment" ]; then
+          BODY="$COMMENT_BODY"
           # /ai-dev 로 시작하는 댓글만 자율 개발 에이전트를 기동 (대소문자 무관하게 감지)
           if [[ "$BODY" =~ ^/[aA][iI]-[dD][eE][vV] ]]; then
-            TASK=$(echo "$BODY" | sed 's|^/[aA][iI]-[dD][eE][vV]\s*||i')
+            TASK=$(echo "$BODY" | sed 's|^\/[aA][iI]-[dD][eE][vV]\s*||i')
             RUN_AGENT="true"
           fi
         fi
