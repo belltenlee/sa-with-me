@@ -1,0 +1,30 @@
+[2026-05-27 19:34:59] -------------------------------
+ - Prompt (Input) Tokens : 1500 tokens
+ - Completion (Output) Tokens : 500 tokens
+ - This Run Total Tokens : 2000 tokens
+ - Cumulative Total: 2000 tokens
+
+[2026-05-28 00:53:12] -------------------------------
+ - Prompt (Input) Tokens : 1500 tokens
+ - Completion (Output) Tokens : 500 tokens
+ - This Run Total Tokens : 2000 tokens
+ - Cumulative Total: 4000 tokens
+
+[2026-05-28 01:28:03] -------------------------------
+ - Prompt (Input) Tokens : 1500 tokens
+ - Completion (Output) Tokens : 500 tokens
+ - This Run Total Tokens : 2000 tokens
+ - Cumulative Total: 6000 tokens
+
+[2026-05-28 02:48:08] -------------------------------
+ - Prompt (Input) Tokens : 1500 tokens
+ - Completion (Output) Tokens : 500 tokens
+ - This Run Total Tokens : 2000 tokens
+ - Cumulative Total: 8000 tokens
+
+[2026-05-28 02:56:22] -------------------------------
+ - Prompt (Input) Tokens : 1500 tokens
+ - Completion (Output) Tokens : 500 tokens
+ - This Run Total Tokens : 2000 tokens
+ - Cumulative Total: 10000 tokens
+
