@@ -9,20 +9,29 @@ import ShareButton from "@/components/ShareButton";
 import Account from "@/components/Account";
 import WeddingInfo from "@/components/WeddingInfo";
 import RsvpSection from "@/components/RsvpSection";
-import FallingPetals from "@/components/FallingPetals";
+import FallingHearts from "@/components/FallingHearts"; // FallingPetals -> FallingHearts로 변경
 import SectionHeader from "@/components/SectionHeader";
 
+/**
+ * @component Home
+ * @description The main page component for the wedding invitation application.
+ * It orchestrates various sections like Hero, Invitation, Gallery, Map, etc.
+ */
 export default function Home() {
   // Read gallery images at build time (Server-side)
+  // This ensures image data is available when the component is rendered on the server.
   const galleryDir = path.join(process.cwd(), 'public/images/gallery');
   let initialImages: { src: string; alt: string }[] = [];
 
   try {
+    // Synchronously read directory contents. This runs only on the server during build/SSR.
     const files = fs.readdirSync(galleryDir);
     initialImages = files
-      .filter(file => /^(G|soho|tell)\d+\.jpg$/i.test(file))
-      .map(file => {
-        const prefix = file.match(/^(G|soho|tell)/i)?.[0].toLowerCase();
+      // Filter for specific image naming conventions (e.g., G1.jpg, soho1.jpg, tell1.jpg)
+      .filter((file: string) => /^(G|soho|tell)\d+\.jpg$/i.test(file))
+      .map((file: string) => {
+        const prefixMatch = file.match(/^(G|soho|tell)/i);
+        const prefix = prefixMatch ? prefixMatch[0].toLowerCase() : '';
         let altPrefix = "Wedding";
         if (prefix === 'soho') altPrefix = "Soho";
         if (prefix === 'tell') altPrefix = "Tell Love";
@@ -32,14 +41,22 @@ export default function Home() {
           alt: `${altPrefix} Photo`,
         };
       });
-  } catch (error) {
-    console.error("Failed to read gallery directory:", error);
+  } catch (error: unknown) {
+    // Log any errors encountered during directory reading.
+    // The type 'unknown' is used for caught errors as per TypeScript best practices,
+    // then narrowed down if specific properties are accessed.
+    if (error instanceof Error) {
+      console.error("Failed to read gallery directory:", error.message);
+    } else {
+      console.error("An unknown error occurred while reading gallery directory:", error);
+    }
   }
 
   return (
     <div className="flex flex-col min-h-screen bg-cream">
       {/* <NoticePopup /> */}
-      <FallingPetals />
+      {/* FallingHearts component provides the decorative falling heart effect */}
+      <FallingHearts /> {/* FallingPetals -> FallingHearts로 변경 */}
       <Hero />
 
       <div className="max-w-md mx-auto w-full bg-white shadow-xl min-h-screen snap-start pb-32">
@@ -51,7 +68,7 @@ export default function Home() {
           <RsvpSection />
         </div>
 
-        {/* Gallery */  /*bg-[#F9FAFB] */}
+        {/* Gallery Section */}
         <section className="py-20 px-6 text-center bg-[#F8F6F2]" hidden={false}>
           <SectionHeader title="갤러리" />
           <Gallery initialImages={initialImages} />
@@ -65,7 +82,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Location */}
+        {/* Location Section */}
         <section id="map-section" className="py-16 px-6 text-center">
           <SectionHeader title="오시는 길" />
           <Map />
